@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manage Rosters &mdash; Nick's Guild Ball Health Tracker</title>
+    <link rel="shortcut icon" href="/images/narwhal-32.png" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="extra.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="hidden-xs col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+          <div class="row">
+            <div class="col-xs-12">
+              <p>
+                <div id="rosterSelector" class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default active">
+                    <input type="radio" name="rosters" id="roster1" autocomplete="off" checked>Roster 1
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="rosters" id="roster2" autocomplete="off">Roster 2
+                  </label>
+                </div>
+              </p>
+              <div id="guildBack" class="hidden">
+                <p>
+                  <button id="guildBack-butt" class="btn btn-default btn-block" type="button"></button>
+                </p>
+              </div>
+              <div id="guildSelector">
+                <h3 class="text-center">Choose a Guild</h3>
+                <button id="alchemists-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/alchemists.png" alt="Alchemists" class="img-responsive center-block"></button>
+                <button id="brewers-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/brewers.png" alt="Brewers" class="img-responsive center-block"></button>
+                <button id="butchers-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/butchers.png" alt="Butchers" class="img-responsive center-block"></button>
+                <button id="engineers-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/engineers.png" alt="Engineers" class="img-responsive center-block"></button>
+                <button id="fishermen-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/fishermen.png" alt="Fishermen" class="img-responsive center-block"></button>
+                <button id="hunters-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/hunters.png" alt="Hunters" class="img-responsive center-block"></button>
+                <button id="masons-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/masons.png" alt="Masons" class="img-responsive center-block"></button>
+                <button id="morticians-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/morticians.png" alt="Morticians" class="img-responsive center-block"></button>
+                <button id="union-butt" class="col-xs-4 btn btn-default" type="button"><img src="/images/union.png" alt="Union" class="img-responsive center-block"></button>
+              </div>
+              <div id="allPlayers">
+                <p>Choose Players &ndash; <span id="rosterSize">0</span>/10</p>
+                <div id="alchemistsPlayers" class="hidden">
+                  <p id="alchemistsCaptains">
+                    <button id="midas-butt" class="btn btn-default" type="button">Midas (C)</button>
+                    <button id="smoke-butt" class="btn btn-default" type="button">Smoke (C)</button>
+                  </p>
+                  <p id="alchemistsMascots">
+                    <button id="flask-butt" class="btn btn-default" type="button">Flask (M)</button>
+                    <button id="naja-butt" class="btn btn-default" type="button">Naja (M)</button>
+                  </p>
+                  <p id="alchemistsPlayers">
+                    <button id="calculus-butt" class="btn btn-default" type="button">Calculus</button>
+                    <button id="compound-butt" class="btn btn-default" type="button">Compound</button>
+                    <button id="katalyst-butt" class="btn btn-default" type="button">Katalyst</button>
+                    <button id="vkatalyst-butt" class="btn btn-default" type="button">vKatalyst</button>
+                    <button id="mercury-butt" class="btn btn-default" type="button">Mercury</button>
+                    <button id="venin-butt" class="btn btn-default" type="button">Venin</button>
+                    <button id="vitriol-butt" class="btn btn-default" type="button">Vitriol</button>
+                  </p>
+                  <p id="alchemistsUnion">
+                    <button id="avarisse-butt" class="btn btn-default" type="button">Avarisse &amp; Greede</button>
+                    <button id="decimate-butt" class="btn btn-default" type="button">Decimate</button>
+                    <button id="harry-butt" class="btn btn-default" type="button">Harry &lsquo;the Hat&rsquo;</button>
+                    <button id="hemlocke-butt" class="btn btn-default" type="button">Hemlocke</button>
+                    <button id="mist-butt" class="btn btn-default" type="button">Mist</button>
+                    <button id="snakeskin-butt" class="btn btn-default" type="button">Snakeskin</button>
+                  </p>
+                </div>
+              </div>
+              <p id="output"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+          <footer class="text-center">&copy; <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, 2016 <a href="https://github.com/nick-ng/NickGBHealth">GitHub</a></footer>
+        </div>
+      </div>
+    </div>
+    
+    <script src="/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js.cookie.js"></script>
+    <script src="/common.js"></script>
+    <script src="/managerosters.js"></script>
+  </body>
+</html>

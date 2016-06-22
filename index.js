@@ -17,9 +17,24 @@ app.use( express.static( __dirname + '/bootstrap' ) );
 
 // The pages
 app.get( '/', function( req, res ) {
-  res.sendFile(PAGEDIR + '/home.html');
+  res.sendFile(PAGEDIR + '/home.html' );
+  //~ console.log('query - root');
+  //~ console.log(req.query);
 });
 
+app.get( '/managerosters', function( req, res ) {
+  res.sendFile(PAGEDIR + '/managerosters.html' );
+});
+
+app.get( '/:id', function( req, res ) {
+  res.sendFile(PAGEDIR + '/home.html');
+  //~ console.log('params - id');
+  //~ console.log(req.params);
+  //~ console.log('query - id');
+  //~ console.log(req.query);
+});
+
+// Listen
 http.listen( app.get( 'port' ), function(){
   console.log( 'listening on : ' + app.get('port') );
 });
@@ -33,7 +48,7 @@ io.on( 'connection', function( socket ) {
   
   // Test functions
   socket.on( 'testA', function (testObj) {
-    console.log('testA socket received');
+    //~ console.log('testA socket received');
     io.to(socket.id).emit( 'testB', 'hello' );
   });
 });

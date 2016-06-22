@@ -1,5 +1,4 @@
 // Common variables
-var socket = io();
 var common = {};
 common.cookieExpiry = 999; // 999 days
 
@@ -20,6 +19,14 @@ common.findInArray = function findInArray(array, searchValue, searchKey, returnK
     return returnObj;
   };
 }
+
+common.getThisID = function getThisID() {
+  return window.location.pathname.replace(/^\//, '');
+};
+
+common.getThisSearch = function getThisSearch() {
+  return window.location.search.replace(/^\?/, '');
+};
 
 common.sumArray = function sumArray(someArray, useFloat) {
   // Sums all values in an array which may be strings. If a value cannot be parsed, it's skipped

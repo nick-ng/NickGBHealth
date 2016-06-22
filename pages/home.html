@@ -5,21 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nick's Guild Ball Health Tracker</title>
-    <link rel="shortcut icon" href="images/narwhal-32.png" />
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/narwhal-32.png" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="extra.css" rel="stylesheet">
   </head>
   <body>
-    <p>Hello</p>
-    <p>
-      <button id="testButton" type="button">Test</button>
-    </p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="hidden-xs col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+          <h1 class="text-center">Nick's Guild Ball Health Tracker</h1>
+          <p>
+            <button id="newGameButton" class="btn btn-default btn-lg btn-block" type="button">New Game</button>
+          </p>
+          <p>
+            <form id="joinGameForm">
+              <div class="input-group input-group-lg">
+                <input id="" type="text" class="form-control" placeholder="Game ID">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit">Load</button>
+                </span>
+              </div>
+            </form>
+          </p>
+          <p>
+            <a class="btn btn-default btn-lg btn-block" href="/managerosters" role="button">Manage Rosters</a>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+          <footer class="text-center">&copy; <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, 2016 <a href="https://github.com/nick-ng/NickGBHealth">GitHub</a></footer>
+        </div>
+      </div>
+    </div>
     
-    <script src="./socket.io/socket.io.js"></script>
-    <script src="jquery-2.2.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js.cookie.js"></script>
-    <script src="common.js"></script>
-    <script src="home.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js.cookie.js"></script>
+    <script src="/common.js"></script>
+    <script src="/home.js"></script>
   </body>
 </html>
