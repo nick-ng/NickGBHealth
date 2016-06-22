@@ -1,3 +1,9 @@
+# Private Test Files
+test.html
+
+# Environment Variables
+.env
+
 # Logs
 logs
 *.log

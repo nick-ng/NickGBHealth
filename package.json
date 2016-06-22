@@ -1,0 +1,27 @@
+{
+  "name": "nick-gb-health",
+  "version": "0.0.1",
+  "description": "Tracks health of players for both participants in a Guild Ball game and displays health to both participants via Socket.IO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nick-ng/NickGBHealth.git"
+  },
+  "keywords": [
+    "Guild",
+    "Ball"
+  ],
+  "author": "nick-ng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nick-ng/NickGBHealth/issues"
+  },
+  "homepage": "https://github.com/nick-ng/NickGBHealth#readme",
+  "dependencies": {
+    "express": "4.13.4",
+    "socket.io": "1.4.6"
+  }
+}
