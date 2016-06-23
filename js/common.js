@@ -159,6 +159,20 @@ common.getThisSearch = function getThisSearch() {
   return window.location.search.replace(/^\?/, '');
 };
 
+common.parseRosterCookie = function parseRosterCookie(rosterCookie) {
+  var guild = rosterCookie.match( /3([a-z])+2/ );
+  if (guild) {
+    guild = guild[0].replace( /\d/g, '' );
+  }
+  var players = rosterCookie.match( /1([a-z])+0/g );
+  if (players) {
+    for (var i = 0; i < players.length; i++) {
+      players[i] = players[i].replace( /\d/g, '' );
+    };
+  }
+  return {guild:guild, players:players};
+};
+
 common.sumArray = function sumArray(someArray, useFloat) {
   // Sums all values in an array which may be strings. If a value cannot be parsed, it's skipped
   useFloat = useFloat || false;

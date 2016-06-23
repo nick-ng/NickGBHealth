@@ -4,18 +4,13 @@ var rosterCookies = ['', ''];
 var maxRosterSize = 9;
 
 $(document).ready(function() {
-  populateAllPlayersDOM();
-  hookAllPlayersEvents();
   $( '#maxRosterSize' ).text(maxRosterSize);
+  populateDOM();
+  hookEvents();
+  loadRoster();
 }); // $( document ).ready(function() {
 
-$( '#guildBack-butt' ).click(function() {
-  hideAllPlayerSelectors()
-  $( '#guildSelector' ).removeClass( 'hidden' );
-  $( '#guildBack' ).addClass( 'hidden' );
-});
-
-function populateAllPlayersDOM() {
+function populateDOM() {
   for (var i = 0; i < common.allPlayers.length; i++) {
     var guildObj = common.allPlayers[i]
     var guildHTML = '<div id="' + guildObj.name + 'Players" class="hidden">';
@@ -59,26 +54,31 @@ function populateAllPlayersDOM() {
   }
 };
 
-function playerButtonHTML(name, special) {
-  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
-  if (name == 'avarisse') {
-    Name = 'Avarisse &amp; Greede';
-  }
-  if (name == 'harry') {
-    Name = 'Harry &lsquo;the Hat&rsquo;';
-  }
-  return '<button id="' + name + '-butt" class="btn btn-default" type="button">' + Name + '</button>';
-}
+function hookEvents() {
+  $( '#guildBack-butt' ).click(function() {
+    resetRosterManager();
+  });
 
-function hookAllPlayersEvents() {
+  $( 'input[name=rosters]:radio' ).change(function() {
+    resetRosterManager();
+    loadRoster();
+  });
+  
+  $( '#saveRosterButton' ).click(function() {
+    cookieName = 'roster' + rosterID;
+    Cookies.set(cookieName, rosterCookies[rosterID], { expires: common.cookieExpiry });
+    var rosterNumber = rosterID + 1;
+    $( '#saveSuccessAlert' ).text( 'Roster ' + rosterNumber + ' saved.' );
+    $( '#saveSuccessAlert' ).removeClass( 'hidden' );
+    common.parseRosterCookie(rosterCookies[rosterID]);
+  });
+  
   $( '#guildSelector button' ).each(function() {
     $(this).click(function() {
       var guild = $(this).attr( 'id' ).replace(/-butt$/, '' );
-      var Guild = common.capFirst(guild);
+      var Guild = 
       hideAllPlayerSelectors()
-      chooseGuild( Guild );
-      $( '#allPlayers' ).removeClass( 'hidden' );
-      $( '#' + guild + 'Players' ).removeClass( 'hidden' );
+      chooseGuild( guild );
     });
   });
 
@@ -94,18 +94,43 @@ function hookAllPlayersEvents() {
         rosterSize[rosterID]++;
         $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
         rosterCookies[rosterID] += playerCookie;
+        $( '#saveControl' ).removeClass( 'hidden' );
       };
       $(this).blur();
       $( '#rosterSize' ).text(rosterSize[rosterID]);
-      $( '#output' ).text(rosterCookies[rosterID]);
+      //~ $( '#output' ).text(rosterCookies[rosterID]);
     });
   });
 };
 
+function playerButtonHTML(name, special) {
+  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
+  if (name == 'avarisse') {
+    Name = 'Avarisse &amp; Greede';
+  }
+  if (name == 'harry') {
+    Name = 'Harry &lsquo;the Hat&rsquo;';
+  }
+  return '<button id="' + name + '-butt" class="btn btn-default" type="button">' + Name + '</button>';
+};
+
 function chooseGuild(guildName) {
+  var Guild = common.capFirst(guildName);
   $( '#guildSelector' ).addClass( 'hidden' );
   $( '#guildBack' ).removeClass( 'hidden' );
-  $( '#guildBack-butt' ).text( guildName + ', click here to change guild' );
+  $( '#guildBack-butt' ).text( Guild + ', click here to change guild' );
+  $( '#allPlayers' ).removeClass( 'hidden' );
+  $( '#' + guildName + 'Players' ).removeClass( 'hidden' );
+  rosterCookies[rosterID] = '3' + guildName + '2';
+};
+
+function choosePlayers(playerList) {
+  $( '#allPlayers button' ).each(function() {
+    var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
+    if (playerList.indexOf(player) > -1) { // It's in the list
+      $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
+    }
+  });
 };
 
 function hideAllPlayerSelectors() {
@@ -119,5 +144,32 @@ function hideAllPlayerSelectors() {
   rosterCookies[rosterID] = '';
   rosterSize[rosterID] = 0;
   $( '#rosterSize' ).text(rosterSize[rosterID]);
-  $( '#output' ).text(rosterCookies[rosterID]);
+  //~ $( '#output' ).text(rosterCookies[rosterID]);
+  $( '#saveControl' ).addClass( 'hidden' );
+  $( '#saveSuccessAlert' ).addClass( 'hidden' );
+};
+
+function loadRoster() {
+  var id = parseInt($( 'input[name=rosters]:checked' ).attr('id'));
+  rosterID = id;
+  var cookieName = 'roster' + id;
+  var tempCookie = Cookies.get(cookieName);
+  if (tempCookie) {
+    rosterCookies[id] = tempCookie;
+    var rosterObj = common.parseRosterCookie(rosterCookies[id]);
+    if (rosterObj.guild && rosterObj.players) {
+      chooseGuild(rosterObj.guild);
+      choosePlayers(rosterObj.players);
+      rosterSize[id] = rosterObj.players.length;
+      $( '#rosterSize' ).text(rosterSize[rosterID]);
+    };
+  } else {
+    rosterCookies[id] = '';
+  }
+};
+
+function resetRosterManager() {
+  hideAllPlayerSelectors()
+  $( '#guildSelector' ).removeClass( 'hidden' );
+  $( '#guildBack' ).addClass( 'hidden' );
 };

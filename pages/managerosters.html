@@ -19,10 +19,10 @@
               <p>
                 <div id="rosterSelector" class="btn-group btn-group-justified" data-toggle="buttons">
                   <label class="btn btn-default active">
-                    <input type="radio" name="rosters" id="roster1" autocomplete="off" checked>Roster 1
+                    <input type="radio" name="rosters" id="0" autocomplete="off" checked>Roster 1
                   </label>
                   <label class="btn btn-default">
-                    <input type="radio" name="rosters" id="roster2" autocomplete="off">Roster 2
+                    <input type="radio" name="rosters" id="1" autocomplete="off">Roster 2
                   </label>
                 </div>
               </p>
@@ -38,6 +38,10 @@
               <div id="allPlayers" class="hidden">
                 <p>Choose Players &ndash; <span id="rosterSize">0</span>/<span id="maxRosterSize"> Something went wrong! </span></p>
                 <!-- Player selection buttons go here -->
+              </div>
+              <div id="saveControl" class="hidden">
+                <button id="saveRosterButton" class="btn btn-default btn-block" type="button">Save Roster</button>
+                <div id="saveSuccessAlert" class="alert alert-success hidden" role="alert"></div>
               </div>
               <p id="output"></p>
             </div>
