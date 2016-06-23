@@ -14,38 +14,40 @@
       <div class="row">
         <div class="hidden-xs col-sm-1 col-md-2 col-lg-3"></div>
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+          <p>
+            <div id="rosterSelector" class="btn-group btn-group-justified" data-toggle="buttons">
+              <label class="btn btn-default active">
+                <input type="radio" name="rosters" id="0" autocomplete="off" checked>Roster 1
+              </label>
+              <label class="btn btn-default">
+                <input type="radio" name="rosters" id="1" autocomplete="off">Roster 2
+              </label>
+            </div>
+          </p>
+          <div id="guildBack" class="hidden">
+            <p>
+              <button id="guildBack-butt" class="btn btn-default btn-block" type="button"></button>
+            </p>
+          </div>
           <div class="row">
-            <div class="col-xs-12">
-              <p>
-                <div id="rosterSelector" class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default active">
-                    <input type="radio" name="rosters" id="0" autocomplete="off" checked>Roster 1
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="rosters" id="1" autocomplete="off">Roster 2
-                  </label>
-                </div>
-              </p>
-              <div id="guildBack" class="hidden">
-                <p>
-                  <button id="guildBack-butt" class="btn btn-default btn-block" type="button"></button>
-                </p>
-              </div>
-              <div id="guildSelector">
-                <h3 class="text-center">Choose a Guild</h3>
-                <!-- Guild selection buttons go here -->
-              </div>
-              <div id="allPlayers" class="hidden">
-                <p>Choose Players &ndash; <span id="rosterSize">0</span>/<span id="maxRosterSize"> Something went wrong! </span></p>
-                <!-- Player selection buttons go here -->
-              </div>
-              <div id="saveControl" class="hidden">
-                <button id="saveRosterButton" class="btn btn-default btn-block" type="button">Save Roster</button>
-                <div id="saveSuccessAlert" class="alert alert-success hidden" role="alert"></div>
-              </div>
-              <p id="output"></p>
+            <div id="guildSelector" class="col-xs-12">
+              <h3 class="text-center">Choose a Guild</h3>
+              <!-- Guild selection buttons go here -->
             </div>
           </div>
+          <div id="allPlayers" class="hidden">
+            <p>Choose Players &ndash; <span id="rosterSize">0</span>/<span id="maxRosterSize"> Something went wrong! </span></p>
+            <!-- Player selection buttons go here -->
+          </div>
+          <div id="saveControl" class="hidden">
+            <button id="saveRosterButton" class="btn btn-default btn-block" type="button">Save Roster</button>
+            <div id="saveSuccessAlert" class="alert alert-success hidden" role="alert"></div>
+          </div>
+          <div>
+            <hr>
+            <a class="btn btn-default btn-block" href="/" role="button">Done</a>
+          </div>
+          <p id="output"></p>
         </div>
       </div>
       <div class="row">

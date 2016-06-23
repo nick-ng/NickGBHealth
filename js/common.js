@@ -164,7 +164,7 @@ common.parseRosterCookie = function parseRosterCookie(rosterCookie) {
   if (guild) {
     guild = guild[0].replace( /\d/g, '' );
   }
-  var players = rosterCookie.match( /1([a-z])+0/g );
+  var players = rosterCookie.match( /1([a-z\-])+0/g );
   if (players) {
     for (var i = 0; i < players.length; i++) {
       players[i] = players[i].replace( /\d/g, '' );

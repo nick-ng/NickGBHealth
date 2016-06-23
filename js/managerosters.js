@@ -55,9 +55,7 @@ function populateDOM() {
 };
 
 function hookEvents() {
-  $( '#guildBack-butt' ).click(function() {
-    resetRosterManager();
-  });
+  $( '#guildBack-butt' ).click(resetRosterManager);
 
   $( 'input[name=rosters]:radio' ).change(function() {
     resetRosterManager();
@@ -78,7 +76,8 @@ function hookEvents() {
       var guild = $(this).attr( 'id' ).replace(/-butt$/, '' );
       var Guild = 
       hideAllPlayerSelectors()
-      chooseGuild( guild );
+      chooseGuild(guild);
+      rosterCookies[rosterID] = '3' + guild + '2';
     });
   });
 
@@ -121,7 +120,6 @@ function chooseGuild(guildName) {
   $( '#guildBack-butt' ).text( Guild + ', click here to change guild' );
   $( '#allPlayers' ).removeClass( 'hidden' );
   $( '#' + guildName + 'Players' ).removeClass( 'hidden' );
-  rosterCookies[rosterID] = '3' + guildName + '2';
 };
 
 function choosePlayers(playerList) {
@@ -156,7 +154,7 @@ function loadRoster() {
   var tempCookie = Cookies.get(cookieName);
   if (tempCookie) {
     rosterCookies[id] = tempCookie;
-    var rosterObj = common.parseRosterCookie(rosterCookies[id]);
+    var rosterObj = common.parseRosterCookie(tempCookie);
     if (rosterObj.guild && rosterObj.players) {
       chooseGuild(rosterObj.guild);
       choosePlayers(rosterObj.players);

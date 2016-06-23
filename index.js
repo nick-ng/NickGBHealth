@@ -4,6 +4,8 @@ var express = require( 'express' ); var app = express();
 var fs = require( 'fs' );
 var http = require( 'http' ).Server( app );
 var io = require( 'socket.io' )( http );
+var redis = require("redis"),
+client = redis.createClient();
 
 var PAGEDIR = __dirname + '/pages';
 
@@ -18,6 +20,11 @@ app.use( express.static( __dirname + '/bootstrap' ) );
 // The pages
 app.get( '/', function( req, res ) {
   res.sendFile(PAGEDIR + '/home.html' );
+  if (req.query.newGame) {
+    console.log(req.query.newGame);
+    res.status(200);
+    res.json({id:123});
+  }
   //~ console.log('query - root');
   //~ console.log(req.query);
 });
@@ -52,3 +59,13 @@ io.on( 'connection', function( socket ) {
     io.to(socket.id).emit( 'testB', 'hello' );
   });
 });
+
+// log redis errors.
+client.on("error", function (err) {
+    console.log("Redis error: " + err);
+});
+
+//~ client.set('test', 'onetwo');
+//~ client.get('test', function(err, reply) {
+  //~ console.log(reply);
+//~ });
