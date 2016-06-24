@@ -5,8 +5,11 @@ $(document).ready(function() {
 }); // $( document ).ready(function() {
 
 $( '#newGameButton' ).click(function() {
-  $.get( '/', {newGame:true}, function(data) {
-    console.log(data)
+  $( '#output' ).text('Getting new game ID.');
+  $.post( '/', {newGame:true}, function(res) {
+    if (res.id) {
+      window.location.href = '/' + res.id + '?mode=host';
+    }
   });
 });
 

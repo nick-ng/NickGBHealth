@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 function populateDOM() {
   for (var i = 0; i < common.allPlayers.length; i++) {
-    var guildObj = common.allPlayers[i]
+    var guildObj = common.allPlayers[i];
     var guildHTML = '<div id="' + guildObj.name + 'Players" class="hidden">';
     var selectorHTML = '<button id="' + guildObj.name + '-butt" ' +
       'class="col-xs-4 btn btn-default" type="button">' +
@@ -26,11 +26,11 @@ function populateDOM() {
     for (var j = 0; j < guildObj.players.length; j++) {
       var player = guildObj.players[j];
       if (player.role == 'c') {
-        captainsHTML += playerButtonHTML(player.name, ' (C)' );
+        captainsHTML += common.playerButtonHTML(player.name, ' (C)' );
       } else if (player.role == 'm') {
-        mascotsHTML += playerButtonHTML(player.name, ' (M)' );
+        mascotsHTML += common.playerButtonHTML(player.name, ' (M)' );
       } else if (!player.role) {
-        playersHTML += playerButtonHTML(player.name, '' );
+        playersHTML += common.playerButtonHTML(player.name, '' );
       }
     }
     if (captainsHTML.length > 0) {
@@ -45,7 +45,7 @@ function populateDOM() {
     if (guildObj.union.length > 0) {
       unionHTML += '<p id="union">';
       for (var j = 0; j < guildObj.union.length; j++) {
-        unionHTML += playerButtonHTML(guildObj.union[j], '');
+        unionHTML += common.playerButtonHTML(guildObj.union[j], '');
       };
       unionHTML += '</p>'
     }
@@ -88,10 +88,12 @@ function hookEvents() {
       if ($(this).hasClass( 'btn-primary' )) {
         rosterSize[rosterID]--
         $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
+        $(this).removeClass( 'active' );
         rosterCookies[rosterID] = rosterCookies[rosterID].replace( playerCookie, '' );
       } else {
         rosterSize[rosterID]++;
         $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
+        $(this).addClass( 'active' );
         rosterCookies[rosterID] += playerCookie;
         $( '#saveControl' ).removeClass( 'hidden' );
       };
@@ -100,17 +102,6 @@ function hookEvents() {
       //~ $( '#output' ).text(rosterCookies[rosterID]);
     });
   });
-};
-
-function playerButtonHTML(name, special) {
-  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
-  if (name == 'avarisse') {
-    Name = 'Avarisse &amp; Greede';
-  }
-  if (name == 'harry') {
-    Name = 'Harry &lsquo;the Hat&rsquo;';
-  }
-  return '<button id="' + name + '-butt" class="btn btn-default" type="button">' + Name + '</button>';
 };
 
 function chooseGuild(guildName) {
@@ -127,6 +118,7 @@ function choosePlayers(playerList) {
     var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
     if (playerList.indexOf(player) > -1) { // It's in the list
       $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
+      $(this).addClass( 'active' );
     }
   });
 };
@@ -138,6 +130,7 @@ function hideAllPlayerSelectors() {
   });
   $( '#allPlayers button' ).each(function() {
     $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
+    $(this).removeClass( 'active' );
   });
   rosterCookies[rosterID] = '';
   rosterSize[rosterID] = 0;

@@ -7,7 +7,7 @@
     <title>Nick's Guild Ball Health Tracker</title>
     <link rel="shortcut icon" href="/images/narwhal-32.png" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="extra.css" rel="stylesheet">
+    <link href="/extra.css" rel="stylesheet">
   </head>
   <body>
     <div class="container-fluid">
@@ -16,21 +16,27 @@
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
           <p id="output"></p>
           <h1 class="text-center">Nick's Guild Ball Health Tracker</h1>
+          <p class="hidden">
+            <button id="resumeGameButton" class="btn btn-default btn-lg btn-block" type="button">Resume Game</button>
+          </p>
           <p>
-            <button id="newGameButton" class="btn btn-default btn-lg btn-block" type="button">New Game</button>
+            <button id="newGameButton" class="btn btn-default btn-lg btn-block" type="button">Host Game</button>
           </p>
           <p>
             <form id="joinGameForm">
               <div class="input-group input-group-lg">
                 <input id="" type="text" class="form-control" placeholder="Game ID">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit">Load</button>
+                  <button class="btn btn-default" type="submit">Join</button>
                 </span>
               </div>
             </form>
           </p>
           <p>
             <a class="btn btn-default btn-lg btn-block" href="/managerosters" role="button">Manage Rosters</a>
+          </p>
+          <p>
+            <a class="btn btn-default btn-lg btn-block" href="/1" role="button">Solo Mode</a>
           </p>
         </div>
       </div>

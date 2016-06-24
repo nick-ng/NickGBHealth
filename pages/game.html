@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Host Game &mdash; Nick's Guild Ball Health Tracker</title>
+    <link rel="shortcut icon" href="/images/narwhal-32.png" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/extra.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="hidden-xs col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+          <p id="output"></p>
+          <div id="qrcode" class="text-center"></div>
+          <h3 id="gameIDTitle" class="text-center">Game ID: <span id="gameIDHolder"></span></h3>
+          <div id="rosterSelect">
+            <p>Choose a Roster:</p>
+            <p>
+              <button id="roster0-butt" class="btn btn-default btn-lg btn-block" type="button" disabled="disabled">Roster 1</button>
+            </p>
+            <p>
+              <button id="roster1-butt" class="btn btn-default btn-lg btn-block" type="button" disabled="disabled">Roster 2</button>
+            </p>
+            <p class="hidden">
+              <button id="adhoc-butt" class="btn btn-default btn-lg btn-block" type="button">Ad Hoc Roster</button>
+            </p>
+          </div>
+          <div id="playerSelect" class="hidden">
+            <p>
+              <button id="chooseRoster" class="btn btn-default btn-lg btn-block" type="button">test</button>
+            </p>
+            <p>Players: <span id="teamSize">0</span>/6</p>
+            <div id="allPlayers"></div>
+            <hr>
+            <p>
+              <button id="play-butt" class="btn btn-default btn-lg btn-block" type="button">Play</button>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+          <p class="text-center">
+            <a class="btn btn-default" href="/" role="button">Home</a>
+          </p>
+          <footer class="text-center">&copy; <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, 2016 <a href="https://github.com/nick-ng/NickGBHealth">GitHub</a></footer>
+        </div>
+      </div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js.cookie.js"></script>
+    <script src="/jquery.qrcode.min.js"></script>
+    <script src="/common.js"></script>
+    <script src="/game.js"></script>
+  </body>
+</html>

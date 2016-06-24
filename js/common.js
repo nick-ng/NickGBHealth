@@ -148,7 +148,7 @@ common.findInArray = function findInArray(array, searchValue, searchKey, returnK
     return returnObj[returnKey];
   } else {
     return returnObj;
-  };
+  }
 }
 
 common.getThisID = function getThisID() {
@@ -168,10 +168,21 @@ common.parseRosterCookie = function parseRosterCookie(rosterCookie) {
   if (players) {
     for (var i = 0; i < players.length; i++) {
       players[i] = players[i].replace( /\d/g, '' );
-    };
+    }
   }
   return {guild:guild, players:players};
-};
+}
+
+common.playerButtonHTML = function playerButtonHTML(name, special) {
+  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
+  if (name == 'avarisse') {
+    Name = 'Avarisse &amp; Greede';
+  }
+  if (name == 'harry') {
+    Name = 'Harry &lsquo;the Hat&rsquo;';
+  }
+  return '<button id="' + name + '-butt" class="btn btn-default" type="button">' + Name + '</button>';
+}
 
 common.sumArray = function sumArray(someArray, useFloat) {
   // Sums all values in an array which may be strings. If a value cannot be parsed, it's skipped
@@ -182,7 +193,7 @@ common.sumArray = function sumArray(someArray, useFloat) {
         curr = parseFloat(curr);
       } else {
         curr = parseInt(curr);
-      };
+      }
       if (isNaN(curr)) {
         curr = 0;
       };
@@ -190,8 +201,8 @@ common.sumArray = function sumArray(someArray, useFloat) {
     });
   } else {
     return 0;
-  };
-};
+  }
+}
 
 // Adapted from http://stackoverflow.com/a/32501584
 common.setSelectOnClick = function setSelectOnClick(selectorList) {
@@ -216,12 +227,12 @@ common.setSelectOnClick = function setSelectOnClick(selectorList) {
       }
     });
   }
-};
+}
 
 //From http://stackoverflow.com/a/7224605
 common.capFirst = function capFirst(s) {
   return s && s[0].toUpperCase() + s.slice(1);
-};
+}
 
 common.sortByKey = function sortByKey(array, key) {
   return array.sort(function getDelta(a, b) {
@@ -238,7 +249,19 @@ common.sortByKey = function sortByKey(array, key) {
   });
 }
 
+//Adapted from http://stackoverflow.com/a/21152762
+common.parseQueryString = function parseQueryString() {
+  var qd = {};
+  location.search.substr(1).split("&").forEach(function(item) {
+    var parts = item.split("=");
+    var k = parts[0];
+    var v = decodeURIComponent(parts[1]);
+    (k in qd) ? qd[k].push(v) : qd[k] = [v]
+  });
+  return qd;
+}
+
 for (var i = 0; i < common.allPlayers.length; i++) {
   common.sortByKey(common.allPlayers[i].players, 'name');
   common.allPlayers[i].union.sort();
-};
+}
