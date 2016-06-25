@@ -17,7 +17,7 @@ common.allGuilds[L].players = [
   {name:'calculus', hp:15, sponge:[5, 10]},
   {name:'compound', hp:20, sponge:[6, 12]},
   {name:'katalyst', hp:27, sponge:[9, 18]},
-  {name:'katalyst', hp:29, sponge:[14, 24]},
+  {name:'katalyst-v', hp:29, sponge:[14, 24]},
   {name:'mercury', hp:15, sponge:[5, 10]},
   {name:'venin', hp:16, sponge:[5, 10]},
   {name:'vitriol', hp:12, sponge:[4, 8]},
