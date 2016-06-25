@@ -3,13 +3,13 @@ var common = {};
 common.cookieExpiry = 999; // 999 days
 
 // All Players
-common.allPlayers = [];
+common.allGuilds = [];
 
 // Alchemists
-common.allPlayers.push({});
-L = common.allPlayers.length - 1;
-common.allPlayers[L].name = 'alchemists';
-common.allPlayers[L].players = [
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'alchemists';
+common.allGuilds[L].players = [
   {name:'midas', hp:14, sponge:[5, 10], role:'c'},
   {name:'smoke', hp:16, sponge:[6, 12], role:'c'},
   {name:'flask', hp:10, sponge:[], role:'m'},
@@ -22,7 +22,7 @@ common.allPlayers[L].players = [
   {name:'venin', hp:16, sponge:[5, 10]},
   {name:'vitriol', hp:12, sponge:[4, 8]},
 ];
-common.allPlayers[L].union = [
+common.allGuilds[L].union = [
   'avarisse',
   'decimate',
   'harry',
@@ -32,10 +32,10 @@ common.allPlayers[L].union = [
 ];
 
 // Brewers
-common.allPlayers.push({});
-L = common.allPlayers.length - 1;
-common.allPlayers[L].name = 'brewers';
-common.allPlayers[L].players = [
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'brewers';
+common.allGuilds[L].players = [
   {name:'esters', hp:22, sponge:[8, 16], role:'c'},
   {name:'tapper', hp:18, sponge:[6, 12], role:'c'},
   {name:'quaff', hp:10, sponge:[], role:'m'},
@@ -48,7 +48,7 @@ common.allPlayers[L].players = [
   {name:'stave', hp:23, sponge:[8, 16]},
   {name:'stoker', hp:18, sponge:[6, 12]},
 ];
-common.allPlayers[L].union = [
+common.allGuilds[L].union = [
   'avarisse',
   'fangtooth',
   'gutter',
@@ -64,10 +64,10 @@ common.allPlayers[L].union = [
 // Fishermen
 
 // Hunters
-common.allPlayers.push({});
-L = common.allPlayers.length - 1;
-common.allPlayers[L].name = 'hunters';
-common.allPlayers[L].players = [
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'hunters';
+common.allGuilds[L].players = [
   {name:'theron', hp:18, sponge:[6, 12], role:'c'},
   {name:'fahad', hp:8, sponge:[], role:'m'},
   {name:'chaska', hp:16, sponge:[6, 12]},
@@ -77,7 +77,7 @@ common.allPlayers[L].players = [
   {name:'seenah', hp:21, sponge:[7, 14]},
   {name:'zarola', hp:12, sponge:[4, 8]},
 ];
-common.allPlayers[L].union = [
+common.allGuilds[L].union = [
   'avarisse',
   'hemlocke',
   'minx',
@@ -86,10 +86,10 @@ common.allPlayers[L].union = [
 // Masons
 
 // Morticians
-common.allPlayers.push({});
-L = common.allPlayers.length - 1;
-common.allPlayers[L].name = 'morticians';
-common.allPlayers[L].players = [
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'morticians';
+common.allGuilds[L].players = [
   {name:'obulus', hp:16, sponge:[5, 10], role:'c'},
   {name:'scalpel', hp:17, sponge:[6, 12], role:'c'},
   {name:'dirge', hp:5, sponge:[], role:'m'},
@@ -102,7 +102,7 @@ common.allPlayers[L].players = [
   {name:'graves-v', hp:14, sponge:[5, 10]},
   {name:'silence', hp:15, sponge:[5, 10]},
 ];
-common.allPlayers[L].union = [
+common.allGuilds[L].union = [
   'avarisse',
   'fangtooth',
   'minx',
@@ -111,10 +111,10 @@ common.allPlayers[L].union = [
 ];
 
 // Union
-common.allPlayers.push({});
-L = common.allPlayers.length - 1;
-common.allPlayers[L].name = 'union';
-common.allPlayers[L].players = [
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'union';
+common.allGuilds[L].players = [
   {name:'blackheart', hp:16, sponge:[5, 10], role:'c'},
   {name:'rage-v', hp:17, sponge:[6, 12], role:'c'},
   {name:'coin', hp:10, sponge:[], role:'m'},
@@ -131,7 +131,7 @@ common.allPlayers[L].players = [
   {name:'rage', hp:17, sponge:[6, 12]},
   {name:'snakeskin', hp:12, sponge:[4, 8]},
 ];
-common.allPlayers[L].union = [];
+common.allGuilds[L].union = [];
 
 // Common functions
 common.removeWhiteSpace = function removeWhiteSpace(someString) {
@@ -261,7 +261,18 @@ common.parseQueryString = function parseQueryString() {
   return qd;
 }
 
-for (var i = 0; i < common.allPlayers.length; i++) {
-  common.sortByKey(common.allPlayers[i].players, 'name');
-  common.allPlayers[i].union.sort();
+common.allPlayers = [];
+var unionIndex = 0;
+for (var i = 0; i < common.allGuilds.length; i++) {
+  if (common.allGuilds[i].name != 'union') {
+    common.allPlayers = [...new Set([...common.allPlayers, ...common.allGuilds[i].players])];
+  } else {
+    unionIndex = i;
+  }
+  common.sortByKey(common.allGuilds[i].players, 'name');
+  common.allGuilds[i].union.sort();
+}
+common.sortByKey(common.allPlayers, 'name');
+for (var i = 0; i < common.allGuilds[unionIndex].players.length; i++) {
+  common.allPlayers.push(common.allGuilds[unionIndex].players[i]);
 }

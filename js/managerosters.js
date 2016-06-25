@@ -11,8 +11,8 @@ $(document).ready(function() {
 }); // $( document ).ready(function() {
 
 function populateDOM() {
-  for (var i = 0; i < common.allPlayers.length; i++) {
-    var guildObj = common.allPlayers[i];
+  for (var i = 0; i < common.allGuilds.length; i++) {
+    var guildObj = common.allGuilds[i];
     var guildHTML = '<div id="' + guildObj.name + 'Players" class="hidden">';
     var selectorHTML = '<button id="' + guildObj.name + '-butt" ' +
       'class="col-xs-4 btn btn-default" type="button">' +
@@ -61,7 +61,7 @@ function hookEvents() {
     resetRosterManager();
     loadRoster();
   });
-  
+
   $( '#saveRosterButton' ).click(function() {
     cookieName = 'roster' + rosterID;
     Cookies.set(cookieName, rosterCookies[rosterID], { expires: common.cookieExpiry });
@@ -70,11 +70,11 @@ function hookEvents() {
     $( '#saveSuccessAlert' ).removeClass( 'hidden' );
     common.parseRosterCookie(rosterCookies[rosterID]);
   });
-  
+
   $( '#guildSelector button' ).each(function() {
     $(this).click(function() {
       var guild = $(this).attr( 'id' ).replace(/-butt$/, '' );
-      var Guild = 
+      var Guild =
       hideAllPlayerSelectors()
       chooseGuild(guild);
       rosterCookies[rosterID] = '3' + guild + '2';

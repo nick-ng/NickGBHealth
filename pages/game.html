@@ -25,17 +25,19 @@
             <p>
               <button id="roster1-butt" class="btn btn-default btn-lg btn-block" type="button" disabled="disabled">Roster 2</button>
             </p>
-            <p class="hidden">
+            <p>
               <button id="adhoc-butt" class="btn btn-default btn-lg btn-block" type="button">Ad Hoc Roster</button>
             </p>
           </div>
           <div id="playerSelect" class="hidden">
             <p>
-              <button id="chooseRoster" class="btn btn-default btn-lg btn-block" type="button">test</button>
+              <button id="chooseRoster" class="btn btn-default btn-block" type="button">test</button>
             </p>
-            <p>Players: <span id="teamSize">0</span>/6</p>
+            <p>Players: <span id="teamSize">0</span>/<span id="maxTeamSize">6</span></p>
             <div id="allPlayers"></div>
+            <div id="tooManyPlayers" class="alert alert-danger hidden" role="alert">Too many players. Remove another player first.</div>
             <hr>
+            <div id="notEnoughPlayers" class="alert alert-danger hidden" role="alert">Please select <span id="maxTeamSize">6</span> players.</div>
             <p>
               <button id="play-butt" class="btn btn-default btn-lg btn-block" type="button">Play</button>
             </p>

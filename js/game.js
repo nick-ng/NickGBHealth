@@ -1,8 +1,10 @@
 var gameID;
 var queryObj;
 var teamSize = 0;
+var maxTeamSize = 6;
 var captainSelected = 0;
 var mascotSelected = 0;
+var superPlayers = 2;
 var soloMode = false;
 
 $(document).ready(function() {
@@ -11,8 +13,114 @@ $(document).ready(function() {
   populatePlayerSelect();
   nameRosterButtons();
   hookEvents();
+  $( '#maxTeamSize' ).text(maxTeamSize);
 }); // $( document ).ready(function() {
 
+// Static DOM events
+$( '#roster0-butt' ).click(function() {
+  rosterButton(0);
+});
+
+$( '#roster1-butt' ).click(function() {
+  rosterButton(1);
+});
+
+$( '#adhoc-butt' ).click(function() {
+  rosterButton(-1)
+});
+
+$( '#chooseRoster' ).click(function() {
+  $( '#rosterSelect' ).removeClass( 'hidden' );
+  $( '#playerSelect' ).addClass( 'hidden' );
+  $( '#allPlayers button' ).each(function() {
+    $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
+    $(this).removeClass( 'active' );
+  });
+  $( '#allPlayers input[type=radio]' ).each(function() {
+    $(this).prop( 'checked', false);
+  });
+  $( '#allPlayers label' ).each(function() {
+    $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
+    $(this).removeClass( 'active' );
+  });
+});
+
+$( '#play-butt' ).click(function() {
+  $( '#tooManyPlayers' ).addClass( 'hidden' );
+  if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
+    console.log('gettingPlayers');
+    var teamObj = getSelectedPlayers();
+    console.log(teamObj);
+  } else {
+    $( '#notEnoughPlayers' ).removeClass( 'hidden' );
+  }
+});
+
+// DOM generators
+function populatePlayerSelect() {
+  var captainsHTML = '';
+  var mascotsHTML = '';
+  var playersHTML = '';
+  for (var i = 0; i < common.allPlayers.length; i++) {
+    var player = common.allPlayers[i];
+    if (player.role == 'c') {
+      captainsHTML += playerRadioHTML(player.name, ' (C)', 'captains');
+    } else if (player.role == 'm') {
+      mascotsHTML += playerRadioHTML(player.name, ' (M)', 'mascots');
+    } else if (!player.role) {
+      playersHTML += common.playerButtonHTML(player.name, '' );
+    }
+  }
+  if (captainsHTML.length > 0) {
+    captainsHTML = '<p><div id="captains" data-toggle="buttons">' + captainsHTML + '</div></p>';
+  }
+  if (mascotsHTML.length > 0) {
+    mascotsHTML = '<p><div id="mascots" data-toggle="buttons">' + mascotsHTML + '</div></p>';
+  }
+  if (playersHTML.length > 0) {
+    playersHTML = '<p id="players">' + playersHTML + '</p>';
+  }
+  $( '#allPlayers' ).append(captainsHTML + mascotsHTML + playersHTML);
+}
+
+// Generated DOM events
+function hookEvents() {
+  $( '#allPlayers button' ).each(function() {
+    $(this).click(function() {
+      if ($(this).hasClass( 'btn-primary' )) {
+        teamSize--
+        $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
+        $(this).removeClass( 'active' );
+        $( '#tooManyPlayers' ).addClass( 'hidden' );
+      } else if ((teamSize + superPlayers) < maxTeamSize) {
+        teamSize++;
+        $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
+        $(this).addClass( 'active' );
+        if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
+          $( '#notEnoughPlayers' ).addClass( 'hidden' );
+        }
+      } else {
+        $( '#tooManyPlayers' ).removeClass( 'hidden' );
+      }
+      $( '#teamSize' ).text(captainSelected + mascotSelected + teamSize);
+    });
+  });
+  $( '#allPlayers input[type=radio]' ).each(function() {
+    $(this).change(function() {
+      var playerRole = $(this).attr( 'name' );
+      if (playerRole == 'captains') {captainSelected = 1}
+      else if (playerRoler = 'mascots') {mascotSelected = 1}
+      if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
+        $( '#notEnoughPlayers' ).addClass( 'hidden' );
+      }
+      styleRadioButton($(this));
+      $( '#teamSize' ).text(captainSelected + mascotSelected + teamSize);
+      //~ $( '#output' ).text(rosterCookies[rosterID]);
+    });
+  });
+}
+
+// Other functions
 function nameRosterButtons() {
   for (var i = 0; i < 2; i++) {
     var rosterObj = loadRoster(i);
@@ -42,59 +150,6 @@ function displayGameID() {
   }
 }
 
-$( '#roster0-butt' ).click(function() {
-  rosterButton(0);
-});
-
-$( '#roster1-butt' ).click(function() {
-  rosterButton(1);
-});
-
-$( '#chooseRoster' ).click(function() {
-  $( '#rosterSelect' ).removeClass( 'hidden' );
-  $( '#playerSelect' ).addClass( 'hidden' );
-  $( '#allPlayers button' ).each(function() {
-    $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
-    $(this).removeClass( 'active' );
-  });
-  $( '#allPlayers input[type=radio]' ).each(function() {
-    $(this).prop( 'checked', false);
-  });
-  $( '#allPlayers label' ).each(function() {
-    $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
-    $(this).removeClass( 'active' );
-  });
-});
-
-function hookEvents() {
-  $( '#allPlayers button' ).each(function() {
-    $(this).click(function() {
-      var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
-      if ($(this).hasClass( 'btn-primary' )) {
-        teamSize--
-        $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
-        $(this).removeClass( 'active' );
-      } else {
-        teamSize++;
-        $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
-        $(this).addClass( 'active' );
-      }
-      $( '#teamSize' ).text(captainSelected + mascotSelected + teamSize);
-      //~ $( '#output' ).text(rosterCookies[rosterID]);
-    });
-  });
-  $( '#allPlayers input[type=radio]' ).each(function() {
-    $(this).change(function() {
-      var playerRole = $(this).attr( 'name' );
-      if (playerRole == 'captains') {captainSelected = 1}
-      else if (playerRoler = 'mascots') {mascotSelected = 1}
-      styleRadioButton($(this));
-      $( '#teamSize' ).text(captainSelected + mascotSelected + teamSize);
-      //~ $( '#output' ).text(rosterCookies[rosterID]);
-    });
-  });
-}
-
 function styleRadioButton(element) {
   var playerRole = element.attr( 'name' );
   var player = element.attr( 'id' ).replace(/-butt$/, '' );;
@@ -107,48 +162,26 @@ function styleRadioButton(element) {
   });
 }
 
-function populatePlayerSelect() {
-  var captainsHTML = '';
-  var mascotsHTML = '';
-  var playersHTML = '';
-  for (var i = 0; i < common.allPlayers.length; i++) {
-    var guildObj = common.allPlayers[i];
-    for (var j = 0; j < guildObj.players.length; j++) {
-      var player = guildObj.players[j];
-      if (player.role == 'c') {
-        captainsHTML += playerRadioHTML(player.name, ' (C)', 'captains');
-      } else if (player.role == 'm') {
-        mascotsHTML += playerRadioHTML(player.name, ' (M)', 'mascots');
-      } else if (!player.role) {
-        playersHTML += common.playerButtonHTML(player.name, '' );
-      }
-    }
-  }
-  if (captainsHTML.length > 0) {
-    captainsHTML = '<p><div id="captains" data-toggle="buttons">' + captainsHTML + '</div></p>';
-  }
-  if (mascotsHTML.length > 0) {
-    mascotsHTML = '<p><div id="mascots" data-toggle="buttons">' + mascotsHTML + '</div></p>';
-  }
-  if (playersHTML.length > 0) {
-    playersHTML = '<p id="players">' + playersHTML + '</p>';
-  }
-  $( '#allPlayers' ).append(captainsHTML + mascotsHTML + playersHTML);
-}
-
 function rosterButton(rosterID) {
-  var RosterID = rosterID + 1;
-  var rosterObj = loadRoster(rosterID)
-  if (rosterObj) {
-    showRoster(rosterObj.players);
+  var chooseRosterText;
+  if (rosterID > -1) {
+    var RosterID = rosterID + 1;
+    var rosterObj = loadRoster(rosterID)
+    if (rosterObj) {
+      showRoster(rosterObj.players);
+    }
+    chooseRosterText = 'Roster ' + RosterID + ' selected (' + common.capFirst(rosterObj.guild) + ').';
+  } else {
+    showRoster(['*']);
+    chooseRosterText = 'Ad hoc roster.';
   }
-  $( '#rosterSelect' ).addClass( 'hidden' );
-  $( '#playerSelect' ).removeClass( 'hidden' );
+  $( '#chooseRoster' ).text( chooseRosterText + ' Click here to choose a different roster.' );
   teamSize = 0;
   captainSelected = 0;
   mascotSelected = 0;
   $( '#teamSize' ).text(captainSelected + mascotSelected + teamSize);
-  $( '#chooseRoster' ).text( 'Roster ' + RosterID + ' selected (' + common.capFirst(rosterObj.guild) + '). Click here to choose a different roster.' );
+  $( '#rosterSelect' ).addClass( 'hidden' );
+  $( '#playerSelect' ).removeClass( 'hidden' );
 }
 
 function loadRoster(rosterID) {
@@ -164,7 +197,7 @@ function loadRoster(rosterID) {
 function showRoster(playerList) {
   $( '#allPlayers button' ).each(function() {
     var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
-    if (playerList.indexOf(player) == -1) {
+    if ((playerList[0] != '*' ) && (playerList.indexOf(player) == -1)) {
       $(this).addClass('hidden');
     } else {
       $(this).removeClass('hidden');
@@ -172,12 +205,27 @@ function showRoster(playerList) {
   });
   $( '#allPlayers label' ).each(function() {
     var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
-    if (playerList.indexOf(player) == -1) {
+    if ((playerList[0] != '*' ) && (playerList.indexOf(player) == -1)) {
       $(this).addClass('hidden');
     } else {
       $(this).removeClass('hidden');
     }
   });
+}
+
+function getSelectedPlayers() {
+  var chosenSuperPlayers = {};
+  var players = [];
+  $( '#allPlayers button' ).each(function() {
+    if ($(this).hasClass( 'btn-primary' )) {
+      players.push($(this).attr( 'id' ).replace(/-butt$/, '' ));
+    }
+  });
+  $( '#allPlayers input[type=radio]:checked' ).each(function() {
+    var playerRole = $(this).attr( 'name' );
+    chosenSuperPlayers[playerRole] = $(this).attr('id').replace(/-butt$/, '' );
+  });
+  return {captain:chosenSuperPlayers.captains, mascot:chosenSuperPlayers.mascots, players:players};
 }
 
 function playerButtonHTML(name, special) {
