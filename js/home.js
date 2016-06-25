@@ -8,7 +8,7 @@ $( '#newGameButton' ).click(function() {
   $( '#output' ).text('Getting new game ID.');
   $.post( '/', {newGame:true}, function(res) {
     if (res.id) {
-      window.location.href = '/' + res.id + '?mode=host';
+      location.href = '/' + res.id + '?mode=host';
     }
   });
 });

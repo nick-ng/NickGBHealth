@@ -152,11 +152,11 @@ common.findInArray = function findInArray(array, searchValue, searchKey, returnK
 }
 
 common.getThisID = function getThisID() {
-  return window.location.pathname.replace(/^\//, '');
+  return location.pathname.replace(/^\//, '');
 };
 
 common.getThisSearch = function getThisSearch() {
-  return window.location.search.replace(/^\?/, '');
+  return location.search.replace(/^\?/, '');
 };
 
 common.parseRosterCookie = function parseRosterCookie(rosterCookie) {
