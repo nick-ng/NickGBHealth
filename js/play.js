@@ -17,7 +17,7 @@ var playerList = [
 
 $(document).ready(function() {
   queryObj = common.parseQueryString();
-  gameID = location.pathname.substr(1);
+  gameID = location.pathname.replace( /^\/play\//, '' );
   setupGame();
   makePlayerList(common.allPlayers);
   populateMyTeam();
@@ -138,7 +138,7 @@ function makePlayerList(allPlayers) {
   } else {
     // load playerList from database
   }
-  console.log(playerList);
+  console.log(JSON.stringify(playerList));
 }
 
 function changePlayerHP(currHP, broadcast) {
@@ -147,6 +147,9 @@ function changePlayerHP(currHP, broadcast) {
   var selector = currentPlayer.id + '_hp';
   $( '#' + selector ).text(currHP);
   $( '#selectedHP' ).text(currHP + '/' + playerList[num].hp);
+  if (queryObj.mode == 'solo') {
+    Cookies.set( 'solo-mode', JSON.stringify(playerList), {expires: 0.084});
+  }
 }
 
 function playerRadioHTML(playerList, playerNum, side) {
