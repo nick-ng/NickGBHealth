@@ -265,7 +265,9 @@ common.allPlayers = [];
 var unionIndex = 0;
 for (var i = 0; i < common.allGuilds.length; i++) {
   if (common.allGuilds[i].name != 'union') {
-    common.allPlayers = [...new Set([...common.allPlayers, ...common.allGuilds[i].players])];
+    for (var j = 0; j < common.allGuilds[i].players.length; j++) {
+      common.allPlayers.push(common.allGuilds[i].players[j]);
+    }
   } else {
     unionIndex = i;
   }
