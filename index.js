@@ -43,10 +43,13 @@ app.post( '/', function(req, res) {
         res.status(500).json(err);
         return
       }
+      console.log('generating new key');
       var newID = funcs.generateNewKey(ID_LENGTH, reply);
       if (newID) {
+        console.log('generated new key');
         res.status(201).json({id:newID});
       } else {
+        console.log('Could\'t generate a key');
         res.status(507).send('All possible keys are taken. Tell Nick you got this message.');
       }
     });
