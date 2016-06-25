@@ -16,3 +16,23 @@
 .manual-bg-accent {
   background-color: #f9f9f9; /* This should match @table-bg-accent or .table-striped > tbody > tr:nth-of-type(odd) */
 }
+
+.btn-hp {
+  width:10% !important;
+}
+
+.btn-hp.btn-default.active {
+  color: #fff;
+  background-color: #595959;
+  border-color: #333333;
+}
+
+.btn-hp.btn-info.active {
+  color: #fff;
+  background-color: #124a5b;
+  border-color: #0a2730;
+}
+
+.small-margin-top {
+  margin-top: 5px;
+}

@@ -7,7 +7,7 @@ var bodyParser = require( 'body-parser' );
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
 var http = require( 'http' ).Server( app );
 var io = require( 'socket.io' )( http );
 var redis = require("redis"),
@@ -58,8 +58,8 @@ app.get( '/managerosters', function(req, res) {
   res.sendFile(PAGEDIR + '/managerosters.html' );
 });
 
-app.get( '/host/:id', function(req, res) {
-  res.sendFile(PAGEDIR + '/game.html' );
+app.get( '/play', function(req, res) {
+  res.sendFile(PAGEDIR + '/play.html' );
 });
 
 app.get( '/:id', function(req, res) {
@@ -81,7 +81,7 @@ io.on( 'connection', function( socket ) {
     //console.log('Joined room');
     socket.join(room);
   });
-  
+
   // Test functions
   socket.on( 'testA', function (testObj) {
     //~ console.log('testA socket received');
