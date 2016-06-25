@@ -37,7 +37,7 @@ app.get( '/', function(req, res) {
 app.post( '/', function(req, res) {
   if (req.body.newGame) {
     // Make a new game
-    client.smembers( 'allgames', function(err, reply) {
+    client.smembers( 'allgames', function(err, reply) { // Change this to how I now plan on doing it.
       if (err) {
         console.log(err);
         res.status(500).json(err);
@@ -59,6 +59,10 @@ app.get( '/managerosters', function(req, res) {
 });
 
 app.get( '/play', function(req, res) {
+  res.sendFile(PAGEDIR + '/play.html' );
+});
+
+app.get( '/play/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/play.html' );
 });
 

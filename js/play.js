@@ -1,6 +1,10 @@
 var socket = io();
 var currentPlayer = {};
+var queryObj;
+var gameID;
+var playerList = [];
 
+/*
 var playerList = [
   {name:'theron', hp:18, sponge:[6, 12], role:'c'},
   {name:'fahad', hp:8, sponge:[], role:'m'},
@@ -9,11 +13,18 @@ var playerList = [
   {name:'hearne', hp:20, sponge:[7, 14]},
   {name:'jaecar', hp:14, sponge:[5, 10]},
 ];
+*/
 
 $(document).ready(function() {
+  queryObj = common.parseQueryString();
+  gameID = location.pathname.substr(1);
+  setupGame();
+  makePlayerList(common.allPlayers);
   populateMyTeam();
   hookPlayerButtons( '#myPlayers0' );
   populateHitPoints('init')
+  $( '#selectedPlayer' ).text( 'Ready' );
+  lastMinuteStyles();
 }); // $( document ).ready(function() {
 
 // Static DOM events
@@ -21,7 +32,6 @@ $(document).ready(function() {
 // DOM generators
 function populateMyTeam() {
   for (var i = 0; i < playerList.length; i++) {
-    playerList[i].currHP = playerList[i].hp - 2;
     var html = playerRadioHTML(playerList, i, 'm' );
     $( '#myPlayers0' ).append(html);
   }
@@ -32,7 +42,7 @@ function populateHitPoints(player) {
     //$( '#healthBoxes' ).append('<div class="btn-group btn-group-justified" role="group">');
     for (var i = 0; i < common.mostHP; i++) {
       I = i + 1;
-      var html = '<button href="#" id="' + i + '" class="btn btn-default btn-hp hidden" type="button">'
+      var html = '<button href="#" id="' + i + '" class="btn btn-default btn-hp hidden text-center" type="button">'
       html += I + '</button>';
       if ((i % 10) == 9) {
         //html += '</div><div class=class="btn-group btn-group-justified" role="group">';
@@ -61,6 +71,12 @@ function populateHitPoints(player) {
     changePlayerHP(playerObj.currHP, false);
   }
 }
+
+function lastMinuteStyles() {
+  $( '#quickHealth button' ).each(function() {
+    $(this).addClass( 'btn-xs' );
+  });
+};
 
 // Generated DOM events
 function hookPlayerButtons(selector) {
@@ -100,6 +116,31 @@ function hookHPButtons() {
 };
 
 // Normal functions
+function setupGame() {
+  if (queryObj.mode == 'solo') {
+    $( '#opponents0' ).addClass( 'hidden' );
+    $( '#opponents1' ).addClass( 'hidden' );
+  } else if (queryObj.mode == 'host') {
+    // Send information to the server.
+  } else if (queryObj.mode == 'join') {
+    // Send information to the server.
+  }
+}
+
+function makePlayerList(allPlayers) {
+  if (queryObj.players) {
+    for (var i = 0; i < allPlayers.length; i++) {
+      if (queryObj.players.indexOf(allPlayers[i].name) > -1) {
+        allPlayers[i].currHP = allPlayers[i].hp;
+        playerList.push(allPlayers[i]);
+      }
+    }
+  } else {
+    // load playerList from database
+  }
+  console.log(playerList);
+}
+
 function changePlayerHP(currHP, broadcast) {
   num = currentPlayer.num;
   playerList[num].currHP = currHP;
@@ -121,7 +162,7 @@ function playerRadioHTML(playerList, playerNum, side) {
   var id = playerNum + side + '_' + name;
   var radioName = 'radio_' + side;
   var currHPID = id + '_hp';
-  var html = '<label id="' + id + '" name="' + radioName + '" class="btn btn-default col-xs-4">';
+  var html = '<label id="' + id + '" name="' + radioName + '" class="btn btn-default btn-xs btn-player col-xs-4">';
   html += '<input type="radio" name="' + radioName + '" id="' + id + '" class="text-center" autocomplete="off">';
   html += Name + '<br><span id="' + currHPID + '">' + currHP + '</span>/' + maxHP + '</label>';
   return html

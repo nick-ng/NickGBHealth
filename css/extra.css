@@ -19,6 +19,11 @@
 
 .btn-hp {
   width:10% !important;
+  font-size: 12px !important;
+}
+
+.btn-player {
+  font-size: 14px !important;
 }
 
 .btn-hp.btn-default.active {
