@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 var http = require( 'http' ).Server( app );
 var io = require( 'socket.io' )( http );
 var redis = require("redis"),
-client = redis.createClient();
+client = redis.createClient(process.env.REDIS_URL);
 
 // My requires
 var funcs = require( __dirname + '/common/funcs' );
@@ -43,10 +43,8 @@ app.post( '/', function(req, res) {
         res.status(500).json(err);
         return
       }
-      console.log('generating new key');
       var newID = funcs.generateNewKey(ID_LENGTH, reply);
       if (newID) {
-        console.log('generated new key');
         res.status(201).json({id:newID});
       } else {
         console.log('Could\'t generate a key');
