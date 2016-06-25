@@ -7,8 +7,10 @@ $(document).ready(function() {
 $( '#newGameButton' ).click(function() {
   $( '#output' ).text('Getting new game ID.');
   $.post( '/', {newGame:true}, function(res) {
+    $( '#output' ).text('Got response.');
+    console.log(res);
     if (res.id) {
-      window.location.href = '/' + res.id + '?mode=host';
+      location.href = '/' + res.id + '?mode=host';
     }
   });
 });
