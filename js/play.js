@@ -1,3 +1,5 @@
+var IMG_EXT = '.jpg';
+
 var socket = io();
 var currentPlayer = {};
 var queryObj;
@@ -5,6 +7,7 @@ var gameID;
 var playerList = [];
 var opponentList = [];
 var animateDuration = 2000;
+var cardFront = true;
 
 $(document).ready(function() {
   queryObj = common.parseQueryString();
@@ -17,27 +20,27 @@ $(document).ready(function() {
 }); // $( document ).ready(function() {
 
 // Static DOM events
-$( '#soloReset' ).click(function () {
+$( '#soloReset' ).click(function() {
   Cookies.remove( 'solo-mode' );
   location.reload();
 });
 
-$( '#minusOne' ).click(function () {
+$( '#minusOne' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP - 1, true);
 });
 
-$( '#minusTwo' ).click(function () {
+$( '#minusTwo' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP - 2, true);
 });
 
-$( '#minusThree' ).click(function () {
+$( '#minusThree' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP - 3, true);
 });
 
-$( '#icySponge' ).click(function () {
+$( '#icySponge' ).click(function() {
   var playerObj = playerList[currentPlayer.num];
   for (var i = 0; i < playerObj.sponge.length; i++) {
     if (playerObj.currHP < playerObj.sponge[i]) {
@@ -47,14 +50,23 @@ $( '#icySponge' ).click(function () {
   }
 });
 
-$( '#plusFour' ).click(function () {
+$( '#plusFour' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP + 4, true);
 });
 
-$( '#plusOne' ).click(function () {
+$( '#plusOne' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP + 1, true);
+});
+
+$( '#flipCard' ).click(function() {
+  if (cardFront) {
+    cardFront = false;
+  } else {
+    cardFront = true;
+  }
+  displayCard(currentPlayer);
 });
 
 // DOM generators
@@ -158,6 +170,7 @@ function hookPlayerButtons(selector) {
       $( '#selectedPlayer' ).html(opponentText + player.Name + ' &ndash; <span id="selectedHP"></span>');
       currentPlayer = player;
       populateHitPoints(player);
+      displayCard(player);
     });
   });
 }
@@ -292,6 +305,33 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
   }
 }
 
+function displayCard(player) {
+  if ($( '#cardCol' ).css( 'display' ) != 'none') {
+    var imageURL = '/cards/' + player.name + '_';
+    if (cardFront) {
+      imageURL += 'f' + IMG_EXT;
+    } else {
+      imageURL += 'b' + IMG_EXT;
+    }
+    var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+    $( '#playerCard' ).html(imageTag);
+    $( '#cardPanel' ).removeClass( 'hidden' );
+  }
+  if ($( '#cardCol2' ).css( 'display' ) != 'none') {
+    console.log('cardCol2 visible');
+    var imageURL = '/cards/' + player.name + '_';
+    if (cardFront) {
+      imageURL += 'b' + IMG_EXT;
+    } else {
+      imageURL += 'f' + IMG_EXT;
+    }
+    var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+    $( '#playerCard2' ).html(imageTag);
+    $( '#cardPanel2' ).removeClass( 'hidden' );
+  }
+};
+
+// "Helper" functions
 function playerButtonHTML(playerList, playerNum, side) {
   side = side.toUpperCase() || 'M';
   var playerObj = playerList[playerNum];
