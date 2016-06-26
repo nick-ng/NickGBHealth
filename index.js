@@ -20,6 +20,8 @@ var PAGEDIR = __dirname + '/pages';
 
 // Constants
 const ID_LENGTH = 6;
+const KEY_PREFIX = 'game_';
+const KEY_EXPIRY = 9001; // in seconds
 
 app.set( 'port', ( process.env.PORT || 3434 ));
 app.set( 'views', __dirname + '/public' );
@@ -37,15 +39,22 @@ app.get( '/', function(req, res) {
 app.post( '/', function(req, res) {
   if (req.body.newGame) {
     // Make a new game
-    client.smembers( 'allgames', function(err, reply) {
+    client.keys( KEY_PREFIX + '*', function(err, reply) {
       if (err) {
         console.log(err);
         res.status(500).json(err);
         return
       }
-      var newID = funcs.generateNewKey(ID_LENGTH, reply);
+      var idList = [];
+      for (var i = 0; i < reply.length; i++) {
+        idList.push(reply[i].replace(KEY_PREFIX, '' ));
+      }
+      console.log(idList);
+      var newID = funcs.generateNewKey(ID_LENGTH, idList);
       if (newID) {
+        client.rpush( KEY_PREFIX + newID, '[]', '[]' );
         res.status(201).json({id:newID});
+        client.expire( KEY_PREFIX + newID, KEY_EXPIRY );
       } else {
         console.log('Could\'t generate a key');
         res.status(507).send('All possible keys are taken. Tell Nick you got this message.');
@@ -59,6 +68,10 @@ app.get( '/managerosters', function(req, res) {
 });
 
 app.get( '/play', function(req, res) {
+  res.sendFile(PAGEDIR + '/play.html' );
+});
+
+app.get( '/play/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/play.html' );
 });
 
@@ -77,9 +90,15 @@ http.listen( app.get( 'port' ), function(){
 
 // Socket.IO stuff
 io.on( 'connection', function( socket ) {
-  socket.on( 'joinRoom', function(room) {
+  var room;
+  socket.on( 'joinRoom', function(roomReq) {
     //console.log('Joined room');
+    room = roomReq;
     socket.join(room);
+  });
+  
+  socket.on( 'hostGame', function(teamObj) {
+    io.to(room).emit( 'testC', 'hello' );
   });
 
   // Test functions

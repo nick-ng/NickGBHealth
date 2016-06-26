@@ -5,7 +5,7 @@ var maxTeamSize = 6;
 var captainSelected = 0;
 var mascotSelected = 0;
 var superPlayers = 2;
-var soloMode = false;
+var clientMode = 'solo';
 
 $(document).ready(function() {
   queryObj = common.parseQueryString();
@@ -49,8 +49,11 @@ $( '#play-butt' ).click(function() {
   $( '#tooManyPlayers' ).addClass( 'hidden' );
   if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
     console.log('gettingPlayers');
-    var teamObj = getSelectedPlayers();
-    console.log(teamObj);
+    var players = getSelectedPlayers();
+    console.log(players);
+    var query = makePlayQuery(players);
+    console.log(query);
+    location.href = location.origin + '/play/' + gameID + query;
   } else {
     $( '#notEnoughPlayers' ).removeClass( 'hidden' );
   }
@@ -81,6 +84,24 @@ function populatePlayerSelect() {
     playersHTML = '<p id="players">' + playersHTML + '</p>';
   }
   $( '#allPlayers' ).append(captainsHTML + mascotsHTML + playersHTML);
+}
+
+function displayGameID() {
+  gameID = location.pathname.substr(1);
+  if (queryObj.mode && (queryObj.mode[0] == 'host')) {
+    clientMode = 'host';
+    joinURL = location.origin + '/' + gameID;
+    $( '#qrcode' ).qrcode(joinURL);
+    console.log('Join game url: ' + joinURL);
+  } else {
+    clientMode = 'join';
+  }
+  if (isNaN(parseInt(gameID))) {
+    $( '#gameIDHolder' ).text(gameID);
+  } else {
+    $( '#gameIDTitle' ).text( 'Solo Mode' );
+    clientMode = 'solo';
+  }
 }
 
 // Generated DOM events
@@ -133,20 +154,6 @@ function nameRosterButtons() {
     } else {
       $( '#roster' + i + '-butt' ).prop( 'disabled', true);
     }
-  }
-}
-
-function displayGameID() {
-  gameID = window.location.pathname.substr(1);
-  if (queryObj.mode && (queryObj.mode[0] == 'host')) {
-    joinURL = window.location.origin + gameID;
-    $( '#qrcode' ).qrcode(joinURL);
-  }
-  if (isNaN(parseInt(gameID))) {
-    $( '#gameIDHolder' ).text(gameID);
-  } else {
-    $( '#gameIDTitle' ).text( 'Solo Mode' );
-    soloMode = true;
   }
 }
 
@@ -214,18 +221,25 @@ function showRoster(playerList) {
 }
 
 function getSelectedPlayers() {
-  var chosenSuperPlayers = {};
   var players = [];
+  $( '#allPlayers input[type=radio]:checked' ).each(function() {
+    players.push($(this).attr('id').replace(/-butt$/, '' ));
+  });
   $( '#allPlayers button' ).each(function() {
     if ($(this).hasClass( 'btn-primary' )) {
       players.push($(this).attr( 'id' ).replace(/-butt$/, '' ));
     }
   });
-  $( '#allPlayers input[type=radio]:checked' ).each(function() {
-    var playerRole = $(this).attr( 'name' );
-    chosenSuperPlayers[playerRole] = $(this).attr('id').replace(/-butt$/, '' );
-  });
-  return {captain:chosenSuperPlayers.captains, mascot:chosenSuperPlayers.mascots, players:players};
+  return players;
+}
+
+function makePlayQuery(players) {
+  var query = '?';
+  query += 'mode=' + clientMode;
+  for (var i = 0; i < players.length; i++) {
+    query += '&players=' + players[i];
+  }
+  return query;
 }
 
 function playerButtonHTML(name, special) {
