@@ -30,9 +30,18 @@ $(document).ready(function() {
 
 // DOM generators
 function populateMyTeam() {
+  $( '#myPlayers0' ).html('');
   for (var i = 0; i < playerList.length; i++) {
-    var html = playerRadioHTML(playerList, i, 'm' );
+    var html = playerButtonHTML(playerList, i, 'M' );
     $( '#myPlayers0' ).append(html);
+  }
+}
+
+function populateOpponentTeam() {
+  $( '#opponents0' ).html('');
+  for (var i = 0; i < opponentList.length; i++) {
+    var html = playerButtonHTML(opponentList, i, 'O' );
+    $( '#opponents0' ).append(html);
   }
 }
 
@@ -50,12 +59,22 @@ function populateHitPoints(player) {
     }
     hookHPButtons();
     //$( '#healthBoxes' ).append('</div>');
-  } else if (player.side == 'M') {
+  } else {
     $( '#healthBoxes button' ).each(function() {
       $(this).addClass( 'active' ).addClass( 'hidden' );
       $(this).addClass( 'btn-default' ).removeClass( 'btn-info' );
+      if (player.side == 'M') {
+        $(this).prop( 'disabled', false);
+      } else {
+        $(this).prop( 'disabled', true);
+      }
     });
-    var playerObj = playerList[player.num];
+    var playerObj;
+    if (player.side == 'M') {
+      playerObj = playerList[player.num];
+    } else {
+      playerObj = opponentList[player.num];
+    }
     for (var i = 0; i < playerObj.hp; i++) {
       $( '#healthBoxes #' + i).removeClass( 'hidden' );
     }
@@ -79,12 +98,23 @@ function lastMinuteStyles() {
 
 // Generated DOM events
 function hookPlayerButtons(selector) {
-  $( selector + ' input[type=radio]' ).each(function () {
+  $( selector + ' button' ).each(function () {
     $(this).off();
-    $(this).change(function() {
+    $(this).click(function() {
+      $(this).addClass( 'active' );
       var id = $(this).attr( 'id' );
+      $( 'button[name=playerButtons]' ).each(function() {
+        console.log($(this).attr( 'id' ) + ($(this).attr( 'id' ) != id));
+        if ($(this).attr( 'id' ) != id) {
+          $(this).removeClass( 'active' );
+        }
+      });
       var player = idParser(id);
-      $( '#selectedPlayer' ).html(player.Name + ' &ndash; <span id="selectedHP"></span>');
+      var opponentText = '';
+      if (player.side == 'O') {
+        opponentText = 'Opponent ';
+      }
+      $( '#selectedPlayer' ).html(opponentText + player.Name + ' &ndash; <span id="selectedHP"></span>');
       currentPlayer = player;
       populateHitPoints(player);
     });
@@ -130,11 +160,13 @@ function setupGame() {
     $( '#gameID' ).text( 'Game ID: ' + gameID);
     // Send information to the server.
     socket.emit( 'joinRoom', gameID );
-    socket.emit( 'hostGame', playerList );
+    socket.emit( 'joinGame', playerList, 'host' );
   } else if (queryObj.mode == 'join') {
+    console.log('joining');
     $( '#gameID' ).text( 'Game ID: ' + gameID);
     // Send information to the server.
     socket.emit( 'joinRoom', gameID );
+    socket.emit( 'joinGame', playerList, 'join' );
   }
 }
 
@@ -149,7 +181,7 @@ function makePlayerList(allPlayers) {
   } else {
     // load playerList from database
   }
-  console.log(JSON.stringify(playerList));
+  //console.log(JSON.stringify(playerList));
 }
 
 function changePlayerHP(currHP, broadcast) {
@@ -160,7 +192,26 @@ function changePlayerHP(currHP, broadcast) {
   $( '#selectedHP' ).text(currHP + '/' + playerList[num].hp);
   if (queryObj.mode == 'solo') {
     Cookies.set( 'solo-mode', JSON.stringify(playerList), {expires: 0.084});
+  } else {
+    socket.emit( 'updateOnePlayer', playerList[num], currentPlayer, queryObj.mode);
   }
+}
+
+function playerButtonHTML(playerList, playerNum, side) {
+  side = side.toUpperCase() || 'M';
+  var playerObj = playerList[playerNum];
+  var name = playerObj.name;
+  var maxHP = playerObj.hp;
+  var currHP = playerObj.currHP;
+  var Name = common.capFirst(name);
+  if (Name.match( /-v$/ )) {
+    Name = 'v' + Name.replace( /-v$/, '' );
+  }
+  var id = playerNum + side + '_' + name;
+  var currHPID = id + '_hp';
+  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default btn-xs btn-player col-xs-4 text-center" type="button">';
+  html += Name + '<br><span id="' + currHPID + '">' + currHP + '</span>/' + maxHP + '</button>';
+  return html
 }
 
 function playerRadioHTML(playerList, playerNum, side) {
@@ -174,7 +225,8 @@ function playerRadioHTML(playerList, playerNum, side) {
     Name = 'v' + Name.replace( /-v$/, '' );
   }
   var id = playerNum + side + '_' + name;
-  var radioName = 'radio_' + side;
+  //var radioName = 'radio_' + side;
+  var radioName = 'radioPlayers'
   var currHPID = id + '_hp';
   var html = '<label id="' + id + '" name="' + radioName + '" class="btn btn-default btn-xs btn-player col-xs-4">';
   html += '<input type="radio" name="' + radioName + '" id="' + id + '" class="text-center" autocomplete="off">';
@@ -197,14 +249,22 @@ socket.on( 'testC', function(msg) {
   console.log(msg)
 });
 
-socket.on( 'getRosters', function(teamArr) {
+socket.on( 'broadcastRosters', function(teamArr) {
   if (queryObj.mode == 'host') {
+    console.log(teamArr[0]);
+    console.log(teamArr[1]);
     playerList = JSON.parse(teamArr[0]);
     opponentList = JSON.parse(teamArr[1]);
   } else {
     playerList = JSON.parse(teamArr[1]);
     opponentList = JSON.parse(teamArr[0]);
   }
-  populateMyTeam();
-  hookPlayerButtons( '#myPlayers0' );
+  if (playerList.length > 3) {
+    populateMyTeam();
+    hookPlayerButtons( '#myPlayers0' );
+  }
+  if (opponentList.length > 3) {
+    populateOpponentTeam();
+    hookPlayerButtons( '#opponents0' );
+  }
 });

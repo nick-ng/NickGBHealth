@@ -88,6 +88,31 @@ http.listen( app.get( 'port' ), function(){
   console.log( 'listening on : ' + app.get('port') );
 });
 
+// Extend client. object
+client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
+  if (teamObj) {
+    this.lset( KEY_PREFIX + gameID, teamNum, JSON.stringify(teamObj), function(err, reply) {
+      if (err) {
+        console.log(err);
+        return
+      }
+      callback();
+    });
+  } else {
+    callback();
+  }
+}
+
+client.getTeams = function setTeams(gameID, callback) {
+  this.lrange( KEY_PREFIX + gameID, 0, 1, function(err, reply) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    callback(reply);
+  });
+}
+
 // Socket.IO stuff
 io.on( 'connection', function( socket ) {
   var room;
@@ -97,8 +122,35 @@ io.on( 'connection', function( socket ) {
     socket.join(room);
   });
   
-  socket.on( 'hostGame', function(teamObj) {
-    io.to(room).emit( 'testC', 'hello' );
+  socket.on( 'joinGame', function(teamObj, mode) {
+    if (mode == 'host') {
+      // put teamObj into slot 0
+      client.setTeam(room, 0, teamObj, function() {
+        // get both team objects from the game. In callback so your team object is definitely added before you get it.
+        client.getTeams(room, function(teamArr) {
+          io.to(room).emit( 'broadcastRosters', teamArr);
+        });
+      });
+    } else if (mode == 'join') {
+      // put teamObj into slot 1
+      client.setTeam(room, 1, teamObj, function() {
+        // get both team objects from the game. In callback so your team object is definitely added before you get it.
+        client.getTeams(room, function(teamArr) {
+          io.to(room).emit( 'broadcastRosters', teamArr);
+        });
+      });
+    } else { // spectator mode.
+    }
+    teamArr = ['[]','[]'];
+    //io.to(room).emit( 'broadcastRosters', teamArr);
+  });
+  
+  socket.on( 'updateOnePlayer', function(playerObj, objFromID, mode) {
+    if (mode == 'host') {
+      // 0
+    } else { // Has to be join
+      // 1
+    }
   });
 
   // Test functions
