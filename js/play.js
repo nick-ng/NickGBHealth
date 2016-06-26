@@ -3,6 +3,7 @@ var currentPlayer = {};
 var queryObj;
 var gameID;
 var playerList = [];
+var opponentList = [];
 
 /*
 var playerList = [
@@ -18,10 +19,8 @@ var playerList = [
 $(document).ready(function() {
   queryObj = common.parseQueryString();
   gameID = location.pathname.replace( /^\/play\//, '' );
-  setupGame();
   makePlayerList(common.allPlayers);
-  populateMyTeam();
-  hookPlayerButtons( '#myPlayers0' );
+  setupGame();
   populateHitPoints('init')
   $( '#selectedPlayer' ).text( 'Ready' );
   lastMinuteStyles();
@@ -81,6 +80,7 @@ function lastMinuteStyles() {
 // Generated DOM events
 function hookPlayerButtons(selector) {
   $( selector + ' input[type=radio]' ).each(function () {
+    $(this).off();
     $(this).change(function() {
       var id = $(this).attr( 'id' );
       var player = idParser(id);
@@ -120,10 +120,21 @@ function setupGame() {
   if (queryObj.mode == 'solo') {
     $( '#opponents0' ).addClass( 'hidden' );
     $( '#opponents1' ).addClass( 'hidden' );
+    if (playerList.length < 3) {
+      var playerCookie = Cookies.get( 'solo-mode' );
+      playerList = JSON.parse(playerCookie);
+    }
+    populateMyTeam();
+    hookPlayerButtons( '#myPlayers0' );
   } else if (queryObj.mode == 'host') {
+    $( '#gameID' ).text( 'Game ID: ' + gameID);
     // Send information to the server.
+    socket.emit( 'joinRoom', gameID );
+    socket.emit( 'hostGame', playerList );
   } else if (queryObj.mode == 'join') {
+    $( '#gameID' ).text( 'Game ID: ' + gameID);
     // Send information to the server.
+    socket.emit( 'joinRoom', gameID );
   }
 }
 
@@ -180,3 +191,20 @@ function idParser(idString) {
   player.num = parseInt(idString.match( /\d/ )[0]);
   return player
 }
+
+// Socket.IO ons
+socket.on( 'testC', function(msg) {
+  console.log(msg)
+});
+
+socket.on( 'getRosters', function(teamArr) {
+  if (queryObj.mode == 'host') {
+    playerList = JSON.parse(teamArr[0]);
+    opponentList = JSON.parse(teamArr[1]);
+  } else {
+    playerList = JSON.parse(teamArr[1]);
+    opponentList = JSON.parse(teamArr[0]);
+  }
+  populateMyTeam();
+  hookPlayerButtons( '#myPlayers0' );
+});
