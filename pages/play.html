@@ -4,7 +4,7 @@
     <meta charset=utf-8>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Host Game &mdash; Nick's Guild Ball Health Tracker</title>
+    <title>Play Game &mdash; Nick's Guild Ball Health Tracker</title>
     <link rel="shortcut icon" href="/images/narwhal-32.png" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/extra.css" rel="stylesheet">
@@ -13,6 +13,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+          <div id="soloHeader" class="row hidden">
+            <div class="col-xs-12">
+              <h3 class=" text-center">Solo Mode</h3>
+              <hr>
+            </div>
+          </div>
           <div id="opponents0" class="row player-container" data-toggle="buttons">
             <div class="col-md-12">
               No opponent.
@@ -26,9 +32,15 @@
           <h4 id="selectedPlayer" class="text-center"></h4>
           <div class="row">
             <div id="quickHealth">
-              <button id="minusOne" class="btn btn-danger col-xs-2" type="button">-1<br><span class="glyphicon glyphicon-heart"></span></button>
-              <button id="minusTwo" class="btn btn-danger col-xs-2" type="button">-2<br><span class="glyphicon glyphicon-heart"></span></button>
-              <button id="minusThree" class="btn btn-danger col-xs-2" type="button">-3<br><span class="glyphicon glyphicon-heart"></span></button>
+              <button id="minusOne" class="btn btn-danger col-xs-2" type="button">-1<br>
+                <span class="glyphicon glyphicon-heart"></span>
+              </button>
+              <button id="minusTwo" class="btn btn-danger col-xs-2" type="button">-2<br>
+                <span class="glyphicon glyphicon-heart"></span>
+              </button>
+              <button id="minusThree" class="btn btn-danger col-xs-2" type="button">-3<br>
+                <span class="glyphicon glyphicon-heart"></span>
+              </button>
               <button id="icySponge" class="btn btn-success col-xs-2" type="button">Icy<br>Sponge</button>
               <button id="plusFour" class="btn btn-success col-xs-2" type="button">+4<br><span class="glyphicon glyphicon-heart"></span></button>
               <button id="plusOne" class="btn btn-success col-xs-2" type="button">+1<br><span class="glyphicon glyphicon-heart"></span></button>
@@ -49,6 +61,9 @@
         <div class="col-md-12">
           <hr>
           <p class="text-center">
+            <button id="soloReset" class="btn btn-default hidden" type="button">
+              Reset Game
+            </button>
             <a class="btn btn-default" href="/" role="button">Home</a>
           </p>
           <footer class="text-center">
@@ -64,6 +79,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js.cookie.js"></script>
     <script src="/jquery.qrcode.min.js"></script>
+    <script src="/jquery.animate-colors-min.js"></script>
     <script src="/common.js"></script>
     <script src="/play.js"></script>
   </body>

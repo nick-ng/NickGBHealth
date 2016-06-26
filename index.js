@@ -49,7 +49,6 @@ app.post( '/', function(req, res) {
       for (var i = 0; i < reply.length; i++) {
         idList.push(reply[i].replace(KEY_PREFIX, '' ));
       }
-      console.log(idList);
       var newID = funcs.generateNewKey(ID_LENGTH, idList);
       if (newID) {
         client.rpush( KEY_PREFIX + newID, '[]', '[]' );
