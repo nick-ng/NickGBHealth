@@ -145,12 +145,13 @@ io.on( 'connection', function( socket ) {
     //io.to(room).emit( 'broadcastRosters', teamArr);
   });
   
-  socket.on( 'updateOnePlayer', function(playerObj, objFromID, mode) {
+  socket.on( 'onePlayerToServer', function(playerObj, currentPlayer, mode) {
+    io.to(room).emit( 'onePlayerToClient', playerObj, currentPlayer.id);
+    var teamNum = 1;
     if (mode == 'host') {
-      // 0
-    } else { // Has to be join
-      // 1
+      teamNum = 0;
     }
+    
   });
 
   // Test functions

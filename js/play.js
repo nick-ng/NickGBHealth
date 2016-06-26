@@ -193,7 +193,7 @@ function changePlayerHP(currHP, broadcast) {
   if (queryObj.mode == 'solo') {
     Cookies.set( 'solo-mode', JSON.stringify(playerList), {expires: 0.084});
   } else {
-    socket.emit( 'updateOnePlayer', playerList[num], currentPlayer, queryObj.mode);
+    socket.emit( 'onePlayerToServer', playerList[num], currentPlayer, queryObj.mode);
   }
 }
 
@@ -267,4 +267,17 @@ socket.on( 'broadcastRosters', function(teamArr) {
     populateOpponentTeam();
     hookPlayerButtons( '#opponents0' );
   }
+});
+
+socket.on( 'onePlayerToClient', function(playerObj, theirID) {
+  theirID = theirID.replace( 'M_', 'O_' );
+  var hpSelector = '#' + theirID + '_hp';
+  console.log('their: ' + theirID + ', hpSel: ' + hpSelector);
+  var oldHP = parseInt($(hpSelector).text());
+  if (oldHP > playerObj.currHP) {
+    // animate lose hp
+  } else if (oldHP < playerObj.currHP) {
+    // animate gain hp
+  }
+  $(hpSelector).text(playerObj.currHP);
 });
