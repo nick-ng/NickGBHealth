@@ -17,7 +17,7 @@ common.allGuilds[L].players = [
   {name:'calculus', hp:15, sponge:[5, 10]},
   {name:'compound', hp:20, sponge:[6, 12]},
   {name:'katalyst', hp:27, sponge:[9, 18]},
-  {name:'katalyst', hp:29, sponge:[14, 24]},
+  {name:'katalyst-v', hp:29, sponge:[14, 24]},
   {name:'mercury', hp:15, sponge:[5, 10]},
   {name:'venin', hp:16, sponge:[5, 10]},
   {name:'vitriol', hp:12, sponge:[4, 8]},
@@ -262,11 +262,13 @@ common.parseQueryString = function parseQueryString() {
 }
 
 common.allPlayers = [];
+common.mostHP = 0;
 var unionIndex = 0;
 for (var i = 0; i < common.allGuilds.length; i++) {
   if (common.allGuilds[i].name != 'union') {
     for (var j = 0; j < common.allGuilds[i].players.length; j++) {
       common.allPlayers.push(common.allGuilds[i].players[j]);
+      common.mostHP = Math.max(common.allGuilds[i].players[j].hp, common.mostHP);
     }
   } else {
     unionIndex = i;
@@ -277,4 +279,5 @@ for (var i = 0; i < common.allGuilds.length; i++) {
 common.sortByKey(common.allPlayers, 'name');
 for (var i = 0; i < common.allGuilds[unionIndex].players.length; i++) {
   common.allPlayers.push(common.allGuilds[unionIndex].players[i]);
+  common.mostHP = Math.max(common.allGuilds[unionIndex].players[i].hp, common.mostHP);
 }
