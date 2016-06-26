@@ -67,6 +67,7 @@ $( '#flipCard' ).click(function() {
     cardFront = true;
   }
   displayCard(currentPlayer);
+  console.log($( '#flipCard' ));
 });
 
 // DOM generators
@@ -306,6 +307,14 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
 }
 
 function displayCard(player) {
+  if ($( '#cardCol2' ).css( 'display' ) != 'none') {
+    console.log('cardCol2 visible');
+    var imageURL = '/cards/' + player.name + '_b' + IMG_EXT;
+    cardFront = true;
+    var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+    $( '#playerCard2' ).html(imageTag);
+    $( '#cardPanel2' ).removeClass( 'hidden' );
+  }
   if ($( '#cardCol' ).css( 'display' ) != 'none') {
     var imageURL = '/cards/' + player.name + '_';
     if (cardFront) {
@@ -316,18 +325,6 @@ function displayCard(player) {
     var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
     $( '#playerCard' ).html(imageTag);
     $( '#cardPanel' ).removeClass( 'hidden' );
-  }
-  if ($( '#cardCol2' ).css( 'display' ) != 'none') {
-    console.log('cardCol2 visible');
-    var imageURL = '/cards/' + player.name + '_';
-    if (cardFront) {
-      imageURL += 'b' + IMG_EXT;
-    } else {
-      imageURL += 'f' + IMG_EXT;
-    }
-    var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
-    $( '#playerCard2' ).html(imageTag);
-    $( '#cardPanel2' ).removeClass( 'hidden' );
   }
 };
 
