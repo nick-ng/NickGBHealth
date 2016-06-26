@@ -117,6 +117,7 @@ function hookPlayerButtons(selector) {
       $( '#selectedPlayer' ).html(opponentText + player.Name + ' &ndash; <span id="selectedHP"></span>');
       currentPlayer = player;
       populateHitPoints(player);
+      console.log(currentPlayer);
     });
   });
 }
@@ -185,15 +186,21 @@ function makePlayerList(allPlayers) {
 }
 
 function changePlayerHP(currHP, broadcast) {
-  num = currentPlayer.num;
-  playerList[num].currHP = currHP;
+  var num = currentPlayer.num;
+  var playerObj;
+  if (currentPlayer.side == 'M') {
+    playerObj = playerList[num];
+  } else {
+    playerObj = opponentList[num];
+  }
+  playerObj.currHP = currHP;
   var selector = currentPlayer.id + '_hp';
   $( '#' + selector ).text(currHP);
-  $( '#selectedHP' ).text(currHP + '/' + playerList[num].hp);
+  $( '#selectedHP' ).text(currHP + '/' + playerObj.hp);
   if (queryObj.mode == 'solo') {
     Cookies.set( 'solo-mode', JSON.stringify(playerList), {expires: 0.084});
-  } else {
-    socket.emit( 'onePlayerToServer', playerList[num], currentPlayer, queryObj.mode);
+  } else if (currentPlayer.side == 'M') {
+    socket.emit( 'onePlayerToServer', playerObj, currentPlayer, queryObj.mode);
   }
 }
 
@@ -250,9 +257,12 @@ socket.on( 'testC', function(msg) {
 });
 
 socket.on( 'broadcastRosters', function(teamArr) {
+  if (queryObj.players) {
+    var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
+    location.href = newURL;
+    return
+  }
   if (queryObj.mode == 'host') {
-    console.log(teamArr[0]);
-    console.log(teamArr[1]);
     playerList = JSON.parse(teamArr[0]);
     opponentList = JSON.parse(teamArr[1]);
   } else {
@@ -269,11 +279,12 @@ socket.on( 'broadcastRosters', function(teamArr) {
   }
 });
 
-socket.on( 'onePlayerToClient', function(playerObj, theirID) {
-  theirID = theirID.replace( 'M_', 'O_' );
+socket.on( 'onePlayerToClient', function(playerObj, theirCurrent) {
+  theirID = theirCurrent.id.replace( 'M_', 'O_' );
   var hpSelector = '#' + theirID + '_hp';
   console.log('their: ' + theirID + ', hpSel: ' + hpSelector);
   var oldHP = parseInt($(hpSelector).text());
+  opponentList[theirCurrent.num] = playerObj;
   if (oldHP > playerObj.currHP) {
     // animate lose hp
   } else if (oldHP < playerObj.currHP) {

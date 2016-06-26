@@ -90,8 +90,8 @@ http.listen( app.get( 'port' ), function(){
 
 // Extend client. object
 client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
-  if (teamObj) {
-    this.lset( KEY_PREFIX + gameID, teamNum, JSON.stringify(teamObj), function(err, reply) {
+  if (teamObj && teamObj.length >= 3) {
+    this.lset(KEY_PREFIX + gameID, teamNum, JSON.stringify(teamObj), function(err, reply) {
       if (err) {
         console.log(err);
         return
@@ -104,12 +104,25 @@ client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
 }
 
 client.getTeams = function setTeams(gameID, callback) {
-  this.lrange( KEY_PREFIX + gameID, 0, 1, function(err, reply) {
+  this.lrange(KEY_PREFIX + gameID, 0, 1, function(err, reply) {
     if (err) {
       console.log(err);
       return
     }
     callback(reply);
+  });
+}
+
+client.updateOnePlayer = function updateOnePlayer(gameID, teamNum, playerObj, playerNum) {
+  thisClient = this;
+  thisClient.lindex(KEY_PREFIX + gameID, teamNum, function(err, reply) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    teamArr = JSON.parse(reply);
+    teamArr[playerNum] = playerObj;
+    thisClient.setTeam(gameID, teamNum, teamArr, function() {});
   });
 }
 
@@ -146,12 +159,12 @@ io.on( 'connection', function( socket ) {
   });
   
   socket.on( 'onePlayerToServer', function(playerObj, currentPlayer, mode) {
-    io.to(room).emit( 'onePlayerToClient', playerObj, currentPlayer.id);
+    io.to(room).emit( 'onePlayerToClient', playerObj, currentPlayer);
     var teamNum = 1;
     if (mode == 'host') {
       teamNum = 0;
     }
-    
+    client.updateOnePlayer(room, teamNum, playerObj, currentPlayer.num);
   });
 
   // Test functions
