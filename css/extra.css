@@ -18,12 +18,12 @@
 }
 
 .btn-hp {
-  width:10% !important;
-  font-size: 12px !important;
+  width:10%;
+  font-size: 12px;
 }
 
 .btn-player {
-  font-size: 14px !important;
+  font-size: 14px;
 }
 
 .btn-hp.btn-default.active {
@@ -40,4 +40,8 @@
 
 .small-margin-top {
   margin-top: 5px;
+}
+
+.small-margin-bottom {
+  margin-bottom: 5px;
 }

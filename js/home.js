@@ -15,5 +15,9 @@ $( '#newGameButton' ).click(function() {
   });
 });
 
-$( 'joinGameForm' ).submit(function() {
+$( '#joinGameForm' ).submit(function() {
+  var id = $( '#gameID' ).val();
+  console.log(id);
+  location.href = '/' + id;
+  return false
 });
