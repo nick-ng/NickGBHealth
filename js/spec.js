@@ -34,7 +34,7 @@ function populatePlayers(sidesIn) {
       }
     }
     $( 'div [id=content-' + teamNum + ']' ).each(function() {
-      $(this).html('<ul>' + captainHTML + mascotHTML + playersHTML + '</ul>');
+      $(this).html('<ul class="list-unstyled">' + captainHTML + mascotHTML + playersHTML + '</ul>');
     });
     if (teamGuild) {
       $( 'div [id=guild-' + teamNum + ']' ).each(function() {
@@ -51,8 +51,8 @@ function lastMinuteStyles() {
   $( 'div[role=team-display]' ).each(function() {
     $(this).addClass( 'col-xs-6 col-sm-5 col-md-3 col-lg-2' );
   });
-  $( 'div [id=guild-1]' ).each(function() {
-    $(this).text( 'Guild One' );
+  $( '.right-side[role=team-display]' ).each(function() {
+    $(this).addClass('text-right');
   });
 }
 
@@ -86,17 +86,41 @@ function updatePlayersHP(playerList, teamNum) {
   for (var i = 0; i < playerList.length; i++) {
     var playerObj = playerList[i];
     var percent = 100 * (playerObj.currHP / playerObj.hp);
+    var hpID = teamNum + '_' + playerObj.name + '_hp';
     var barID = teamNum + '_' + playerObj.name + '_bar';
     var oldPercent = parseInt($( '#' + barID ).attr( 'aria-valuenow' ));
     var duration = 0.01 * Math.abs(percent - oldPercent) * animateDuration;
     $( 'div [id=' + barID + ']' ).each(function() {
-      if ($(this).css( 'display' ) == 'none') {
-        $(this).css( 'width', percent + '%' );
-      } else {
-        $(this).animate({width: percent + '%' }, {duration: duration});
-      }
+      animateHealthBars(this, percent, duration);
       $(this).attr( 'aria-valuenow', percent);
     });
+    $( 'span[id=' + hpID + ']' ).each(function() {
+      $(this).text(playerObj.currHP);
+    });
+  }
+}
+
+function animateHealthBars(selector, percent, duration) {
+  if ($(selector).css( 'display' ) == 'none') {
+    $(selector).css( 'width', percent + '%' );
+  } else {
+    var properties = {
+      width: percent + '%',
+      backgroundColor: colourHealthBars(percent)};
+    var options = {
+      //easing: 'linear',
+      duration: duration};
+    $(selector).animate(properties, options);
+  }
+}
+
+function colourHealthBars(percent) {
+  if (percent <= 25) {
+    return '#d9534f';
+  } else if (percent <= 50) {
+    return '#f0ad4e';
+  } else {
+    return '#5cb85c';
   }
 }
 
@@ -111,10 +135,10 @@ function playerHTML(playerObj, teamNum) {
   var barID = id + '_bar';
   var barDef = 'class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" style="width: 0%;"';
   var barHTML = '<div class="progress hidden-xs"><div id="' + barID + '" ' + barDef + '></div></div>';
+  //var barHTML = '<div class="progress hidden-xs"><div id="' + barID + '" ' + barDef + '><strong><span id="' + currHPID + '">' + currHP + '</span></strong></div></div>';
   var hLvl = 4;
   var textHTML = '<h' + hLvl + '>' + Name + ' &ndash; <span id="' + currHPID + '">' + currHP + '</span>/' + maxHP + '</h' + hLvl + '>';
-  //var textHTML = Name + ' &ndash; <span id="' + currHPID + '">' + currHP + '</span>/' + maxHP;
-  //return '<li class="list-group-item">' + textHTML + barHTML + '</li>';
+  //var textHTML = '<h' + hLvl + '>' + Name + '</h' + hLvl + '>';
   return '<li>' + textHTML + barHTML + '</li>';
 };
 
@@ -134,5 +158,5 @@ socket.on( 'onePlayerToClient', function(playerObj, currentPlayer, mode) {
   if (mode == 'host') {
     teamNum = 0;
   }
-  updatePlayerHP([playerObj], teamNum);
+  updatePlayersHP([playerObj], teamNum);
 });
