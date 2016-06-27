@@ -305,16 +305,18 @@ function changePlayerHP(newHP, broadcast) {
   }
 }
 
-function updateOpponentHP(playerObj, theirCurrent) {
-  theirID = theirCurrent.id.replace( 'M_', 'O_' );
-  var hpSelector = '#' + theirID + '_hp';
-  var oldHP = parseInt($(hpSelector).text());
-  opponentList[theirCurrent.num] = playerObj;
-  var buttonSelector = 'button[id=' + theirID + ']';
-  animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
-  $(hpSelector).text(playerObj.currHP);
-  if (theirID == currentPlayer.id) {
-    changePlayerHP(playerObj.currHP, false);
+function updateOpponentHP(playerObj, theirCurrent, mode) {
+  if (mode != queryObj.mode) {
+    theirID = theirCurrent.id.replace( 'M_', 'O_' );
+    var hpSelector = '#' + theirID + '_hp';
+    var oldHP = parseInt($(hpSelector).text());
+    opponentList[theirCurrent.num] = playerObj;
+    var buttonSelector = 'button[id=' + theirID + ']';
+    animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
+    $(hpSelector).text(playerObj.currHP);
+    if (theirID == currentPlayer.id) {
+      changePlayerHP(playerObj.currHP, false);
+    }
   }
 }
 
@@ -365,6 +367,7 @@ function displayCard(player) {
 };
 
 function updatePlayerLists(teamArr) {
+  console.log('updatePlayerLists');
   if (queryObj.mode == 'host') {
     playerList = JSON.parse(teamArr[0]);
     opponentList = JSON.parse(teamArr[1]);
@@ -422,12 +425,13 @@ function idParser(idString) {
 
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
-  if (queryObj.players) {
+  if (queryObj.players && (playerList.length > 3)) {
     var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
     Cookies.set( 'resume-url', newURL, {expires: 0.1});
     location.href = newURL;
     return
   }
+  $( '#opponents0' ).removeClass( 'hidden' );
   updatePlayerLists(teamArr);
   if (playerList.length > 3) {
     populateMyTeam();

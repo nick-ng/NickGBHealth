@@ -74,6 +74,14 @@ app.get( '/play/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/play.html' );
 });
 
+app.get( '/spec', function(req, res) {
+  res.sendFile(PAGEDIR + '/spec.html' );
+});
+
+app.get( '/spec/:id', function(req, res) {
+  res.sendFile(PAGEDIR + '/spec.html' );
+});
+
 app.get( '/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/game.html' );
 });
@@ -134,18 +142,19 @@ io.on( 'connection', function(socket) {
       io.to(socket.id).emit( 'reconnect' );
       return
     };
-    var teamNum = 1;
-    if (mode == 'host') {
-      teamNum = 0;
-    }
-    client.setTeam(room, teamNum, teamObj, function() {
-      client.getTeams(room, function(teamArr) {
-        io.to(room).emit( 'broadcastRosters', teamArr);
-      });
-    });
     if (mode == 'spec') {
       client.getTeams(room, function(teamArr) {
         io.to(room).emit( 'broadcastRosters', teamArr);
+      });
+    } else if (teamObj.length >= 3) {
+      var teamNum = 1;
+      if (mode == 'host') {
+        teamNum = 0;
+      }
+      client.setTeam(room, teamNum, teamObj, function() {
+        client.getTeams(room, function(teamArr) {
+          io.to(room).emit( 'broadcastRosters', teamArr);
+        });
       });
     }
   });
@@ -176,7 +185,7 @@ io.on( 'connection', function(socket) {
       io.to(socket.id).emit( 'reconnect' );
       return
     };
-    io.to(room).emit( 'onePlayerToClient', playerObj, currentPlayer);
+    io.to(room).emit( 'onePlayerToClient', playerObj, currentPlayer, mode);
     var teamNum = 1;
     if (mode == 'host') {
       teamNum = 0;
