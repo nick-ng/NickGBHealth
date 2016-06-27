@@ -21,7 +21,7 @@ var PAGEDIR = __dirname + '/pages';
 // Constants
 const ID_LENGTH = 6;
 const KEY_PREFIX = 'game_';
-const KEY_EXPIRY = 9001; // in seconds
+const KEY_EXPIRY = 20000; // in seconds
 
 app.set( 'port', ( process.env.PORT || 3434 ));
 app.set( 'views', __dirname + '/public' );
@@ -141,12 +141,8 @@ io.on( 'connection', function(socket) {
     if (!room) {
       io.to(socket.id).emit( 'reconnect' );
       return
-    };
-    if (mode == 'spec') {
-      client.getTeams(room, function(teamArr) {
-        io.to(room).emit( 'broadcastRosters', teamArr);
-      });
-    } else if (teamObj.length >= 3) {
+    }
+    if (teamObj.length >= 3) {
       var teamNum = 1;
       if (mode == 'host') {
         teamNum = 0;
@@ -155,6 +151,10 @@ io.on( 'connection', function(socket) {
         client.getTeams(room, function(teamArr) {
           io.to(room).emit( 'broadcastRosters', teamArr);
         });
+      });
+    } else {
+      client.getTeams(room, function(teamArr) {
+        io.to(room).emit( 'broadcastRosters', teamArr);
       });
     }
   });
