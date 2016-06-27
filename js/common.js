@@ -58,10 +58,58 @@ common.allGuilds[L].union = [
 ];
 
 // Butchers
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'butchers';
+common.allGuilds[L].players = [
+  {name:'fillet', hp:16, sponge:[6, 12], role:'c'},
+  {name:'ox', hp:19, sponge:[6, 12], role:'c'},
+  {name:'princess', hp:10, sponge:[], role:'m'},
+  {name:'truffles', hp:11, sponge:[], role:'m'},
+  {name:'boar', hp:22, sponge:[7, 14]},
+  {name:'boiler', hp:14, sponge:[5, 10]},
+  {name:'brisket', hp:12, sponge:[4, 8]},
+  {name:'brisket-v', hp:13, sponge:[5, 10]},
+  {name:'meathook', hp:14, sponge:[5, 10]},
+  {name:'shank', hp:14, sponge:[5, 10]},
+  {name:'tenderiser', hp:19, sponge:[6, 12]},
+];
+common.allGuilds[L].union = [
+  'avarisse',
+  'decimate',
+  'gutter',
+  'harry',
+  'minx',
+  'rage',
+];
 
 // Engineers
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'engineers';
+common.allGuilds[L].players = [
+  {name:'ballista', hp:18, sponge:[6, 12], role:'c'},
+  {name:'pinvice', hp:16, sponge:[6, 12], role:'c', display:'Pin Vice'},
+  {name:'mainspring', hp:6, sponge:[], role:'m'},
+  {name:'mother', hp:9, sponge:[], role:'m'},
+  {name:'colossus', hp:20, sponge:[7, 14]},
+  {name:'compound', hp:20, sponge:[6, 12]},
+  {name:'hoist', hp:11, sponge:[4, 7]},
+  {name:'ratchet', hp:17, sponge:[6, 12]},
+  {name:'salvo', hp:14, sponge:[5, 10]},
+  {name:'velocity', hp:11, sponge:[4, 7]},
+  {name:'velocity-v', hp:14, sponge:[5, 10]},
+];
+common.allGuilds[L].union = [
+  'avarisse',
+  'decimate',
+  'gutter',
+  'harry',
+  'rage',
+];
 
 // Fishermen
+
 
 // Hunters
 common.allGuilds.push({});
@@ -84,6 +132,7 @@ common.allGuilds[L].union = [
 ];
 
 // Masons
+
 
 // Morticians
 common.allGuilds.push({});
@@ -119,12 +168,12 @@ common.allGuilds[L].players = [
   {name:'rage-v', hp:17, sponge:[6, 12], role:'c'},
   {name:'coin', hp:10, sponge:[], role:'m'},
   {name:'strongbox', hp:10, sponge:[], role:'m'},
-  {name:'avarisse', hp:20, sponge:[7, 14]},
+  {name:'avarisse', hp:20, sponge:[7, 14], detach:'greede'},
   {name:'greede', hp:4, sponge:[], role:'benched'},
   {name:'decimate', hp:14, sponge:[5, 10]},
   {name:'fangtooth', hp:29, sponge:[10, 20]},
   {name:'gutter', hp:14, sponge:[5, 10]},
-  {name:'harry', hp:19, sponge:[7, 14]},
+  {name:'harry', hp:19, sponge:[7, 14], display:'Harry &lsquo;the Hat&rsquo;'},
   {name:'hemlocke', hp:10, sponge:[3, 6]},
   {name:'minx', hp:12, sponge:[4, 8]},
   {name:'mist', hp:12, sponge:[4, 8]},
@@ -174,14 +223,22 @@ common.parseRosterCookie = function parseRosterCookie(rosterCookie) {
 }
 
 common.playerButtonHTML = function playerButtonHTML(name, special) {
-  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
-  if (name == 'avarisse') {
-    Name = 'Avarisse &amp; Greede';
-  }
-  if (name == 'harry') {
-    Name = 'Harry &lsquo;the Hat&rsquo;';
-  }
+  var Name = common.getRosterName(name);
   return '<button id="' + name + '-butt" class="btn btn-default" type="button">' + Name + '</button>';
+}
+
+common.getRosterName = function getRosterName(name) {
+  var playerObj = common.findInArray(common.allPlayers, name, 'name');
+  var displayName = false;
+  if (playerObj.display) {
+    displayName = playerObj.display;
+  } else {
+    displayName = common.capFirst(name).replace( /-v$/, ', Veteran' );
+  }
+  if (playerObj.detach) {
+    displayName += ' &amp; ' + common.getRosterName(playerObj.detach);
+  }
+  return displayName
 }
 
 common.sumArray = function sumArray(someArray, useFloat) {
