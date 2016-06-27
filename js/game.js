@@ -48,11 +48,8 @@ $( '#chooseRoster' ).click(function() {
 $( '#play-butt' ).click(function() {
   $( '#tooManyPlayers' ).addClass( 'hidden' );
   if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
-    console.log('gettingPlayers');
     var players = getSelectedPlayers();
-    console.log(players);
     var query = makePlayQuery(players);
-    console.log(query);
     location.href = location.origin + '/play/' + gameID + query;
   } else {
     $( '#notEnoughPlayers' ).removeClass( 'hidden' );
@@ -92,7 +89,7 @@ function displayGameID() {
     clientMode = 'host';
     joinURL = location.origin + '/' + gameID;
     $( '#qrcode' ).qrcode(joinURL);
-    console.log('Join game url: ' + joinURL);
+    console.log( 'Join game url: ' + joinURL);
   } else {
     clientMode = 'join';
   }

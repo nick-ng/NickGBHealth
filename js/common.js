@@ -120,7 +120,7 @@ common.allGuilds[L].players = [
   {name:'coin', hp:10, sponge:[], role:'m'},
   {name:'strongbox', hp:10, sponge:[], role:'m'},
   {name:'avarisse', hp:20, sponge:[7, 14]},
-  {name:'greede', hp:4, sponge:[], role:'greede'},
+  {name:'greede', hp:4, sponge:[], role:'benched'},
   {name:'decimate', hp:14, sponge:[5, 10]},
   {name:'fangtooth', hp:29, sponge:[10, 20]},
   {name:'gutter', hp:14, sponge:[5, 10]},
