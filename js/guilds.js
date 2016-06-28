@@ -11,7 +11,6 @@ common.allGuilds[L].players = [
   {name:'flask', hp:10, sponge:[], role:'m'},
   {name:'naja', hp:7, sponge:[], role:'m'},
   {name:'calculus', hp:15, sponge:[5, 10]},
-  {name:'compound', hp:20, sponge:[6, 12]},
   {name:'katalyst', hp:27, sponge:[9, 18]},
   {name:'katalyst-v', hp:29, sponge:[14, 24]},
   {name:'mercury', hp:15, sponge:[5, 10]},
@@ -20,6 +19,7 @@ common.allGuilds[L].players = [
 ];
 common.allGuilds[L].union = [
   'avarisse',
+  'compound',
   'decimate',
   'harry',
   'hemlocke',
@@ -98,6 +98,7 @@ common.allGuilds[L].players = [
 ];
 common.allGuilds[L].union = [
   'avarisse',
+  'compound',
   'decimate',
   'gutter',
   'harry',
@@ -203,6 +204,7 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'union';
 common.allGuilds[L].players = [
+  {name:'compound', hp:20, sponge:[6, 12], role:'nonunion'},
   {name:'blackheart', hp:16, sponge:[5, 10], role:'c'},
   {name:'rage-v', hp:17, sponge:[6, 12], role:'c'},
   {name:'coin', hp:10, sponge:[], role:'m'},
