@@ -1,4 +1,5 @@
 var IMG_EXT = '.jpg';
+var havePermissionToDisplayCards = false;
 
 var socket = io();
 var currentPlayer = {};
@@ -346,23 +347,25 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
 }
 
 function displayCard(player) {
-  if ($( '#cardCol2' ).css( 'display' ) != 'none') {
-    var imageURL = '/cards/' + player.name + '_b' + IMG_EXT;
-    cardFront = true;
-    var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
-    $( '#playerCard2' ).html(imageTag);
-    $( '#cardPanel2' ).removeClass( 'hidden' );
-  }
-  if ($( '#cardCol' ).css( 'display' ) != 'none') {
-    var imageURL = '/cards/' + player.name + '_';
-    if (cardFront) {
-      imageURL += 'f' + IMG_EXT;
-    } else {
-      imageURL += 'b' + IMG_EXT;
+  if (havePermissionToDisplayCards || Cookies.get( 'test-cards' )) {
+    if ($( '#cardCol2' ).css( 'display' ) != 'none') {
+      var imageURL = '/cards/' + player.name + '_b' + IMG_EXT;
+      cardFront = true;
+      var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+      $( '#playerCard2' ).html(imageTag);
+      $( '#cardPanel2' ).removeClass( 'hidden' );
     }
-    var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
-    $( '#playerCard' ).html(imageTag);
-    $( '#cardPanel' ).removeClass( 'hidden' );
+    if ($( '#cardCol' ).css( 'display' ) != 'none') {
+      var imageURL = '/cards/' + player.name + '_';
+      if (cardFront) {
+        imageURL += 'f' + IMG_EXT;
+      } else {
+        imageURL += 'b' + IMG_EXT;
+      }
+      var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+      $( '#playerCard' ).html(imageTag);
+      $( '#cardPanel' ).removeClass( 'hidden' );
+    }
   }
 };
 

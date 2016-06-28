@@ -62,6 +62,10 @@ app.post( '/', function(req, res) {
   }
 });
 
+app.get( '/test-cards', function(req, res) {
+  res.sendFile(PAGEDIR + '/test-cards.html' );
+});
+
 app.get( '/managerosters', function(req, res) {
   res.sendFile(PAGEDIR + '/managerosters.html' );
 });
