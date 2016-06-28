@@ -6,17 +6,16 @@ var pfx = ["webkit", "moz", "ms", "o", ""]; // For RunPrefixMethod()
 var currentPlayer = {};
 var queryObj;
 var gameID;
-var playerList = [];
-var opponentList = [];
+var teamList = [[],[]];
 var animateDuration = 2000;
 var cardFront = true;
 var fullSyncPeriod = 100;
 var singleSends = 0;
-var btnSize = 'btn-xs';
+var btnSize = '';
 
 $(document).ready(function() {
   if (isBiggerThanPhone()) {
-    btnSize = 'btn-lg';
+    btnSize = 'btn-tablet';
   }
   queryObj = common.parseQueryString();
   gameID = location.pathname.replace( /^\/play\//, '' );
@@ -25,7 +24,7 @@ $(document).ready(function() {
   populateHitPoints('init')
   $( '#selectedPlayer' ).text( 'Ready' );
   hookFullscreenChange();
-  
+  displayCard();
   lastMinuteStyles();
 }); // $( document ).ready(function() {
 
@@ -40,37 +39,36 @@ $( '#soloReset' ).click(function() {
 });
 
 $( '#minusOne' ).click(function() {
-  var currHP = playerList[currentPlayer.num].currHP;
+  var currHP = teamList[0][currentPlayer.num].currHP;
   changePlayerHP(currHP - 1, true);
 });
 
 $( '#minusTwo' ).click(function() {
-  var currHP = playerList[currentPlayer.num].currHP;
+  var currHP = teamList[0][currentPlayer.num].currHP;
   changePlayerHP(currHP - 2, true);
 });
 
 $( '#minusThree' ).click(function() {
-  var currHP = playerList[currentPlayer.num].currHP;
+  var currHP = teamList[0][currentPlayer.num].currHP;
   changePlayerHP(currHP - 3, true);
 });
 
 $( '#icySponge' ).click(function() {
-  var playerObj = playerList[currentPlayer.num];
-  for (var i = 0; i < playerObj.sponge.length; i++) {
-    if (playerObj.currHP < playerObj.sponge[i]) {
-      changePlayerHP(playerObj.sponge[i], true);
+  for (var i = 0; i < teamList[0][currentPlayer.num].sponge.length; i++) {
+    if (teamList[0][currentPlayer.num].currHP < teamList[0][currentPlayer.num].sponge[i]) {
+      changePlayerHP(teamList[0][currentPlayer.num].sponge[i], true);
       return
     }
   }
 });
 
 $( '#plusFour' ).click(function() {
-  var currHP = playerList[currentPlayer.num].currHP;
+  var currHP = teamList[0][currentPlayer.num].currHP;
   changePlayerHP(currHP + 4, true);
 });
 
 $( '#plusOne' ).click(function() {
-  var currHP = playerList[currentPlayer.num].currHP;
+  var currHP = teamList[0][currentPlayer.num].currHP;
   changePlayerHP(currHP + 1, true);
 });
 
@@ -86,9 +84,9 @@ $( '#flipCard' ).click(function() {
 // DOM generators
 function populateMyTeam() {
   $( '#myPlayers0' ).html('');
-  for (var i = 0; i < playerList.length; i++) {
-    if (playerList[i].role != 'benched') {
-      var html = playerButtonHTML(playerList, i, 'M' );
+  for (var i = 0; i < teamList[0].length; i++) {
+    if (teamList[0][i].role != 'benched') {
+      var html = playerButtonHTML(teamList[0], i, 'M' );
       $( '#myPlayers0' ).append(html);
     }
   }
@@ -96,9 +94,9 @@ function populateMyTeam() {
 
 function populateOpponentTeam() {
   $( '#opponents0' ).html('');
-  for (var i = 0; i < opponentList.length; i++) {
-    if (opponentList[i].role != 'benched') {
-      var html = playerButtonHTML(opponentList, i, 'O' );
+  for (var i = 0; i < teamList[1].length; i++) {
+    if (teamList[1][i].role != 'benched') {
+      var html = playerButtonHTML(teamList[1], i, 'O' );
       $( '#opponents0' ).append(html);
     }
   }
@@ -109,7 +107,7 @@ function populateHitPoints(player) {
     //$( '#healthBoxes' ).append('<div class="btn-group btn-group-justified" role="group">');
     for (var i = 0; i < common.mostHP; i++) {
       I = i + 1;
-      var html = '<button href="#" id="' + i + '" class="btn btn-default ' + btnSize + '-hp hidden text-center" type="button">'
+      var html = '<button href="#" id="' + i + '" class="btn btn-default btn-hp ' + btnSize + ' hidden text-center" type="button">'
       html += I + '</button>';
       if ((i % 10) == 9) {
         //html += '</div><div class=class="btn-group btn-group-justified" role="group">';
@@ -135,28 +133,22 @@ function populateHitPoints(player) {
         $(this).prop( 'disabled', true);
       }
     });
-    var playerObj;
-    if (player.side == 'M') {
-      playerObj = playerList[player.num];
-    } else {
-      playerObj = opponentList[player.num];
-    }
-    for (var i = 0; i < playerObj.hp; i++) {
+    for (var i = 0; i < teamList[player.sideN][player.num].hp; i++) {
       $( '#healthBoxes #' + i).removeClass( 'hidden' );
     }
-    for (var i = 0; i < playerObj.currHP; i++) {
+    for (var i = 0; i < teamList[player.sideN][player.num].currHP; i++) {
       $( '#healthBoxes #' + i).removeClass( 'active' );
     }
-    if (playerObj.sponge.length == 0) {
+    if (teamList[player.sideN][player.num].sponge.length == 0) {
       $( '#icySponge' ).prop( 'disabled', true);
     } else {
-      for (var i = 0; i < playerObj.sponge.length; i++) {
-        var s = playerObj.sponge[i] - 1;
+      for (var i = 0; i < teamList[player.sideN][player.num].sponge.length; i++) {
+        var s = teamList[player.sideN][player.num].sponge[i] - 1;
         $( '#healthBoxes #' + s).removeClass( 'btn-default' );
         $( '#healthBoxes #' + s).addClass( 'btn-info' );
       }
     }
-    changePlayerHP(playerObj.currHP, false);
+    changePlayerHP(teamList[player.sideN][player.num].currHP, false);
   }
 }
 
@@ -195,7 +187,7 @@ function hookPlayerButtons(selector) {
 }
 
 function hookHPButtons() {
-  $( '#healthBoxes button' ).each(function() {
+  $( '#healthBoxes > button' ).each(function() {
     $(this).click(function() {
       var id = parseInt($(this).attr( 'id' ));
       var hp = id + 1;
@@ -224,18 +216,18 @@ function hookFullscreenChange() {
 
 // Normal functions
 function setupGame() {
-  if (queryObj.mode == 'solo') {
+  if (queryObj.mode[0] == 'solo') {
     soloSetup();
-  } else if (queryObj.mode == 'host') {
+  } else if (queryObj.mode[0] == 'host') {
     $( '#gameID' ).text( 'Game ID: ' + gameID);
     // Send information to the server.
     socket.emit( 'joinRoom', gameID );
-    socket.emit( 'joinGame', playerList, 'host' );
-  } else if (queryObj.mode == 'join') {
+    socket.emit( 'joinGame', teamList[0], 'host' );
+  } else if (queryObj.mode[0] == 'join') {
     $( '#gameID' ).text( 'Game ID: ' + gameID);
     // Send information to the server.
     socket.emit( 'joinRoom', gameID );
-    socket.emit( 'joinGame', playerList, 'join' );
+    socket.emit( 'joinGame', teamList[0], 'join' );
   }
 }
 
@@ -248,11 +240,11 @@ function soloSetup() {
   var sameTeam = false; // Start with different.
   if (playerCookie) {
     cookieList = JSON.parse(playerCookie);
-    if (playerList.length == cookieList.length) {
+    if (teamList[0].length == cookieList.length) {
       sameTeam = true; // might be the same...
       // check if they have the same players.
-      for (var i = 0; i < playerList.length; i++) {
-        if (playerList[i].name != cookieList[i].name) {
+      for (var i = 0; i < teamList[0].length; i++) {
+        if (teamList[0][i].name != cookieList[i].name) {
           sameTeam = false;
           break
         }
@@ -272,27 +264,22 @@ function makePlayerList(allPlayers) {
     for (var i = 0; i < allPlayers.length; i++) {
       if (queryObj.players.indexOf(allPlayers[i].name) > -1) {
         allPlayers[i].currHP = allPlayers[i].hp;
-        playerList.push(allPlayers[i]);
+        teamList[0].push(allPlayers[i]);
       }
     }
     // Check if Avarisse is a player.
     if (queryObj.players.indexOf( 'avarisse' ) > -1) {
-      // Add the greede object to playerList.
+      // Add the greede object to teamList[0].
       var greedeObj = common.findInArray(allPlayers, 'greede', 'name');
       greedeObj.currHP = greedeObj.hp;
-      playerList.push(greedeObj);
+      teamList[0].push(greedeObj);
     }
   }
 }
 
 function changePlayerHP(newHP, broadcast) {
   var num = currentPlayer.num;
-  var playerObj;
-  if (currentPlayer.side == 'M') {
-    playerObj = playerList[num];
-  } else {
-    playerObj = opponentList[num];
-  }
+  var sideN = currentPlayer.sideN;
   // colour buttons
   $( '#healthBoxes button' ).each(function() {
     var id = parseInt($(this).attr( 'id' ));
@@ -303,37 +290,38 @@ function changePlayerHP(newHP, broadcast) {
     }
   });
   newHP = Math.max(0, newHP);
-  newHP = Math.min(newHP, playerObj.hp);
-  if (playerObj.currHP == newHP) {
+  newHP = Math.min(newHP, teamList[sideN][num].hp);
+  if (teamList[sideN][num].currHP == newHP) {
     // player's HP won't change so no point sending it to server.
     broadcast = false;
   } else {
-    playerObj.currHP = newHP; // This works becsue playerObj is a reference to the object that player/opponentList[num] also refers to?
+    teamList[sideN][num].currHP = newHP; // This works becsue playerObj is a reference to the object that player/teamList[1][num] also refers to?
   }
   var selector = currentPlayer.id + '_hp';
-  $( '#' + selector ).text(playerObj.currHP);
-  $( '#selectedHP' ).text(playerObj.currHP + '/' + playerObj.hp);
-  if (queryObj.mode == 'solo') {
-    var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
-    Cookies.set( 'resume-url', newURL, {expires: 0.084});
-    Cookies.set( 'solo-mode', JSON.stringify(playerList), {expires: 0.084});
+  $( '#' + selector ).text(teamList[sideN][num].currHP);
+  $( '#selectedHP' ).text(teamList[sideN][num].currHP + '/' + teamList[sideN][num].hp);
+  if (queryObj.mode[0] == 'solo') {
+    Cookies.set( 'resume-url', location.href, {expires: 0.084});
+    Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.084});
   } else if (broadcast && currentPlayer.side == 'M') {
-    socket.emit( 'onePlayerToServer', playerObj, currentPlayer, queryObj.mode);
+    socket.emit( 'onePlayerToServer', teamList[sideN][num], currentPlayer, queryObj.mode);
     singleSends++
     singleSends = singleSends % fullSyncPeriod;
     console.log(singleSends);
     if (singleSends == 0) {
-      socket.emit( 'resyncRosterToServer', playerList, queryObj.mode);
+      socket.emit( 'resyncRosterToServer', teamList[0], queryObj.mode);
     }
   }
 }
 
 function updateOpponentHP(playerObj, theirCurrent, mode) {
-  if (mode != queryObj.mode) {
+  //if (('' + mode) !== ('' + queryObj.mode)) {
+  if (mode[0] != queryObj.mode[0]) {
+    console.log('updating');
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
     var oldHP = parseInt($(hpSelector).text());
-    opponentList[theirCurrent.num] = playerObj;
+    teamList[1][theirCurrent.num] = playerObj;
     var buttonSelector = 'button[id=' + theirID + ']';
     animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
     $(hpSelector).text(playerObj.currHP);
@@ -369,21 +357,29 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
 }
 
 function displayCard(player) {
+  var imageURL = '/cards/card-narwal.gif';
+  var imageURL2 = imageURL;
+  if (player && (havePermissionToDisplayCards || Cookies.get( 'test-cards' ))) {
+    if ($( '#cardCol2' ).css( 'display' ) != 'none') {
+      imageURL2 = '/cards/' + player.name + '_b' + IMG_EXT;
+      cardFront = true;
+    }
+    imageURL = '/cards/' + player.name + '_';
+    if (cardFront) {
+      imageURL += 'f' + IMG_EXT;
+    } else {
+      imageURL += 'b' + IMG_EXT;
+    }
+  } else {
+    player = {Name:'Nick\'s Guild Ball Health Tracker'};
+  }
   if (havePermissionToDisplayCards || Cookies.get( 'test-cards' )) {
     if ($( '#cardCol2' ).css( 'display' ) != 'none') {
-      var imageURL = '/cards/' + player.name + '_b' + IMG_EXT;
-      cardFront = true;
-      var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+      var imageTag = '<img src="' + imageURL2 + '" class="img-responsive center-block" alt="' + player.Name + '">';
       $( '#playerCard2' ).html(imageTag);
       $( '#cardPanel2' ).removeClass( 'hidden' );
     }
     if ($( '#cardCol' ).css( 'display' ) != 'none') {
-      var imageURL = '/cards/' + player.name + '_';
-      if (cardFront) {
-        imageURL += 'f' + IMG_EXT;
-      } else {
-        imageURL += 'b' + IMG_EXT;
-      }
       var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
       $( '#playerCard' ).html(imageTag);
       $( '#cardPanel' ).removeClass( 'hidden' );
@@ -396,23 +392,21 @@ function isBiggerThanPhone() {
 }
 
 function updatePlayerLists(teamArr) {
-  console.log('updatePlayerLists');
-  if (queryObj.mode == 'host') {
-    playerList = JSON.parse(teamArr[0]);
-    opponentList = JSON.parse(teamArr[1]);
+  if (queryObj.mode[0] == 'host') {
+    teamList[0] = JSON.parse(teamArr[0]);
+    teamList[1] = JSON.parse(teamArr[1]);
   } else {
-    playerList = JSON.parse(teamArr[1]);
-    opponentList = JSON.parse(teamArr[0]);
+    teamList[0] = JSON.parse(teamArr[1]);
+    teamList[1] = JSON.parse(teamArr[0]);
   }
 }
 
 // "Helper" functions
 function playerButtonHTML(playerList, playerNum, side) {
   side = side.toUpperCase() || 'M';
-  var playerObj = playerList[playerNum];
-  var name = playerObj.name;
-  var maxHP = playerObj.hp;
-  var currHP = playerObj.currHP;
+  var name = playerList[playerNum].name;
+  var maxHP = playerList[playerNum].hp;
+  var currHP = playerList[playerNum].currHP;
   var Name = common.capFirst(name);
   if (Name.match( /-v$/ )) {
     Name = 'v' + Name.replace( /-v$/, '' );
@@ -429,16 +423,16 @@ function playerButtonHTML(playerList, playerNum, side) {
     var Name2 = 'Greede';
     var playerNum2 = 6;
     var playerObj2 = playerList[playerNum2];
-    var name2 = playerObj2.name;
-    var maxHP2 = playerObj2.hp;
-    var currHP2 = playerObj2.currHP;
+    var name2 = playerList[playerNum2].name;
+    var maxHP2 = playerList[playerNum2].hp;
+    var currHP2 = playerList[playerNum2].currHP;
     var id2 = playerNum2 + side + '_' + name2
     var currHPID2 = id2 + '_hp';
-    html2 = '<button id="' + id2 + '" name="playerButtons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
-    html2 += Name2 + '<br><span id="' + currHPID2 + '" class="hp-text">' + currHP2 + '</span> /' + maxHP2 + '</button>';
+    html2 = '<button id="' + id2 + '" name="playerButtons" class="btn btn-default btn-xs ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
+    html2 += Name2 + '<br><span id="' + currHPID2 + '" class="hp-text">' + currHP2 + '</span>/' + maxHP2 + '</button>';
   }
-  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
-  html += Name + '<br><span id="' + currHPID + '" class="hp-text">' + currHP + '</span> /' + maxHP + '</button>';
+  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default btn-xs ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
+  html += Name + '<br><span id="' + currHPID + '" class="hp-text">' + currHP + '</span>/' + maxHP + '</button>';
   return html + html2;
 }
 
@@ -448,25 +442,29 @@ function idParser(idString) {
   player.name = idString.replace( /^\d{1}[MO]{1}_/, '' );
   player.Name = common.capFirst(player.name).replace( /-v$/, ', Veteran' );
   player.side = idString.match( /[MO]/ )[0];
+  player.sideN = 1;
+  if (player.side == 'M') {
+    player.sideN = 0;
+  }
   player.num = parseInt(idString.match( /\d/ )[0]);
   return player
 }
 
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
-  if (queryObj.players && (playerList.length > 3)) {
-    var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
+  if (queryObj.players && (teamList[0].length > 3)) {
+    var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode[0];
     Cookies.set( 'resume-url', newURL, {expires: 0.1});
     location.href = newURL;
     return
   }
   $( '#opponents0' ).removeClass( 'hidden' );
   updatePlayerLists(teamArr);
-  if (playerList.length > 3) {
+  if (teamList[0].length > 3) {
     populateMyTeam();
     hookPlayerButtons( '#myPlayers0' );
   }
-  if (opponentList.length > 3) {
+  if (teamList[1].length > 3) {
     populateOpponentTeam();
     hookPlayerButtons( '#opponents0' );
   }
@@ -475,15 +473,14 @@ socket.on( 'broadcastRosters', function(teamArr) {
 socket.on( 'resyncRosterToClient', function(teamArr) {
   updatePlayerLists(teamArr);
   // Should only need to update opponent players.
-  for (var i = 0; i < opponentList.length; i++) {
-    var playerObj = opponentList[i]
+  for (var i = 0; i < teamList[1].length; i++) {
     theirCurrent = {};
-    theirCurrent.id = i + 'O_' + playerObj.name;
-    theirCurrent.name = playerObj.name;
+    theirCurrent.id = i + 'O_' + teamList[1][i].name;
+    theirCurrent.name = teamList[1][i].name;
     theirCurrent.num = i;
     theirCurrent.side = 'O';
     theirCurrent.Name = 'Please Fix';
-    updateOpponentHP(playerObj, theirCurrent);
+    updateOpponentHP(teamList[1][i], theirCurrent);
   }
 });
 
