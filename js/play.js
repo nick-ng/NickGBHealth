@@ -2,6 +2,7 @@ var IMG_EXT = '.jpg';
 var havePermissionToDisplayCards = false;
 
 var socket = io();
+var pfx = ["webkit", "moz", "ms", "o", ""]; // For RunPrefixMethod()
 var currentPlayer = {};
 var queryObj;
 var gameID;
@@ -11,18 +12,28 @@ var animateDuration = 2000;
 var cardFront = true;
 var fullSyncPeriod = 100;
 var singleSends = 0;
+var btnSize = 'btn-xs';
 
 $(document).ready(function() {
+  if (isBiggerThanPhone()) {
+    btnSize = 'btn-lg';
+  }
   queryObj = common.parseQueryString();
   gameID = location.pathname.replace( /^\/play\//, '' );
   makePlayerList(common.allPlayers);
   setupGame();
   populateHitPoints('init')
   $( '#selectedPlayer' ).text( 'Ready' );
+  hookFullscreenChange();
+  
   lastMinuteStyles();
 }); // $( document ).ready(function() {
 
 // Static DOM events
+$( '#makeFullscreen' ).click(function() {
+  $( '#fullscreen-content' ).fullScreen(true);
+});
+
 $( '#soloReset' ).click(function() {
   Cookies.remove( 'solo-mode' );
   location.reload();
@@ -98,7 +109,7 @@ function populateHitPoints(player) {
     //$( '#healthBoxes' ).append('<div class="btn-group btn-group-justified" role="group">');
     for (var i = 0; i < common.mostHP; i++) {
       I = i + 1;
-      var html = '<button href="#" id="' + i + '" class="btn btn-default btn-hp hidden text-center" type="button">'
+      var html = '<button href="#" id="' + i + '" class="btn btn-default ' + btnSize + '-hp hidden text-center" type="button">'
       html += I + '</button>';
       if ((i % 10) == 9) {
         //html += '</div><div class=class="btn-group btn-group-justified" role="group">';
@@ -150,10 +161,11 @@ function populateHitPoints(player) {
 }
 
 function lastMinuteStyles() {
-  $( '#quickHealth > button' ).each(function() {
-    $(this).addClass( 'btn-xs' );
-    $(this).prop( 'disabled', true);
+  $( '#quickHealth button' ).each(function() {
+    $(this).addClass( btnSize );
+    //$(this).prop( 'disabled', true);
   });
+  $( '#makeFullscreen' ).prop( 'disabled', false);
 };
 
 // Generated DOM events
@@ -197,6 +209,16 @@ function hookHPButtons() {
         }
       }
     });
+  });
+}
+
+function hookFullscreenChange() {
+  $(document).bind("fullscreenchange", function() {
+    if ($(document).fullScreen()) {
+      $( '#makeFullscreen-div' ).addClass( 'hidden' );
+    } else {
+      $( '#makeFullscreen-div' ).removeClass( 'hidden' );
+    }
   });
 }
 
@@ -367,7 +389,11 @@ function displayCard(player) {
       $( '#cardPanel' ).removeClass( 'hidden' );
     }
   }
-};
+}
+
+function isBiggerThanPhone() {
+  return $( '#cardCol' ).css( 'display' ) != 'none';
+}
 
 function updatePlayerLists(teamArr) {
   console.log('updatePlayerLists');
@@ -408,11 +434,11 @@ function playerButtonHTML(playerList, playerNum, side) {
     var currHP2 = playerObj2.currHP;
     var id2 = playerNum2 + side + '_' + name2
     var currHPID2 = id2 + '_hp';
-    html2 = '<button id="' + id2 + '" name="playerButtons" class="btn btn-default btn-xs btn-player ' + colSize + ' text-center" type="button">';
-    html2 += Name2 + '<br><span id="' + currHPID2 + '">' + currHP2 + '</span>/' + maxHP2 + '</button>';
+    html2 = '<button id="' + id2 + '" name="playerButtons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
+    html2 += Name2 + '<br><span id="' + currHPID2 + '" class="hp-text">' + currHP2 + '</span> /' + maxHP2 + '</button>';
   }
-  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default btn-xs btn-player ' + colSize + ' text-center" type="button">';
-  html += Name + '<br><span id="' + currHPID + '">' + currHP + '</span>/' + maxHP + '</button>';
+  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
+  html += Name + '<br><span id="' + currHPID + '" class="hp-text">' + currHP + '</span> /' + maxHP + '</button>';
   return html + html2;
 }
 
