@@ -1,3 +1,6 @@
+var IMG_EXT = '.jpg';
+var havePermissionToDisplayCards = false;
+
 var socket = io();
 var currentPlayer = {};
 var queryObj;
@@ -5,6 +8,9 @@ var gameID;
 var playerList = [];
 var opponentList = [];
 var animateDuration = 2000;
+var cardFront = true;
+var fullSyncPeriod = 100;
+var singleSends = 0;
 
 $(document).ready(function() {
   queryObj = common.parseQueryString();
@@ -17,27 +23,27 @@ $(document).ready(function() {
 }); // $( document ).ready(function() {
 
 // Static DOM events
-$( '#soloReset' ).click(function () {
+$( '#soloReset' ).click(function() {
   Cookies.remove( 'solo-mode' );
   location.reload();
 });
 
-$( '#minusOne' ).click(function () {
+$( '#minusOne' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP - 1, true);
 });
 
-$( '#minusTwo' ).click(function () {
+$( '#minusTwo' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP - 2, true);
 });
 
-$( '#minusThree' ).click(function () {
+$( '#minusThree' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP - 3, true);
 });
 
-$( '#icySponge' ).click(function () {
+$( '#icySponge' ).click(function() {
   var playerObj = playerList[currentPlayer.num];
   for (var i = 0; i < playerObj.sponge.length; i++) {
     if (playerObj.currHP < playerObj.sponge[i]) {
@@ -47,30 +53,43 @@ $( '#icySponge' ).click(function () {
   }
 });
 
-$( '#plusFour' ).click(function () {
+$( '#plusFour' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP + 4, true);
 });
 
-$( '#plusOne' ).click(function () {
+$( '#plusOne' ).click(function() {
   var currHP = playerList[currentPlayer.num].currHP;
   changePlayerHP(currHP + 1, true);
+});
+
+$( '#flipCard' ).click(function() {
+  if (cardFront) {
+    cardFront = false;
+  } else {
+    cardFront = true;
+  }
+  displayCard(currentPlayer);
 });
 
 // DOM generators
 function populateMyTeam() {
   $( '#myPlayers0' ).html('');
   for (var i = 0; i < playerList.length; i++) {
-    var html = playerButtonHTML(playerList, i, 'M' );
-    $( '#myPlayers0' ).append(html);
+    if (playerList[i].role != 'benched') {
+      var html = playerButtonHTML(playerList, i, 'M' );
+      $( '#myPlayers0' ).append(html);
+    }
   }
 }
 
 function populateOpponentTeam() {
   $( '#opponents0' ).html('');
   for (var i = 0; i < opponentList.length; i++) {
-    var html = playerButtonHTML(opponentList, i, 'O' );
-    $( '#opponents0' ).append(html);
+    if (opponentList[i].role != 'benched') {
+      var html = playerButtonHTML(opponentList, i, 'O' );
+      $( '#opponents0' ).append(html);
+    }
   }
 }
 
@@ -158,6 +177,7 @@ function hookPlayerButtons(selector) {
       $( '#selectedPlayer' ).html(opponentText + player.Name + ' &ndash; <span id="selectedHP"></span>');
       currentPlayer = player;
       populateHitPoints(player);
+      displayCard(player);
     });
   });
 }
@@ -233,6 +253,13 @@ function makePlayerList(allPlayers) {
         playerList.push(allPlayers[i]);
       }
     }
+    // Check if Avarisse is a player.
+    if (queryObj.players.indexOf( 'avarisse' ) > -1) {
+      // Add the greede object to playerList.
+      var greedeObj = common.findInArray(allPlayers, 'greede', 'name');
+      greedeObj.currHP = greedeObj.hp;
+      playerList.push(greedeObj);
+    }
   }
 }
 
@@ -254,7 +281,13 @@ function changePlayerHP(newHP, broadcast) {
     }
   });
   newHP = Math.max(0, newHP);
-  playerObj.currHP = Math.min(newHP, playerObj.hp); // This works becsue playerObj is a reference to the object that player/opponentList[num] also refers to?
+  newHP = Math.min(newHP, playerObj.hp);
+  if (playerObj.currHP == newHP) {
+    // player's HP won't change so no point sending it to server.
+    broadcast = false;
+  } else {
+    playerObj.currHP = newHP; // This works becsue playerObj is a reference to the object that player/opponentList[num] also refers to?
+  }
   var selector = currentPlayer.id + '_hp';
   $( '#' + selector ).text(playerObj.currHP);
   $( '#selectedHP' ).text(playerObj.currHP + '/' + playerObj.hp);
@@ -262,8 +295,29 @@ function changePlayerHP(newHP, broadcast) {
     var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
     Cookies.set( 'resume-url', newURL, {expires: 0.084});
     Cookies.set( 'solo-mode', JSON.stringify(playerList), {expires: 0.084});
-  } else if (currentPlayer.side == 'M' && broadcast) {
+  } else if (broadcast && currentPlayer.side == 'M') {
     socket.emit( 'onePlayerToServer', playerObj, currentPlayer, queryObj.mode);
+    singleSends++
+    singleSends = singleSends % fullSyncPeriod;
+    console.log(singleSends);
+    if (singleSends == 0) {
+      socket.emit( 'resyncRosterToServer', playerList, queryObj.mode);
+    }
+  }
+}
+
+function updateOpponentHP(playerObj, theirCurrent, mode) {
+  if (mode != queryObj.mode) {
+    theirID = theirCurrent.id.replace( 'M_', 'O_' );
+    var hpSelector = '#' + theirID + '_hp';
+    var oldHP = parseInt($(hpSelector).text());
+    opponentList[theirCurrent.num] = playerObj;
+    var buttonSelector = 'button[id=' + theirID + ']';
+    animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
+    $(hpSelector).text(playerObj.currHP);
+    if (theirID == currentPlayer.id) {
+      changePlayerHP(playerObj.currHP, false);
+    }
   }
 }
 
@@ -292,6 +346,41 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
   }
 }
 
+function displayCard(player) {
+  if (havePermissionToDisplayCards || Cookies.get( 'test-cards' )) {
+    if ($( '#cardCol2' ).css( 'display' ) != 'none') {
+      var imageURL = '/cards/' + player.name + '_b' + IMG_EXT;
+      cardFront = true;
+      var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+      $( '#playerCard2' ).html(imageTag);
+      $( '#cardPanel2' ).removeClass( 'hidden' );
+    }
+    if ($( '#cardCol' ).css( 'display' ) != 'none') {
+      var imageURL = '/cards/' + player.name + '_';
+      if (cardFront) {
+        imageURL += 'f' + IMG_EXT;
+      } else {
+        imageURL += 'b' + IMG_EXT;
+      }
+      var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
+      $( '#playerCard' ).html(imageTag);
+      $( '#cardPanel' ).removeClass( 'hidden' );
+    }
+  }
+};
+
+function updatePlayerLists(teamArr) {
+  console.log('updatePlayerLists');
+  if (queryObj.mode == 'host') {
+    playerList = JSON.parse(teamArr[0]);
+    opponentList = JSON.parse(teamArr[1]);
+  } else {
+    playerList = JSON.parse(teamArr[1]);
+    opponentList = JSON.parse(teamArr[0]);
+  }
+}
+
+// "Helper" functions
 function playerButtonHTML(playerList, playerNum, side) {
   side = side.toUpperCase() || 'M';
   var playerObj = playerList[playerNum];
@@ -304,9 +393,27 @@ function playerButtonHTML(playerList, playerNum, side) {
   }
   var id = playerNum + side + '_' + name;
   var currHPID = id + '_hp';
-  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default btn-xs btn-player col-xs-4 text-center" type="button">';
+  var colSize = 'col-xs-4';
+  var html2 = '';
+  if (name == 'avarisse') {
+    //Name = 'Ava<span class="hidden-xs">risse</span><span class="visible-xs-inline">.</span>';
+    Name = 'Avarisse';
+    colSize = 'col-xs-2';
+    //var Name2 = 'Gre<span class="hidden-xs">ede</span><span class="visible-xs-inline">.</span>';
+    var Name2 = 'Greede';
+    var playerNum2 = 6;
+    var playerObj2 = playerList[playerNum2];
+    var name2 = playerObj2.name;
+    var maxHP2 = playerObj2.hp;
+    var currHP2 = playerObj2.currHP;
+    var id2 = playerNum2 + side + '_' + name2
+    var currHPID2 = id2 + '_hp';
+    html2 = '<button id="' + id2 + '" name="playerButtons" class="btn btn-default btn-xs btn-player ' + colSize + ' text-center" type="button">';
+    html2 += Name2 + '<br><span id="' + currHPID2 + '">' + currHP2 + '</span>/' + maxHP2 + '</button>';
+  }
+  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default btn-xs btn-player ' + colSize + ' text-center" type="button">';
   html += Name + '<br><span id="' + currHPID + '">' + currHP + '</span>/' + maxHP + '</button>';
-  return html
+  return html + html2;
 }
 
 function idParser(idString) {
@@ -321,19 +428,14 @@ function idParser(idString) {
 
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
-  if (queryObj.players) {
+  if (queryObj.players && (playerList.length > 3)) {
     var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
     Cookies.set( 'resume-url', newURL, {expires: 0.1});
     location.href = newURL;
     return
   }
-  if (queryObj.mode == 'host') {
-    playerList = JSON.parse(teamArr[0]);
-    opponentList = JSON.parse(teamArr[1]);
-  } else {
-    playerList = JSON.parse(teamArr[1]);
-    opponentList = JSON.parse(teamArr[0]);
-  }
+  $( '#opponents0' ).removeClass( 'hidden' );
+  updatePlayerLists(teamArr);
   if (playerList.length > 3) {
     populateMyTeam();
     hookPlayerButtons( '#myPlayers0' );
@@ -344,15 +446,24 @@ socket.on( 'broadcastRosters', function(teamArr) {
   }
 });
 
-socket.on( 'onePlayerToClient', function(playerObj, theirCurrent) {
-  theirID = theirCurrent.id.replace( 'M_', 'O_' );
-  var hpSelector = '#' + theirID + '_hp';
-  var oldHP = parseInt($(hpSelector).text());
-  opponentList[theirCurrent.num] = playerObj;
-  var buttonSelector = 'button[id=' + theirID + ']';
-  animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
-  $(hpSelector).text(playerObj.currHP);
-  if (theirID == currentPlayer.id) {
-    changePlayerHP(playerObj.currHP, false);
+socket.on( 'resyncRosterToClient', function(teamArr) {
+  updatePlayerLists(teamArr);
+  // Should only need to update opponent players.
+  for (var i = 0; i < opponentList.length; i++) {
+    var playerObj = opponentList[i]
+    theirCurrent = {};
+    theirCurrent.id = i + 'O_' + playerObj.name;
+    theirCurrent.name = playerObj.name;
+    theirCurrent.num = i;
+    theirCurrent.side = 'O';
+    theirCurrent.Name = 'Please Fix';
+    updateOpponentHP(playerObj, theirCurrent);
   }
+});
+
+socket.on( 'onePlayerToClient', updateOpponentHP);
+
+socket.on( 'reconnect', function() {
+  console.log( 'Reconnecting' );
+  window.location.reload(true);
 });

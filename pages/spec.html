@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spectate &mdash; Nick's Guild Ball Health Tracker</title>
+    <link rel="shortcut icon" href="/images/narwhal-32.png" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/extra.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h1 class="hidden-xs text-center">
+            Spectating <span id="gameID"></span>
+          </h1>
+          <p class="visible-xs-block">
+            <button id="swap" class="btn btn-default btn-block">Switch Sides</button>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div id="default-0" class="left-side" role="team-display">
+          <h2 id="guild-0" class="hidden-xs"></h2>
+          <h3 id="guild-0" class="visible-xs-block"></h3>
+          <div id="content-0"></div>
+        </div>
+        <div id="swap-1" class="right-side hidden" role="team-display">
+          <h2 id="guild-1" class="hidden-xs"></h2>
+          <h3 id="guild-1" class="visible-xs-block"></h3>
+          <div id="content-1"></div>
+        </div>
+        <div id="middle" class="hidden-xs col-sm-2 col-md-6 col-lg-8">
+          <p class="text-center">
+            <button id="swap" class="btn btn-default">Switch Sides</button>
+          </p>
+        </div>
+        <div id="default-1" class="right-side" role="team-display">
+          <h2 id="guild-1" class="hidden-xs"></h2>
+          <h3 id="guild-1" class="visible-xs-block"></h3>
+          <div id="content-1"></div>
+        </div>
+        <div id="swap-0" class="right-side hidden" role="team-display">
+          <h2 id="guild-0" class="hidden-xs"></h2>
+          <h3 id="guild-0" class="visible-xs-block"></h3>
+          <div id="content-0"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+          <p class="text-center">
+            <button id="soloReset" class="btn btn-default hidden" type="button">
+              Reset Game
+            </button>
+            <a class="btn btn-default" href="/" role="button">Home</a>
+          </p>
+          <footer class="text-center">
+            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a> <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
+            Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved.<br>
+            <a href="http://glyphicons.com/">GLYPHICONS</a> used as part of <a href="http://getbootstrap.com/">Bootstrap</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/jquery.animate-colors-min.js"></script>
+    <script src="/common.js"></script>
+    <script src="/guilds.js"></script>
+    <script src="/spec.js"></script>
+  </body>
+</html>

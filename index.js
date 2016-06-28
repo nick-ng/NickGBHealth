@@ -21,7 +21,7 @@ var PAGEDIR = __dirname + '/pages';
 // Constants
 const ID_LENGTH = 6;
 const KEY_PREFIX = 'game_';
-const KEY_EXPIRY = 9001; // in seconds
+const KEY_EXPIRY = 20000; // in seconds
 
 app.set( 'port', ( process.env.PORT || 3434 ));
 app.set( 'views', __dirname + '/public' );
@@ -55,11 +55,15 @@ app.post( '/', function(req, res) {
         res.status(201).json({id:newID});
         client.expire( KEY_PREFIX + newID, KEY_EXPIRY );
       } else {
-        console.log('Could\'t generate a key');
+        console.log( 'Could\'t generate a key' );
         res.status(507).send('All possible keys are taken. Tell Nick you got this message.');
       }
     });
   }
+});
+
+app.get( '/test-cards', function(req, res) {
+  res.sendFile(PAGEDIR + '/test-cards.html' );
 });
 
 app.get( '/managerosters', function(req, res) {
@@ -74,12 +78,16 @@ app.get( '/play/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/play.html' );
 });
 
+app.get( '/spec', function(req, res) {
+  res.sendFile(PAGEDIR + '/spec.html' );
+});
+
+app.get( '/spec/:id', function(req, res) {
+  res.sendFile(PAGEDIR + '/spec.html' );
+});
+
 app.get( '/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/game.html' );
-  //~ console.log('params - id');
-  //~ console.log(req.params);
-  //~ console.log('query - id');
-  //~ console.log(req.query);
 });
 
 // Listen
@@ -126,50 +134,67 @@ client.updateOnePlayer = function updateOnePlayer(gameID, teamNum, playerObj, pl
 }
 
 // Socket.IO stuff
-io.on( 'connection', function( socket ) {
-  var room;
+io.on( 'connection', function(socket) {
+  var room = false;
   socket.on( 'joinRoom', function(roomReq) {
-    //console.log('Joined room');
     room = roomReq;
     socket.join(room);
   });
   
   socket.on( 'joinGame', function(teamObj, mode) {
-    if (mode == 'host') {
-      // put teamObj into slot 0
-      client.setTeam(room, 0, teamObj, function() {
-        // get both team objects from the game. In callback so your team object is definitely added before you get it.
-        client.getTeams(room, function(teamArr) {
-          io.to(room).emit( 'broadcastRosters', teamArr);
-        });
-      });
-    } else if (mode == 'join') {
-      // put teamObj into slot 1
-      client.setTeam(room, 1, teamObj, function() {
-        // get both team objects from the game. In callback so your team object is definitely added before you get it.
-        client.getTeams(room, function(teamArr) {
-          io.to(room).emit( 'broadcastRosters', teamArr);
-        });
-      });
-    } else { // spectator mode.
+    if (!room) {
+      io.to(socket.id).emit( 'reconnect' );
+      return
     }
-    teamArr = ['[]','[]'];
-    //io.to(room).emit( 'broadcastRosters', teamArr);
+    if (teamObj.length >= 3) {
+      var teamNum = 1;
+      if (mode == 'host') {
+        teamNum = 0;
+      }
+      client.setTeam(room, teamNum, teamObj, function() {
+        client.getTeams(room, function(teamArr) {
+          io.to(room).emit( 'broadcastRosters', teamArr);
+        });
+      });
+    } else {
+      client.getTeams(room, function(teamArr) {
+        io.to(room).emit( 'broadcastRosters', teamArr);
+      });
+    }
+  });
+  
+  socket.on( 'resyncRosterToServer', function(teamObj, mode) {
+    if (!room) {
+      io.to(socket.id).emit( 'reconnect' );
+      return
+    };
+    var teamNum = 1;
+    if (mode == 'host') {
+      teamNum = 0;
+    }
+    client.setTeam(room, teamNum, teamObj, function() {
+      client.getTeams(room, function(teamArr) {
+        io.to(room).emit( 'resyncRosterToClient', teamArr);
+      });
+    });
+    if (mode == 'spec') {
+      client.getTeams(room, function(teamArr) {
+        io.to(room).emit( 'resyncRosterToClient', teamArr);
+      });
+    }
   });
   
   socket.on( 'onePlayerToServer', function(playerObj, currentPlayer, mode) {
-    io.to(room).emit( 'onePlayerToClient', playerObj, currentPlayer);
+    if (!room) {
+      io.to(socket.id).emit( 'reconnect' );
+      return
+    };
+    io.to(room).emit( 'onePlayerToClient', playerObj, currentPlayer, mode);
     var teamNum = 1;
     if (mode == 'host') {
       teamNum = 0;
     }
     client.updateOnePlayer(room, teamNum, playerObj, currentPlayer.num);
-  });
-
-  // Test functions
-  socket.on( 'testA', function (testObj) {
-    //~ console.log('testA socket received');
-    io.to(socket.id).emit( 'testB', 'hello' );
   });
 });
 
