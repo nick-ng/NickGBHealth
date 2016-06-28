@@ -17,22 +17,34 @@
   background-color: #f9f9f9; /* This should match @table-bg-accent or .table-striped > tbody > tr:nth-of-type(odd) */
 }
 
-.btn-hp {
+.btn-lg-hp, .btn-xs-hp {
   width:10%;
-  font-size: 12px;
 }
 
-.btn-player {
+.btn-hp {
+  font-size: 10px;
+}
+
+.btn-player.btn-xs {
   font-size: 14px;
+  line-height: 1.1;
 }
 
-.btn-hp.btn-default.active {
+.btn-xs .hp-text {
+  font-size: 26px;
+}
+
+.btn-lg .hp-text {
+  font-size: 44px;
+}
+
+.btn-lg-hp.btn-default.active, .btn-xs-hp.btn-default.active {
   color: #fff;
   background-color: #595959;
   border-color: #333333;
 }
 
-.btn-hp.btn-info.active {
+.btn-lg-hp.btn-info.active, .btn-xs-hp.btn-info.active {
   color: #fff;
   background-color: #124a5b;
   border-color: #0a2730;
@@ -47,8 +59,16 @@
 }
 
 button {
+  /*
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
+  */
   white-space: nowrap
+}
+
+/* Prevent background from going black when going fullscreen */
+section
+{
+	background-color: #fff;
 }
