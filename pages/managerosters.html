@@ -35,14 +35,22 @@
               <!-- Guild selection buttons go here -->
             </div>
           </div>
+          <div id="saveSuccessAlert" class="alert alert-success hidden" role="alert"></div>
           <div id="allPlayers" class="hidden">
             <p>Choose Players &ndash; <span id="rosterSize">0</span>/<span id="maxRosterSize"> Something went wrong! </span></p>
             <!-- Player selection buttons go here -->
           </div>
-          <div id="saveControl" class="hidden">
+          <form id="saveControl" class="hidden">
+            <div class="form-group">
+              <label for="lowHealthThreshold">Low Enemy Health Indicator Threshold</label>
+              <div class="row">
+                <div class="col-xs-4 col-sm-2 col-md-2 col-lg-1">
+                  <input type="number" class="form-control text-right" id="lowHealthThreshold" value=0>
+                </div>
+              </div>
+            </div>
             <button id="saveRosterButton" class="btn btn-default btn-block" type="button">Save Roster</button>
-            <div id="saveSuccessAlert" class="alert alert-success hidden" role="alert"></div>
-          </div>
+          </form>
           <p id="output"></p>
         </div>
       </div>
@@ -61,6 +69,7 @@
       </div>
     </div>
     
+    <script src="/underscore-min.js"></script>
     <script src="/jquery-2.2.4.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js.cookie.js"></script>

@@ -31,10 +31,18 @@
           </div>
           <div id="playerSelect" class="hidden">
             <p>
-              <button id="chooseRoster" class="btn btn-default btn-block" type="button">test</button>
+              <button id="chooseRoster" class="btn btn-default btn-sm btn-block" type="button">test</button>
             </p>
             <p>Players: <span id="teamSize">0</span>/<span id="maxTeamSize">6</span></p>
             <div id="allPlayers"></div>
+            <div class="form-group">
+              <label for="lowHealthThreshold">Low Enemy Health Indicator Threshold</label>
+              <div class="row">
+                <div class="col-xs-4 col-sm-2 col-md-2 col-lg-1">
+                  <input type="number" class="form-control text-right" id="lowHealthThreshold" value=0>
+                </div>
+              </div>
+            </div>
             <div id="tooManyPlayers" class="alert alert-danger hidden" role="alert">Too many players. Remove another player first.</div>
             <hr>
             <div id="notEnoughPlayers" class="alert alert-danger hidden" role="alert">Please select <span id="maxTeamSize">6</span> players.</div>
@@ -59,6 +67,7 @@
       </div>
     </div>
     
+    <script src="/underscore-min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/jquery-2.2.4.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
