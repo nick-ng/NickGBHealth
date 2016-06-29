@@ -180,7 +180,7 @@ function hookPlayerButtons(selector) {
       $(this).addClass( 'active' );
       var id = $(this).attr( 'id' );
       $( 'button[name=playerButtons]' ).each(function() {
-        $(this).removeAttr( 'style' );
+        $(this).css( 'background-color', '' );
         if ($(this).attr( 'id' ) != id) {
           $(this).removeClass( 'active' );
         }
@@ -194,7 +194,6 @@ function hookPlayerButtons(selector) {
       currentPlayer = player;
       populateHitPoints(player);
       displayCard(player);
-      windowResized();
     });
   });
 }
@@ -321,7 +320,6 @@ function changePlayerHP(newHP, broadcast) {
     socket.emit( 'onePlayerToServer', teamList[sideN][num], currentPlayer, queryObj.mode);
     singleSends++
     singleSends = singleSends % fullSyncPeriod;
-    console.log(singleSends);
     if (singleSends == 0) {
       socket.emit( 'resyncRosterToServer', teamList[0], queryObj.mode);
     }
@@ -329,15 +327,10 @@ function changePlayerHP(newHP, broadcast) {
 }
 
 function updateOpponentHP(playerObj, theirCurrent, mode) {
-  console.log(playerObj);
-  console.log(theirCurrent);
-  console.log(mode);
-  console.log(queryObj.mode);
   /* queryObj.mode is a list with a single element.
    * Doing it this way lets us handle an undefined queryObj.mode
    */
   if (('' + mode) !== ('' + queryObj.mode)) {
-    console.log('updating');
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
     var oldHP = parseInt($(hpSelector).text());
@@ -360,8 +353,7 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
     $(buttonSelector).animate({backgroundColor: originalBG}, {
       duration: animateDuration / 2,
       always: function() {
-        $(buttonSelector).removeAttr( 'style' );
-        windowResized();
+        $(buttonSelector).css( 'background-color', '' );
       }
     });
   } else if (oldHP < newHP) {
@@ -371,8 +363,7 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
     $(buttonSelector).animate({backgroundColor: originalBG}, {
       duration: animateDuration,
       always: function() {
-        $(buttonSelector).removeAttr( 'style' );
-        windowResized();
+        $(buttonSelector).css( 'background-color', '' );
       }
     });
   }
@@ -428,9 +419,12 @@ function windowResized() {
   var windowHeight = $(window).height();
   for (var i = 0; i < percentHeights.length; i++) {
     var pixels = percentHeights[i].height * windowHeight + (percentHeights[i].constant || 0);
+    var maxHeight = 0;
     $(percentHeights[i].selector).each(function() {
-      $(this).css( 'height', pixels);
+      $(this).css( 'height', '' );
+      maxHeight = Math.max(maxHeight, $(this).height());
     });
+    $(percentHeights[i].selector).height(Math.max(maxHeight, pixels));
   }
 }
 
