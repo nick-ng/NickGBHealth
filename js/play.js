@@ -12,6 +12,11 @@ var cardFront = true;
 var fullSyncPeriod = 100;
 var singleSends = 0;
 var btnSize = '';
+var percentHeights = [
+  {selector:'.btn-player', height:0.12},
+  {selector:'#quickHealth button', height:0.25, constant:-50},
+  {selector:'.btn-hp', height:0.05},
+];
 
 $(document).ready(function() {
   if (isBiggerThanPhone()) {
@@ -25,6 +30,7 @@ $(document).ready(function() {
   $( '#selectedPlayer' ).text( 'Ready' );
   hookFullscreenChange();
   displayCard();
+  windowResized();
   lastMinuteStyles();
 }); // $( document ).ready(function() {
 
@@ -81,6 +87,8 @@ $( '#flipCard' ).click(function() {
   displayCard(currentPlayer);
 });
 
+$(window).resize(windowResized);
+
 // DOM generators
 function populateMyTeam() {
   $( '#myPlayers0' ).html('');
@@ -90,6 +98,7 @@ function populateMyTeam() {
       $( '#myPlayers0' ).append(html);
     }
   }
+  windowResized();
 }
 
 function populateOpponentTeam() {
@@ -100,6 +109,7 @@ function populateOpponentTeam() {
       $( '#opponents0' ).append(html);
     }
   }
+  windowResized();
 }
 
 function populateHitPoints(player) {
@@ -182,6 +192,7 @@ function hookPlayerButtons(selector) {
       currentPlayer = player;
       populateHitPoints(player);
       displayCard(player);
+      windowResized();
     });
   });
 }
@@ -341,6 +352,7 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
       duration: animateDuration / 2,
       always: function() {
         $(buttonSelector).removeAttr( 'style' );
+        windowResized();
       }
     });
   } else if (oldHP < newHP) {
@@ -351,9 +363,11 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
       duration: animateDuration,
       always: function() {
         $(buttonSelector).removeAttr( 'style' );
+        windowResized();
       }
     });
   }
+  
 }
 
 function displayCard(player) {
@@ -398,6 +412,16 @@ function updatePlayerLists(teamArr) {
   } else {
     teamList[0] = JSON.parse(teamArr[1]);
     teamList[1] = JSON.parse(teamArr[0]);
+  }
+}
+
+function windowResized() {
+  var windowHeight = $(window).height();
+  for (var i = 0; i < percentHeights.length; i++) {
+    var pixels = percentHeights[i].height * windowHeight + (percentHeights[i].constant || 0);
+    $(percentHeights[i].selector).each(function() {
+      $(this).css( 'height', pixels);
+    });
   }
 }
 
