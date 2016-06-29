@@ -17,12 +17,14 @@ var percentHeights = [
   {selector:'#quickHealth button', height:0.25, constant:-50},
   {selector:'.btn-hp', height:0.05},
 ];
+var demoRegex = /000[12]$/;
 
 $(document).ready(function() {
   if (isBiggerThanPhone()) {
     btnSize = 'btn-tablet';
   }
   queryObj = common.parseQueryString();
+  if (!queryObj.mode) {queryObj.mode = ['join']};
   gameID = location.pathname.replace( /^\/play\//, '' );
   makePlayerList(common.allPlayers);
   setupGame();
@@ -227,18 +229,19 @@ function hookFullscreenChange() {
 
 // Normal functions
 function setupGame() {
-  if (queryObj.mode[0] == 'solo') {
+  if (gameID == 'demo') {
+    socket.emit( 'joinRoom', 'demo' );
+    $( '#gameID' ).text( 'Demonstration' );
+  } else if (queryObj.mode == 'solo') {
     soloSetup();
-  } else if (queryObj.mode[0] == 'host') {
-    $( '#gameID' ).text( 'Game ID: ' + gameID);
-    // Send information to the server.
+  } else {
     socket.emit( 'joinRoom', gameID );
-    socket.emit( 'joinGame', teamList[0], 'host' );
-  } else if (queryObj.mode[0] == 'join') {
     $( '#gameID' ).text( 'Game ID: ' + gameID);
-    // Send information to the server.
-    socket.emit( 'joinRoom', gameID );
-    socket.emit( 'joinGame', teamList[0], 'join' );
+    if (queryObj.mode == 'host') {
+      socket.emit( 'joinGame', teamList[0], 'host' );
+    } else if (queryObj.mode == 'join') {
+      socket.emit( 'joinGame', teamList[0], 'join' );
+    }
   }
 }
 
@@ -311,7 +314,7 @@ function changePlayerHP(newHP, broadcast) {
   var selector = currentPlayer.id + '_hp';
   $( '#' + selector ).text(teamList[sideN][num].currHP);
   $( '#selectedHP' ).text(teamList[sideN][num].currHP + '/' + teamList[sideN][num].hp);
-  if (queryObj.mode[0] == 'solo') {
+  if (queryObj.mode == 'solo') {
     Cookies.set( 'resume-url', location.href, {expires: 0.084});
     Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.084});
   } else if (broadcast && currentPlayer.side == 'M') {
@@ -326,8 +329,14 @@ function changePlayerHP(newHP, broadcast) {
 }
 
 function updateOpponentHP(playerObj, theirCurrent, mode) {
-  //if (('' + mode) !== ('' + queryObj.mode)) {
-  if (mode[0] != queryObj.mode[0]) {
+  console.log(playerObj);
+  console.log(theirCurrent);
+  console.log(mode);
+  console.log(queryObj.mode);
+  /* queryObj.mode is a list with a single element.
+   * Doing it this way lets us handle an undefined queryObj.mode
+   */
+  if (('' + mode) !== ('' + queryObj.mode)) {
     console.log('updating');
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
@@ -406,7 +415,7 @@ function isBiggerThanPhone() {
 }
 
 function updatePlayerLists(teamArr) {
-  if (queryObj.mode[0] == 'host') {
+  if (queryObj.mode == 'host') {
     teamList[0] = JSON.parse(teamArr[0]);
     teamList[1] = JSON.parse(teamArr[1]);
   } else {
@@ -477,7 +486,7 @@ function idParser(idString) {
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
   if (queryObj.players && (teamList[0].length > 3)) {
-    var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode[0];
+    var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
     Cookies.set( 'resume-url', newURL, {expires: 0.1});
     location.href = newURL;
     return
