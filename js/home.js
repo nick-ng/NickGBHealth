@@ -39,17 +39,3 @@ $( '#specGameForm' ).submit(function() {
   }
   return false
 });
-
-$( '#playerDemo' ).click(function() {
-  if (!Cookies.get( 'test-cards' )) {
-    Cookies.set( 'test-cards', true, {expires: 0.02});
-  }
-  location.href = '/play/demo';
-});
-
-$( '#spectatorDemo' ).click(function() {
-  if (!Cookies.get( 'test-cards' )) {
-    Cookies.set( 'test-cards', true, {expires: 0.02});
-  }
-  location.href = '/spec/demo';
-});
