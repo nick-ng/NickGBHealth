@@ -94,10 +94,10 @@ function displayGameID() {
     clientMode = 'join';
   }
   if (isNaN(parseInt(gameID))) {
-    $( '#gameIDHolder' ).text(gameID);
-  } else {
     $( '#gameIDTitle' ).text( 'Solo Mode' );
     clientMode = 'solo';
+  } else {
+    $( '#gameIDHolder' ).text(gameID);
   }
 }
 

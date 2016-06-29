@@ -19,7 +19,8 @@ var funcs = require( __dirname + '/common/funcs' );
 var PAGEDIR = __dirname + '/pages';
 
 // Constants
-const ID_LENGTH = 6;
+const MIN_ID_LENGTH = 2;
+const EXTRA_ID_RATIO = 1.4;
 const KEY_PREFIX = 'game_';
 const KEY_EXPIRY = 20000; // in seconds
 
@@ -49,7 +50,12 @@ app.post( '/', function(req, res) {
       for (var i = 0; i < reply.length; i++) {
         idList.push(reply[i].replace(KEY_PREFIX, '' ));
       }
-      var newID = funcs.generateNewKey(ID_LENGTH, idList);
+      var idExtra = idList.length * EXTRA_ID_RATIO;
+      var idLength = MIN_ID_LENGTH;
+      while (Math.pow(10, idLength) < idExtra) {
+        idLength++;
+      }
+      var newID = funcs.generateNewKey(idLength, idList);
       if (newID) {
         client.rpush( KEY_PREFIX + newID, '[]', '[]' );
         res.status(201).json({id:newID});
@@ -64,6 +70,14 @@ app.post( '/', function(req, res) {
 
 app.get( '/test-cards', function(req, res) {
   res.sendFile(PAGEDIR + '/test-cards.html' );
+});
+
+app.get( '/test', function(req, res) {
+  if (process.env.TEST) {
+    res.sendFile(PAGEDIR + '/test.html' );
+  } else {
+    res.sendFile(PAGEDIR + '/home.html' );
+  }
 });
 
 app.get( '/managerosters', function(req, res) {
