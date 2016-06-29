@@ -13,11 +13,15 @@ var fullSyncPeriod = 100;
 var singleSends = 0;
 var btnSize = '';
 var percentHeights = [
-  {selector:'.btn-player', height:0.12},
-  {selector:'#quickHealth button', height:0.25, constant:-50},
-  {selector:'.btn-hp', height:0.05},
+  {selector:'.btn-player', height:0.115},
+  {selector:'#quickHealth button', height:0.25, constant:-70},
+  {selector:'.btn-hp', height:0.05, minHeight:function() {
+    var ratio = 0.9;
+    if (isBiggerThanPhone()) {
+      ratio = 0.7;
+    }
+    return $('.btn-hp').width() * ratio}},
 ];
-var demoRegex = /000[12]$/;
 
 $(document).ready(function() {
   if (isBiggerThanPhone()) {
@@ -93,24 +97,38 @@ $(window).resize(windowResized);
 
 // DOM generators
 function populateMyTeam() {
-  $( '#myPlayers0' ).html('');
+  var htmls = [];
+  var chtml = '';
+  var mhtml = '';
+  var side = 'M';
   for (var i = 0; i < teamList[0].length; i++) {
-    if (teamList[0][i].role != 'benched') {
-      var html = playerButtonHTML(teamList[0], i, 'M' );
-      $( '#myPlayers0' ).append(html);
+    if (teamList[0][i].role == 'c') {
+      chtml = playerButtonHTML(teamList[0], i, side);
+    } else if (teamList[0][i].role == 'm') {
+      mhtml = playerButtonHTML(teamList[0], i, side);
+    } else if (teamList[0][i].role != 'benched') {
+      htmls.push(playerButtonHTML(teamList[0], i, side));
     }
   }
+  $( '#myPlayers0' ).html(chtml + htmls[0] + htmls[1] + mhtml + htmls[2] + htmls[3]);
   windowResized();
 }
 
 function populateOpponentTeam() {
-  $( '#opponents0' ).html('');
+  var htmls = [];
+  var chtml = '';
+  var mhtml = '';
+  var side = 'O';
   for (var i = 0; i < teamList[1].length; i++) {
-    if (teamList[1][i].role != 'benched') {
-      var html = playerButtonHTML(teamList[1], i, 'O' );
-      $( '#opponents0' ).append(html);
+    if (teamList[1][i].role == 'c') {
+      chtml = playerButtonHTML(teamList[1], i, side);
+    } else if (teamList[1][i].role == 'm') {
+      mhtml = playerButtonHTML(teamList[1], i, side);
+    } else if (teamList[1][i].role != 'benched') {
+      htmls.push(playerButtonHTML(teamList[1], i, side));
     }
   }
+  $( '#opponents0' ).html(chtml + htmls[0] + htmls[1] + mhtml + htmls[2] + htmls[3]);
   windowResized();
 }
 
@@ -162,6 +180,7 @@ function populateHitPoints(player) {
     }
     changePlayerHP(teamList[player.sideN][player.num].currHP, false);
   }
+  windowResized();
 }
 
 function lastMinuteStyles() {
@@ -231,6 +250,7 @@ function setupGame() {
   if (gameID == 'demo') {
     socket.emit( 'joinRoom', 'demo' );
     $( '#gameID' ).text( 'Demonstration' );
+    queryObj.hpThreshold = [6];
   } else if (queryObj.mode == 'solo') {
     soloSetup();
   } else {
@@ -345,6 +365,11 @@ function updateOpponentHP(playerObj, theirCurrent, mode) {
 }
 
 function animateButtonBG(buttonSelector, oldHP, newHP) {
+  if (queryObj.hpThreshold && (newHP <= queryObj.hpThreshold[0])) {
+    $(buttonSelector).addClass( 'btn-low-hp' );
+  } else {
+    $(buttonSelector).removeClass( 'btn-low-hp' );
+  }
   var originalBG = $(buttonSelector).css( 'background-color' );
   if (oldHP > newHP) {
     // animate lose hp
@@ -419,7 +444,10 @@ function windowResized() {
   var windowHeight = $(window).height();
   for (var i = 0; i < percentHeights.length; i++) {
     var pixels = percentHeights[i].height * windowHeight + (percentHeights[i].constant || 0);
-    var maxHeight = 0;
+    var maxHeight = percentHeights[i].minHeight || 0;
+    if (typeof maxHeight == 'function') {
+      maxHeight = maxHeight();
+    }
     $(percentHeights[i].selector).each(function() {
       $(this).css( 'height', '' );
       maxHeight = Math.max(maxHeight, $(this).height());
@@ -480,7 +508,9 @@ function idParser(idString) {
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
   if (queryObj.players && (teamList[0].length > 3)) {
-    var newURL = location.origin + location.pathname + '?mode=' + queryObj.mode;
+    var newURL = location.origin + location.pathname
+    newURL += '?mode=' + queryObj.mode;
+    newURL += '&hpThreshold=' + queryObj.hpThreshold;
     Cookies.set( 'resume-url', newURL, {expires: 0.1});
     location.href = newURL;
     return

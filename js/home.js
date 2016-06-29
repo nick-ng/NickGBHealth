@@ -1,9 +1,9 @@
-//var socket = io();
-
 $(document).ready(function() {
   if (Cookies.get( 'resume-url' )) {
     $( '#resumeGameButton' ).removeClass( 'hidden' );
   }
+  Cookies.remove( 'roster0' ); // Remove these later
+  Cookies.remove( 'roster1' );
 }); // $( document ).ready(function() {
 
 $( '#resumeGameButton' ).click(function() {

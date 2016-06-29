@@ -26,6 +26,10 @@
 }
 
 /* play.html button styles */
+.btn-low-hp {
+  background-color: #f0c589;
+}
+
 .btn-hp {
   padding: 0;
   width:10%;

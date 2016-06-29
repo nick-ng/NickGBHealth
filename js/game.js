@@ -133,7 +133,7 @@ function hookEvents() {
       }
       styleRadioButton($(this));
       $( '#teamSize' ).text(captainSelected + mascotSelected + teamSize);
-      //~ $( '#output' ).text(rosterCookies[rosterID]);
+      //~ $( '#output' ).text(rosterStrings[rosterID]);
     });
   });
 }
@@ -171,15 +171,17 @@ function rosterButton(rosterID) {
   if (rosterID > -1) {
     var RosterID = rosterID + 1;
     var rosterObj = loadRoster(rosterID)
-    if (rosterObj) {
+    if (rosterObj.players.length > 0) {
       showRoster(rosterObj.players);
+      $( '#lowHealthThreshold' ).val(rosterObj.hpThreshold);
     }
     chooseRosterText = 'Roster ' + RosterID + ' selected (' + common.capFirst(rosterObj.guild) + ').';
   } else {
     showRoster(['*']);
     chooseRosterText = 'Ad hoc roster.';
+    $( '#lowHealthThreshold' ).val(0);
   }
-  $( '#chooseRoster' ).text( chooseRosterText + ' Click here to choose a different roster.' );
+  $( '#chooseRoster' ).html( chooseRosterText + '<br>Click here to choose a different roster.' );
   teamSize = 0;
   captainSelected = 0;
   mascotSelected = 0;
@@ -189,12 +191,11 @@ function rosterButton(rosterID) {
 }
 
 function loadRoster(rosterID) {
-  var cookieName = 'roster' + rosterID;
-  var tempCookie = Cookies.get(cookieName);
-  if (tempCookie) {
-    return common.parseRosterCookie(tempCookie);
-  } else {
+  rosters = JSON.parse(Cookies.get( 'rosters' ));
+  if (rosters[rosterID].length == 0) {
     return false
+  } else {
+    return rosters[rosterID]
   }
 }
 
@@ -233,6 +234,7 @@ function getSelectedPlayers() {
 function makePlayQuery(players) {
   var query = '?';
   query += 'mode=' + clientMode;
+  query += '&hpThreshold=' + $( '#lowHealthThreshold' ).val;
   for (var i = 0; i < players.length; i++) {
     query += '&players=' + players[i];
   }
@@ -253,6 +255,6 @@ function playerButtonHTML(name, special) {
 function playerRadioHTML(name, special, radioName) {
   var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
   var html = '<label id="' + name + '-butt" name="' + radioName + '" class="btn btn-default">';
-  html += '<input type="radio" name="' + radioName + '" id="' + name + '-butt" autocomplete="off" checked>' + Name + '</label>';
+  html += '<input type="radio" name="' + radioName + '" id="' + name + '-butt" autocomplete="off">' + Name + '</label>';
   return html
 }
