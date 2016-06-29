@@ -1,5 +1,5 @@
-# Private Test Files
-test.html
+# Redis database dump
+dump.rdb
 
 # Environment Variables
 .env
