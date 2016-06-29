@@ -17,27 +17,6 @@
   background-color: #f9f9f9; /* This should match @table-bg-accent or .table-striped > tbody > tr:nth-of-type(odd) */
 }
 
-.btn-hp {
-  width:10%;
-  font-size: 12px;
-}
-
-.btn-player {
-  font-size: 14px;
-}
-
-.btn-hp.btn-default.active {
-  color: #fff;
-  background-color: #595959;
-  border-color: #333333;
-}
-
-.btn-hp.btn-info.active {
-  color: #fff;
-  background-color: #124a5b;
-  border-color: #0a2730;
-}
-
 .small-margin-top {
   margin-top: 5px;
 }
@@ -46,9 +25,73 @@
   margin-bottom: 5px;
 }
 
+/* play.html button styles */
+.btn-hp {
+  padding: 0;
+  width:10%;
+  /*font-size: 10px;*/
+}
+.btn-hp.btn-tablet {
+  font-size:18px;
+}
+
+.btn-player {
+  font-size: 14px;
+  line-height: 1;
+}
+.btn-player.btn-tablet {
+ font-size: 18px;
+ /*padding-top: 7px;
+ padding-bottom: 3px;*/
+}
+
+.hp-text {
+  font-size: 32px;
+}
+.btn-tablet > .hp-text {
+  font-size: 58px;
+}
+
+#quickHealth > button {
+  width: 16.6666666666666%;
+  /*position: relative;*/
+  float: left;
+  line-height: 0.7;
+  font-size: 24px;
+}
+#quickHealth > .btn-tablet {
+  font-size: 40px;
+}
+.sponge-text {
+  font-size: 11px;
+  line-height: 0.8;
+}
+.btn-tablet >.sponge-text {
+  font-size: 18px;
+}
+
+.btn-hp.btn-default.active {
+  color: #fff;
+  background-color: #595959;
+  border-color: #333333;
+}
+.btn-hp.btn-info.active {
+  color: #fff;
+  background-color: #124a5b;
+  border-color: #0a2730;
+}
+
 button {
+  /*
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
+  */
   white-space: nowrap
+}
+
+/* Prevent background from going black when going fullscreen */
+section
+{
+	background-color: #fff;
 }
