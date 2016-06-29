@@ -27,8 +27,9 @@
 
 /* play.html button styles */
 .btn-hp {
+  padding: 0;
   width:10%;
-  font-size: 10px;
+  /*font-size: 10px;*/
 }
 .btn-hp.btn-tablet {
   font-size:18px;
@@ -40,8 +41,8 @@
 }
 .btn-player.btn-tablet {
  font-size: 18px;
- padding-top: 7px;
- padding-bottom: 3px;
+ /*padding-top: 7px;
+ padding-bottom: 3px;*/
 }
 
 .hp-text {
@@ -52,13 +53,21 @@
 }
 
 #quickHealth > button {
-  padding: 20px 12px;
   width: 16.6666666666666%;
   /*position: relative;*/
   float: left;
+  line-height: 0.7;
+  font-size: 24px;
 }
 #quickHealth > .btn-tablet {
-  font-size: 20px;
+  font-size: 40px;
+}
+.sponge-text {
+  font-size: 11px;
+  line-height: 0.8;
+}
+.btn-tablet >.sponge-text {
+  font-size: 18px;
 }
 
 .btn-hp.btn-default.active {

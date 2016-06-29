@@ -10,6 +10,10 @@ funcs.randomString = function randomString(strLength, charSet) {
   return result.join( '' );
 }
 
+funcs.getRandomInt = function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 funcs.generateNewKey = function generateNewKey(keyLength, keyList) {
   while (true) {
     var maxAttempts = Math.pow(10, keyLength);
