@@ -20,7 +20,7 @@
                 <hr>
               </div>
             </div>
-            <div id="opponents0" class="row player-container hidden" data-toggle="buttons">
+            <div id="opponents0" class="row player-container hidden">
               <h3 class="col-md-12 text-center">
                 Your opponent hasn't connected yet.<br>
               </h3>
@@ -28,7 +28,7 @@
             <div class="row">
               <div id="gameID" class="col-xs-12 text-center"></div>
             </div>
-            <div id="myPlayers0" class="row player-container" data-toggle="buttons">
+            <div id="myPlayers0" class="row player-container">
             </div>
             <div class="row small-margin-top">
               <div id="quickHealth">
@@ -52,7 +52,7 @@
               <div id="isOpponent" class="small-margin-top">
                 <h3 class="text-center hidden">Opponent's player</h3>
               </div>
-              <div id="makeFullscreen-div">
+              <div id="makeFullscreen-div" class="hidden">
                 <button id="makeFullscreen" class="btn btn-default btn-block" type="button">Fullscreen</button>
               </div>
             </div>
@@ -78,14 +78,13 @@
       <div class="row">
         <div class="col-md-12">
           <hr>
-          <p class="text-center">
-            <button id="soloReset" class="btn btn-default hidden" type="button">
-              Reset Game
-            </button>
+          <div class="form-inline text-center">
+            <a class="btn btn-default" href="/options" role="button">Options</a>
             <a class="btn btn-default" href="/" role="button">Home</a>
-          </p>
+          </div>
+          <hr>
           <footer class="text-center">
-            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a> <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
+            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
             Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved.<br>
             <a href="http://glyphicons.com/">GLYPHICONS</a> used as part of <a href="http://getbootstrap.com/">Bootstrap</a>
           </footer>

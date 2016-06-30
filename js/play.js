@@ -2,7 +2,6 @@ var IMG_EXT = '.jpg';
 var havePermissionToDisplayCards = false;
 
 var socket = io();
-var pfx = ["webkit", "moz", "ms", "o", ""]; // For RunPrefixMethod()
 var currentPlayer = {};
 var queryObj;
 var gameID;
@@ -30,6 +29,8 @@ $(document).ready(function() {
   queryObj = common.parseQueryString();
   if (!queryObj.mode) {queryObj.mode = ['join']};
   gameID = location.pathname.replace( /^\/play\//, '' );
+  common.loadSettings();
+  applySettings();
   makePlayerList(common.allPlayers);
   setupGame();
   populateHitPoints('init')
@@ -38,7 +39,8 @@ $(document).ready(function() {
   displayCard();
   windowResized();
   lastMinuteStyles();
-}); // $( document ).ready(function() {
+  Cookies.set( 'resume-url', getResumeURL(), {expires: 0.1});
+});
 
 // Static DOM events
 $( '#makeFullscreen' ).click(function() {
@@ -96,39 +98,40 @@ $( '#flipCard' ).click(function() {
 $(window).resize(windowResized);
 
 // DOM generators
-function populateMyTeam() {
+function populateTeam(side) {
+  var teamNum = 0;
+  var $targetDiv = $( '#myPlayers0' );
+  if (side == 'O') {
+    $targetDiv = $( '#opponents0' );
+    teamNum = 1;
+  }
+  $targetDiv.html( '' );
   var htmls = [];
-  var chtml = '';
-  var mhtml = '';
-  var side = 'M';
-  for (var i = 0; i < teamList[0].length; i++) {
-    if (teamList[0][i].role == 'c') {
-      chtml = playerButtonHTML(teamList[0], i, side);
-    } else if (teamList[0][i].role == 'm') {
-      mhtml = playerButtonHTML(teamList[0], i, side);
-    } else if (teamList[0][i].role != 'benched') {
-      htmls.push(playerButtonHTML(teamList[0], i, side));
+  for (var i = 0; i < teamList[teamNum].length; i++) {
+    if (teamList[teamNum][i].role == 'c') {
+      common.specialPos.cap.mHTML = playerButtonHTML(teamList[teamNum], i, side);
+    } else if (teamList[teamNum][i].role == 'm') {
+      common.specialPos.mas.mHTML = playerButtonHTML(teamList[teamNum], i, side);
+    } else if (teamList[teamNum][i].role != 'benched') {
+      htmls.push(playerButtonHTML(teamList[teamNum], i, side));
     }
   }
-  $( '#myPlayers0' ).html(chtml + htmls[0] + htmls[1] + mhtml + htmls[2] + htmls[3]);
-  windowResized();
-}
-
-function populateOpponentTeam() {
-  var htmls = [];
-  var chtml = '';
-  var mhtml = '';
-  var side = 'O';
-  for (var i = 0; i < teamList[1].length; i++) {
-    if (teamList[1][i].role == 'c') {
-      chtml = playerButtonHTML(teamList[1], i, side);
-    } else if (teamList[1][i].role == 'm') {
-      mhtml = playerButtonHTML(teamList[1], i, side);
-    } else if (teamList[1][i].role != 'benched') {
-      htmls.push(playerButtonHTML(teamList[1], i, side));
+  for (var i = 0; i < teamList[teamNum].length; i++) {
+    var hasPlayer = false;
+    for (var j = 0; j < _.keys(common.specialPos).length; j++) {
+      var key = _.keys(common.specialPos)[j];
+      if (i == common.specialPos[key].id) {
+        $targetDiv.append(common.specialPos[key].mHTML);
+        hasPlayer = true;
+      }
+    }
+    if (!hasPlayer) {
+      var tempHTML = htmls.shift();
+      if (tempHTML) {
+        $targetDiv.append(tempHTML);
+      }
     }
   }
-  $( '#opponents0' ).html(chtml + htmls[0] + htmls[1] + mhtml + htmls[2] + htmls[3]);
   windowResized();
 }
 
@@ -192,13 +195,13 @@ function lastMinuteStyles() {
 };
 
 // Generated DOM events
-function hookPlayerButtons(selector) {
-  $( selector + ' button' ).each(function () {
+function hookPlayerButtons() {
+  $( 'button[role=player-buttons]' ).each(function () {
     $(this).off();
     $(this).click(function() {
       $(this).addClass( 'active' );
       var id = $(this).attr( 'id' );
-      $( 'button[name=playerButtons]' ).each(function() {
+      $( 'button[role=player-buttons]' ).each(function() {
         $(this).css( 'background-color', '' );
         if ($(this).attr( 'id' ) != id) {
           $(this).removeClass( 'active' );
@@ -213,6 +216,9 @@ function hookPlayerButtons(selector) {
       currentPlayer = player;
       populateHitPoints(player);
       displayCard(player);
+      if (!$(document).fullScreen() && (common.fullscreenBehaviour == 'player' )) {
+        $( '#fullscreen-content' ).fullScreen(true);
+      }
     });
   });
 }
@@ -239,7 +245,7 @@ function hookFullscreenChange() {
   $(document).bind("fullscreenchange", function() {
     if ($(document).fullScreen()) {
       $( '#makeFullscreen-div' ).addClass( 'hidden' );
-    } else {
+    } else if (common.fullscreenBehaviour == 'separate') {
       $( '#makeFullscreen-div' ).removeClass( 'hidden' );
     }
   });
@@ -268,28 +274,14 @@ function soloSetup() {
   $( '#opponents0' ).addClass( 'hidden' );
   $( '#soloHeader' ).removeClass( 'hidden' );
   // Try to load cookie.
-  var playerCookie = Cookies.get( 'solo-mode' );
-  // Check if the cookie has the same team as the one you're trying to load.
-  var sameTeam = false; // Start with different.
-  if (playerCookie) {
-    cookieList = JSON.parse(playerCookie);
-    if (teamList[0].length == cookieList.length) {
-      sameTeam = true; // might be the same...
-      // check if they have the same players.
-      for (var i = 0; i < teamList[0].length; i++) {
-        if (teamList[0][i].name != cookieList[i].name) {
-          sameTeam = false;
-          break
-        }
-      }
-    }
+  if (teamList[0].length >= 3) {
+    Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.1});
+    location.href = getResumeURL();
+    return
   }
-  if (sameTeam) {
-    $( '#soloReset' ).removeClass( 'hidden' );
-    //$( '#soloReset' ).removeAttr( 'disabled' );
-  }
-  populateMyTeam();
-  hookPlayerButtons( '#myPlayers0' );
+  teamList[0] = JSON.parse(Cookies.get( 'solo-mode' ));
+  populateTeam( 'M' );
+  hookPlayerButtons();
 }
 
 function makePlayerList(allPlayers) {
@@ -334,8 +326,8 @@ function changePlayerHP(newHP, broadcast) {
   $( '#' + selector ).text(teamList[sideN][num].currHP);
   $( '#selectedHP' ).text(teamList[sideN][num].currHP + '/' + teamList[sideN][num].hp);
   if (queryObj.mode == 'solo') {
-    Cookies.set( 'resume-url', location.href, {expires: 0.084});
-    Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.084});
+    Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.1});
+    Cookies.set( 'resume-url', getResumeURL(), {expires: 0.1});
   } else if (broadcast && currentPlayer.side == 'M') {
     socket.emit( 'onePlayerToServer', teamList[sideN][num], currentPlayer, queryObj.mode);
     singleSends++
@@ -349,7 +341,7 @@ function changePlayerHP(newHP, broadcast) {
 function updateOpponentHP(playerObj, theirCurrent, mode) {
   /* queryObj.mode is a list with a single element.
    * Doing it this way lets us handle an undefined queryObj.mode
-   */
+   */  var sameTeam = false; // Start with different.
   if (('' + mode) !== ('' + queryObj.mode)) {
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
@@ -392,11 +384,10 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
       }
     });
   }
-  
 }
 
 function displayCard(player) {
-  var imageURL = '/cards/card-narwal.gif';
+  var imageURL = '/cards/card-narwhal.gif';
   var imageURL2 = imageURL;
   if (player && (havePermissionToDisplayCards || Cookies.get( 'test-cards' ))) {
     if ($( '#cardCol2' ).css( 'display' ) != 'none') {
@@ -426,8 +417,10 @@ function displayCard(player) {
   }
 }
 
-function isBiggerThanPhone() {
-  return $( '#cardCol' ).css( 'display' ) != 'none';
+function applySettings() {
+  if (common.fullscreenBehaviour == 'separate') {
+    $( '#makeFullscreen-div' ).removeClass( 'hidden' );
+  }
 }
 
 function updatePlayerLists(teamArr) {
@@ -466,6 +459,9 @@ function playerButtonHTML(playerList, playerNum, side) {
   if (Name.match( /-v$/ )) {
     Name = 'v' + Name.replace( /-v$/, '' );
   }
+  if (playerList[playerNum].role) {
+    Name += ' (' + playerList[playerNum].role.toUpperCase() + ')';
+  }
   var id = playerNum + side + '_' + name;
   var currHPID = id + '_hp';
   var colSize = 'col-xs-4';
@@ -483,10 +479,10 @@ function playerButtonHTML(playerList, playerNum, side) {
     var currHP2 = playerList[playerNum2].currHP;
     var id2 = playerNum2 + side + '_' + name2
     var currHPID2 = id2 + '_hp';
-    html2 = '<button id="' + id2 + '" name="playerButtons" class="btn btn-default btn-xs ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
+    html2 = '<button id="' + id2 + '" role="player-buttons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
     html2 += Name2 + '<br><span id="' + currHPID2 + '" class="hp-text">' + currHP2 + '</span>/' + maxHP2 + '</button>';
   }
-  var html = '<button id="' + id + '" name="playerButtons" class="btn btn-default btn-xs ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
+  var html = '<button id="' + id + '" role="player-buttons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
   html += Name + '<br><span id="' + currHPID + '" class="hp-text">' + currHP + '</span>/' + maxHP + '</button>';
   return html + html2;
 }
@@ -505,26 +501,39 @@ function idParser(idString) {
   return player
 }
 
+function isBiggerThanPhone() {
+  return $( '#cardCol' ).css( 'display' ) != 'none';
+}
+
+function getResumeURL() {
+  var resumeURL = location.origin + location.pathname + '?';
+  for (var i = 0; i < _.keys(queryObj).length; i++) {
+    var key = _.keys(queryObj)[i];
+    console.log(key)
+    if (key != 'players') {
+      for (var j = 0; j < queryObj[key].length; j++) {
+        resumeURL += key + '=' + queryObj[key][j] + '&';
+      }
+    }
+  }
+  return resumeURL
+}
+
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
   if (queryObj.players && (teamList[0].length > 3)) {
-    var newURL = location.origin + location.pathname
-    newURL += '?mode=' + queryObj.mode;
-    newURL += '&hpThreshold=' + queryObj.hpThreshold;
-    Cookies.set( 'resume-url', newURL, {expires: 0.1});
-    location.href = newURL;
+    location.href = getResumeURL();
     return
   }
   $( '#opponents0' ).removeClass( 'hidden' );
   updatePlayerLists(teamArr);
   if (teamList[0].length > 3) {
-    populateMyTeam();
-    hookPlayerButtons( '#myPlayers0' );
+    populateTeam( 'M' );
   }
   if (teamList[1].length > 3) {
-    populateOpponentTeam();
-    hookPlayerButtons( '#opponents0' );
+    populateTeam( 'O' );
   }
+  hookPlayerButtons();
 });
 
 socket.on( 'resyncRosterToClient', function(teamArr) {
