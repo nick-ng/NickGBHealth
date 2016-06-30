@@ -84,6 +84,16 @@ common.getRosterName = function getRosterName(name) {
   return displayName
 }
 
+common.loadSettings = function loadSettings() {
+  for (var i = 0; i < _.keys(specialPos).length; i++) {
+    var key = _.keys(specialPos)[i];
+    var tempPos = parseInt(Cookies.get( 'options-' + key + '-pos' ));
+    if (!isNaN(tempPos)) {
+      specialPos[key].id = tempPos;
+    }
+  }
+}
+
 common.sumArray = function sumArray(someArray, useFloat) {
   // Sums all values in an array which may be strings. If a value cannot be parsed, it's skipped
   useFloat = useFloat || false;

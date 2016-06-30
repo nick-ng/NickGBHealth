@@ -118,6 +118,10 @@ app.get( '/spec/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/spec.html' );
 });
 
+app.get( '/options', function(req, res) {
+  res.sendFile(PAGEDIR + '/options.html' );
+});
+
 app.get( '/:id', function(req, res) {
   res.sendFile(PAGEDIR + '/game.html' );
 });
