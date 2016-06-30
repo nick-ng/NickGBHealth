@@ -2,6 +2,10 @@
 var common = {};
 common.cookieExpiry = 999; // 999 days
 
+// Default settings
+common.specialPos = {cap:{id:0, Name:'Captain'}, mas:{id:1, Name:'Mascot'}};
+common.fullscreenBehaviour = 'separate';
+
 // Common functions
 common.removeWhiteSpace = function removeWhiteSpace(someString) {
   // Replace multiple spaces with one, REMOVE leading and trailing spaces.
@@ -85,13 +89,14 @@ common.getRosterName = function getRosterName(name) {
 }
 
 common.loadSettings = function loadSettings() {
-  for (var i = 0; i < _.keys(specialPos).length; i++) {
-    var key = _.keys(specialPos)[i];
+  for (var i = 0; i < _.keys(common.specialPos).length; i++) {
+    var key = _.keys(common.specialPos)[i];
     var tempPos = parseInt(Cookies.get( 'options-' + key + '-pos' ));
     if (!isNaN(tempPos)) {
-      specialPos[key].id = tempPos;
+      common.specialPos[key].id = tempPos;
     }
   }
+  common.fullscreenBehaviour = Cookies.get( 'options-fullscreen' ) || common.fullscreenBehaviour;
 }
 
 common.sumArray = function sumArray(someArray, useFloat) {

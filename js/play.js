@@ -21,10 +21,6 @@ var percentHeights = [
     }
     return $('.btn-hp').width() * ratio}},
 ];
-var specialPos = {
-  cap:{id:0, Name:'Captain'},
-  mas:{id:1, Name:'Mascot'}
-};
 
 $(document).ready(function() {
   if (isBiggerThanPhone()) {
@@ -34,6 +30,7 @@ $(document).ready(function() {
   if (!queryObj.mode) {queryObj.mode = ['join']};
   gameID = location.pathname.replace( /^\/play\//, '' );
   common.loadSettings();
+  applySettings();
   makePlayerList(common.allPlayers);
   setupGame();
   populateHitPoints('init')
@@ -42,6 +39,7 @@ $(document).ready(function() {
   displayCard();
   windowResized();
   lastMinuteStyles();
+  Cookies.set( 'resume-url', getResumeURL(), {expires: 0.1});
 });
 
 // Static DOM events
@@ -111,19 +109,19 @@ function populateTeam(side) {
   var htmls = [];
   for (var i = 0; i < teamList[teamNum].length; i++) {
     if (teamList[teamNum][i].role == 'c') {
-      specialPos.cap.mHTML = playerButtonHTML(teamList[teamNum], i, side);
+      common.specialPos.cap.mHTML = playerButtonHTML(teamList[teamNum], i, side);
     } else if (teamList[teamNum][i].role == 'm') {
-      specialPos.mas.mHTML = playerButtonHTML(teamList[teamNum], i, side);
+      common.specialPos.mas.mHTML = playerButtonHTML(teamList[teamNum], i, side);
     } else if (teamList[teamNum][i].role != 'benched') {
       htmls.push(playerButtonHTML(teamList[teamNum], i, side));
     }
   }
   for (var i = 0; i < teamList[teamNum].length; i++) {
     var hasPlayer = false;
-    for (var j = 0; j < _.keys(specialPos).length; j++) {
-      var key = _.keys(specialPos)[j];
-      if (i == specialPos[key].id) {
-        $targetDiv.append(specialPos[key].mHTML);
+    for (var j = 0; j < _.keys(common.specialPos).length; j++) {
+      var key = _.keys(common.specialPos)[j];
+      if (i == common.specialPos[key].id) {
+        $targetDiv.append(common.specialPos[key].mHTML);
         hasPlayer = true;
       }
     }
@@ -218,6 +216,9 @@ function hookPlayerButtons() {
       currentPlayer = player;
       populateHitPoints(player);
       displayCard(player);
+      if (!$(document).fullScreen() && (common.fullscreenBehaviour == 'player' )) {
+        $( '#fullscreen-content' ).fullScreen(true);
+      }
     });
   });
 }
@@ -244,7 +245,7 @@ function hookFullscreenChange() {
   $(document).bind("fullscreenchange", function() {
     if ($(document).fullScreen()) {
       $( '#makeFullscreen-div' ).addClass( 'hidden' );
-    } else {
+    } else if (common.fullscreenBehaviour == 'separate') {
       $( '#makeFullscreen-div' ).removeClass( 'hidden' );
     }
   });
@@ -273,26 +274,12 @@ function soloSetup() {
   $( '#opponents0' ).addClass( 'hidden' );
   $( '#soloHeader' ).removeClass( 'hidden' );
   // Try to load cookie.
-  var playerCookie = Cookies.get( 'solo-mode' );
-  // Check if the cookie has the same team as the one you're trying to load.
-  var sameTeam = false; // Start with different.
-  if (playerCookie) {
-    cookieList = JSON.parse(playerCookie);
-    if (teamList[0].length == cookieList.length) {
-      sameTeam = true; // might be the same...
-      // check if they have the same players.
-      for (var i = 0; i < teamList[0].length; i++) {
-        if (teamList[0][i].name != cookieList[i].name) {
-          sameTeam = false;
-          break
-        }
-      }
-    }
+  if (teamList[0].length >= 3) {
+    Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.1});
+    location.href = getResumeURL();
+    return
   }
-  if (sameTeam) {
-    $( '#soloReset' ).removeClass( 'hidden' );
-    //$( '#soloReset' ).removeAttr( 'disabled' );
-  }
+  teamList[0] = JSON.parse(Cookies.get( 'solo-mode' ));
   populateTeam( 'M' );
   hookPlayerButtons();
 }
@@ -339,8 +326,8 @@ function changePlayerHP(newHP, broadcast) {
   $( '#' + selector ).text(teamList[sideN][num].currHP);
   $( '#selectedHP' ).text(teamList[sideN][num].currHP + '/' + teamList[sideN][num].hp);
   if (queryObj.mode == 'solo') {
-    Cookies.set( 'resume-url', location.href, {expires: 0.084});
-    Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.084});
+    Cookies.set( 'solo-mode', JSON.stringify(teamList[0]), {expires: 0.1});
+    Cookies.set( 'resume-url', getResumeURL(), {expires: 0.1});
   } else if (broadcast && currentPlayer.side == 'M') {
     socket.emit( 'onePlayerToServer', teamList[sideN][num], currentPlayer, queryObj.mode);
     singleSends++
@@ -354,7 +341,7 @@ function changePlayerHP(newHP, broadcast) {
 function updateOpponentHP(playerObj, theirCurrent, mode) {
   /* queryObj.mode is a list with a single element.
    * Doing it this way lets us handle an undefined queryObj.mode
-   */
+   */  var sameTeam = false; // Start with different.
   if (('' + mode) !== ('' + queryObj.mode)) {
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
@@ -397,11 +384,10 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
       }
     });
   }
-  
 }
 
 function displayCard(player) {
-  var imageURL = '/cards/card-narwal.gif';
+  var imageURL = '/cards/card-narwhal.gif';
   var imageURL2 = imageURL;
   if (player && (havePermissionToDisplayCards || Cookies.get( 'test-cards' ))) {
     if ($( '#cardCol2' ).css( 'display' ) != 'none') {
@@ -431,8 +417,10 @@ function displayCard(player) {
   }
 }
 
-function isBiggerThanPhone() {
-  return $( '#cardCol' ).css( 'display' ) != 'none';
+function applySettings() {
+  if (common.fullscreenBehaviour == 'separate') {
+    $( '#makeFullscreen-div' ).removeClass( 'hidden' );
+  }
 }
 
 function updatePlayerLists(teamArr) {
@@ -513,14 +501,28 @@ function idParser(idString) {
   return player
 }
 
+function isBiggerThanPhone() {
+  return $( '#cardCol' ).css( 'display' ) != 'none';
+}
+
+function getResumeURL() {
+  var resumeURL = location.origin + location.pathname + '?';
+  for (var i = 0; i < _.keys(queryObj).length; i++) {
+    var key = _.keys(queryObj)[i];
+    console.log(key)
+    if (key != 'players') {
+      for (var j = 0; j < queryObj[key].length; j++) {
+        resumeURL += key + '=' + queryObj[key][j] + '&';
+      }
+    }
+  }
+  return resumeURL
+}
+
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
   if (queryObj.players && (teamList[0].length > 3)) {
-    var newURL = location.origin + location.pathname
-    newURL += '?mode=' + queryObj.mode;
-    newURL += '&hpThreshold=' + queryObj.hpThreshold;
-    Cookies.set( 'resume-url', newURL, {expires: 0.1});
-    location.href = newURL;
+    location.href = getResumeURL();
     return
   }
   $( '#opponents0' ).removeClass( 'hidden' );

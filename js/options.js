@@ -1,12 +1,15 @@
-var specialPos = {cap:{id:0, Name:'Captain'}, mas:{id:1, Name:'Mascot'}};
 var percentHeights = [
   {selector:'.btn-player', height:0.115},
 ];
 
 $(document).ready(function() {
+  if (Cookies.get( 'resume-url' )) {
+    $( '#resumeGameButton' ).removeClass( 'hidden' );
+  }
   populatePositionButtons();
   hookPositionButtons();
   common.loadSettings();
+  console.log(common.fullscreenBehaviour);
   displaySettings();
   windowResized();
 });
@@ -14,11 +17,21 @@ $(document).ready(function() {
 // Static DOM events
 $(window).resize(windowResized);
 
+$( 'input[name=fullscreen-behaviour]:radio' ).change(function() {
+  common.fullscreenBehaviour = $(this).val();
+  Cookies.set( 'options-fullscreen', common.fullscreenBehaviour, {expires: 9999})
+});
+
+$( '#resumeGameButton' ).click(function() {
+  console.log(Cookies.get( 'resume-url' ));
+  location.href = Cookies.get( 'resume-url' );
+});
+
 // DOM generators
 function populatePositionButtons() {
   for (var j = 0; j < 6; j++) {
-    for (var i = 0; i < _.keys(specialPos).length; i++) {
-      var type = _.keys(specialPos)[i];
+    for (var i = 0; i < _.keys(common.specialPos).length; i++) {
+      var type = _.keys(common.specialPos)[i];
       $( '#' + type + '-pos' ).append(playerButtonHTML(j));
     }
   }
@@ -26,8 +39,8 @@ function populatePositionButtons() {
 
 // Generated DOM events
 function hookPositionButtons() {
-  for (var i = 0; i < _.keys(specialPos).length; i++) {
-    var type = _.keys(specialPos)[i];
+  for (var i = 0; i < _.keys(common.specialPos).length; i++) {
+    var type = _.keys(common.specialPos)[i];
     var $theseButtons = $( '#' + type + '-pos button' );
     $theseButtons.each(function() {
       changePos($(this), type);
@@ -38,8 +51,8 @@ function hookPositionButtons() {
 function changePos($thisBtn, type) {
   $thisBtn.click(function() {
     var id = $thisBtn.attr( 'id' );
-    specialPos[type].id = parseInt(id);
-    Cookies.set( 'options-' + type + '-pos', id);
+    common.specialPos[type].id = parseInt(id);
+    Cookies.set( 'options-' + type + '-pos', id, {expires: 9999});
     nameButtons();
     colourButtons();
   });
@@ -49,20 +62,21 @@ function changePos($thisBtn, type) {
 function displaySettings() {
   nameButtons();
   colourButtons();
+  chooseFullscreenBehaviour();
 }
 
 function nameButtons() {
-  for (var i = 0; i < _.keys(specialPos).length; i++) {
-    var type = _.keys(specialPos)[i];
+  for (var i = 0; i < _.keys(common.specialPos).length; i++) {
+    var type = _.keys(common.specialPos)[i];
     var $theseButtons = $( '#' + type + '-pos button' );
     var players = ['1', '2', '3', '4'];
     $theseButtons.each(function() {
       var id = parseInt($(this).attr( 'id' ));
       $(this).text('');
-      for (var j = 0; j < _.keys(specialPos).length; j++) {
-        var key = _.keys(specialPos)[j];
-        if (id == specialPos[key].id) {
-          $(this).text(specialPos[key].Name);
+      for (var j = 0; j < _.keys(common.specialPos).length; j++) {
+        var key = _.keys(common.specialPos)[j];
+        if (id == common.specialPos[key].id) {
+          $(this).text(common.specialPos[key].Name);
         }
       }
       if (!$(this).text()) {
@@ -76,8 +90,8 @@ function nameButtons() {
 }
 
 function colourButtons() {
-  for (var i = 0; i < _.keys(specialPos).length; i++) {
-    var allTypes = _.keys(specialPos);
+  for (var i = 0; i < _.keys(common.specialPos).length; i++) {
+    var allTypes = _.keys(common.specialPos);
     var type = allTypes[i];
     colourEachButton(type, _.without(allTypes, type));
   }
@@ -87,7 +101,7 @@ function colourEachButton(type, antiTypes) {
   var $theseButtons = $( '#' + type + '-pos button' );
   $theseButtons.each(function() {
     var id = parseInt($(this).attr( 'id' ));
-    if (id == specialPos[type].id) {
+    if (id == common.specialPos[type].id) {
       $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
       $(this).addClass( 'active' );
     } else {
@@ -96,11 +110,19 @@ function colourEachButton(type, antiTypes) {
     }
     for (var i = 0; i < antiTypes.length; i++) {
       var antiType = antiTypes[i];
-      if (id == specialPos[antiType].id) {
+      if (id == common.specialPos[antiType].id) {
         $(this).prop( 'disabled', true);
       } else {
         $(this).prop( 'disabled', false);
       }
+    }
+  });
+}
+
+function chooseFullscreenBehaviour() {
+  $( 'input[name=fullscreen-behaviour]:radio').each(function() {
+    if ($(this).val() == common.fullscreenBehaviour) {
+      $(this).prop( 'checked', true);
     }
   });
 }

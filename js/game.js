@@ -234,10 +234,11 @@ function getSelectedPlayers() {
 function makePlayQuery(players) {
   var query = '?';
   query += 'mode=' + clientMode;
-  query += '&hpThreshold=' + $( '#lowHealthThreshold' ).val;
+  query += '&hpThreshold=' + $( '#lowHealthThreshold' ).val();
   for (var i = 0; i < players.length; i++) {
     query += '&players=' + players[i];
   }
+  console.log(query);
   return query;
 }
 
