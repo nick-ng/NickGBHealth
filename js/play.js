@@ -116,6 +116,7 @@ function populateTeam(side) {
       htmls.push(playerButtonHTML(teamList[teamNum], i, side));
     }
   }
+  htmls.sort();
   for (var i = 0; i < teamList[teamNum].length; i++) {
     var hasPlayer = false;
     for (var j = 0; j < _.keys(common.specialPos).length; j++) {
@@ -482,7 +483,7 @@ function playerButtonHTML(playerList, playerNum, side) {
     html2 = '<button id="' + id2 + '" role="player-buttons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
     html2 += Name2 + '<br><span id="' + currHPID2 + '" class="hp-text">' + currHP2 + '</span>/' + maxHP2 + '</button>';
   }
-  var html = '<button id="' + id + '" role="player-buttons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
+  var html = '<button name="' + name + '" id="' + id + '" role="player-buttons" class="btn btn-default ' + btnSize +' btn-player ' + colSize + ' text-center" type="button">';
   html += Name + '<br><span id="' + currHPID + '" class="hp-text">' + currHP + '</span>/' + maxHP + '</button>';
   return html + html2;
 }
