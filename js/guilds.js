@@ -89,7 +89,6 @@ common.allGuilds[L].players = [
   {name:'mainspring', hp:6, sponge:[], role:'m'},
   {name:'mother', hp:9, sponge:[], role:'m'},
   {name:'colossus', hp:20, sponge:[7, 14]},
-  {name:'compound', hp:20, sponge:[6, 12]},
   {name:'hoist', hp:11, sponge:[4, 7]},
   {name:'ratchet', hp:17, sponge:[6, 12]},
   {name:'salvo', hp:14, sponge:[5, 10]},

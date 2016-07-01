@@ -1,3 +1,7 @@
+var options = {
+  IMG_EXT: '.jpg'
+};
+
 var percentHeights = [
   {selector:'.btn-player', height:0.115},
 ];
@@ -9,7 +13,6 @@ $(document).ready(function() {
   populatePositionButtons();
   hookPositionButtons();
   common.loadSettings();
-  console.log(common.fullscreenBehaviour);
   displaySettings();
   windowResized();
 });
@@ -25,6 +28,13 @@ $( 'input[name=fullscreen-behaviour]:radio' ).change(function() {
 $( '#resumeGameButton' ).click(function() {
   console.log(Cookies.get( 'resume-url' ));
   location.href = Cookies.get( 'resume-url' );
+});
+
+$( '#preload-cards' ).click(function() {
+  $( '#preloaded-cards' ).html( '' );
+  $( '#preload-cards-bar' ).removeClass( 'hidden' );
+  var allPlayers = _.sortBy(common.allPlayers, 'name' );
+  preloadCards(allPlayers, allPlayers.length);
 });
 
 // DOM generators
@@ -117,6 +127,34 @@ function colourEachButton(type, antiTypes) {
       }
     }
   });
+}
+
+function preloadCards(allPlayers, totalCards) {
+  if (allPlayers.length) {
+    var playerObj = allPlayers.shift()
+    console.log(playerObj);
+    var name = playerObj.name;
+    var frontURL = '/cards/' + name + '_f' + options.IMG_EXT;
+    var backURL = '/cards/' + name + '_b' + options.IMG_EXT;
+    var newHTML = '<img src="' + frontURL + '" class="img-preload">';
+    newHTML += '<img id="' + name + '-card" src="' + backURL + '" class="img-preload">';
+    $( '#preloaded-cards' ).append(newHTML);
+    var Name = playerObj.display || common.capFirst(name).replace( /-v$/, ', Veteran' );
+    $( '#preload-card-current').html( '&nbsp; Loading ' + Name);
+    var eventData = {
+      totalCards: totalCards,
+      remainingCards: (totalCards - allPlayers.length),
+      allPlayers: allPlayers
+    }
+    $( '#' + name + '-card' ).load(function() {
+      var percent = 100 * eventData.remainingCards / eventData.totalCards;
+      $( '#preload-cards-progress' ).css( 'width', percent + '%' ).text(eventData.remainingCards + '/' + eventData.totalCards);
+      preloadCards(eventData.allPlayers, eventData.totalCards);
+    });
+  } else {
+    $( '#preload-card-current').html( '&nbsp; Done' );
+    $( '#preload-cards-progress' ).text( 'Done' );
+  }
 }
 
 function chooseFullscreenBehaviour() {
