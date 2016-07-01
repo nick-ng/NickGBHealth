@@ -83,11 +83,13 @@ app.post( '/', function(req, res) {
         res.status(507).send('All possible keys are taken. Tell Nick you got this message.');
       }
     });
+  } else {
+    console.log(req.body);
   }
 });
 
 app.get( '/test-cards', function(req, res) {
-  res.sendFile(PAGEDIR + '/test-cards.html' );
+  res.sendFile(PAGEDIR + '/home.html' );
 });
 
 app.get( '/test', function(req, res) {

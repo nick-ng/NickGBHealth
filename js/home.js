@@ -4,6 +4,7 @@ $(document).ready(function() {
   }
   Cookies.remove( 'roster0' ); // Remove these later
   Cookies.remove( 'roster1' );
+  Cookies.remove( 'test-cards' );
 }); // $( document ).ready(function() {
 
 $( '#resumeGameButton' ).click(function() {

@@ -86,6 +86,11 @@
   border-color: #0a2730;
 }
 
+.img-preload {
+  max-width:2.5%;
+  height: auto;
+}
+
 button {
   /*
   overflow: hidden;
