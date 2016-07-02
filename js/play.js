@@ -1,7 +1,6 @@
 var socket = io();
 
 var play = {
-  IMG_EXT: '.jpg',
   currentPlayer: true,
   currentPlayer: {},
   queryObj: null,
@@ -396,23 +395,17 @@ function displayCard(player) {
   var imageURL2 = imageURL;
   if (player) {
     if ($( '#cardCol2' ).css( 'display' ) != 'none') {
-      imageURL2 = '/cards/' + player.name + '_b' + play.IMG_EXT;
       play.cardFront = true;
-    }
-    imageURL = '/cards/' + player.name + '_';
-    if (play.cardFront) {
-      imageURL += 'f' + play.IMG_EXT;
-    } else {
-      imageURL += 'b' + play.IMG_EXT;
-    }
-  } else {
-    player = {Name:'Nick\'s Guild Ball Health Tracker'};
-  }
-  if (play.currentPlayer || Cookies.get( 'test-cards' )) {
-    if ($( '#cardCol2' ).css( 'display' ) != 'none') {
+      imageURL2 = '/cards/' + player.name + '_b' + common.IMG_EXT;
       var imageTag = '<img src="' + imageURL2 + '" class="img-responsive center-block" alt="' + player.Name + '">';
       $( '#playerCard2' ).html(imageTag);
       $( '#cardPanel2' ).removeClass( 'hidden' );
+    }
+    imageURL = '/cards/' + player.name + '_';
+    if (play.cardFront) {
+      imageURL += 'f' + common.IMG_EXT;
+    } else {
+      imageURL += 'b' + common.IMG_EXT;
     }
     if ($( '#cardCol' ).css( 'display' ) != 'none') {
       var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + player.Name + '">';
