@@ -132,7 +132,6 @@ function colourEachButton(type, antiTypes) {
 function preloadCards(allPlayers, totalCards) {
   if (allPlayers.length) {
     var playerObj = allPlayers.shift()
-    console.log(playerObj);
     var name = playerObj.name;
     var frontURL = '/cards/' + name + '_f' + options.IMG_EXT;
     var backURL = '/cards/' + name + '_b' + options.IMG_EXT;

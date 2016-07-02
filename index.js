@@ -83,6 +83,21 @@ app.post( '/', function(req, res) {
         res.status(507).send('All possible keys are taken. Tell Nick you got this message.');
       }
     });
+  } else if (req.body.gameID) {
+    var teamNum = -1;
+    if (req.body.mode == 'host') {
+      teamNum = 0;
+    } else if (req.body.mode == 'join') {
+      teamNum = 1;
+    }
+    if (teamNum >= 0) {
+      client.setTeam(req.body.gameID, teamNum, req.body.teamList, function(statusCode,err) {
+        res.status(statusCode).send('0');
+        client.getTeams(req.body.gameID, function(teamArr) {
+          io.to(req.body.gameID).emit( 'broadcastRosters', teamArr);
+        });
+      });
+    }
   } else {
     console.log(req.body);
   }
@@ -139,12 +154,13 @@ client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
     this.lset(KEY_PREFIX + gameID, teamNum, JSON.stringify(teamObj), function(err, reply) {
       if (err) {
         console.log(err);
+        callback(500,err);
         return
       }
-      callback();
+      callback(201);
     });
   } else {
-    callback();
+    callback(400);
   }
 }
 
@@ -152,6 +168,7 @@ client.getTeams = function getTeams(gameID, callback) {
   this.lrange(KEY_PREFIX + gameID, 0, 1, function(err, reply) {
     if (err) {
       console.log(err);
+      callback(reply,err);
       return
     }
     callback(reply);
@@ -206,7 +223,6 @@ function omniDemo() {
     }
   });
 }
-
 
 function changeDemoHP() {
   remainingDemo--;

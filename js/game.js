@@ -1,5 +1,7 @@
-var gameID;
-var queryObj;
+var game = {
+  gameID: null,
+  queryObj: null
+};
 var teamSize = 0;
 var maxTeamSize = 6;
 var captainSelected = 0;
@@ -8,8 +10,9 @@ var superPlayers = 2;
 var clientMode = 'solo';
 
 $(document).ready(function() {
-  queryObj = common.parseQueryString();
-  displayGameID();
+  game.queryObj = common.parseQueryString();
+  game.gameID = location.pathname.substr(1);
+  displayGameID(game.gameID, game.queryObj);
   populatePlayerSelect();
   nameRosterButtons();
   hookEvents();
@@ -48,9 +51,26 @@ $( '#chooseRoster' ).click(function() {
 $( '#play-butt' ).click(function() {
   $( '#tooManyPlayers' ).addClass( 'hidden' );
   if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
-    var players = getSelectedPlayers();
-    var query = makePlayQuery(players);
-    location.href = location.origin + '/play/' + gameID + query;
+    var teamList = getSelectedTeam();
+    if (game.gameID == 'solo') {
+      Cookies.set( 'solo-mode', JSON.stringify(teamList), {expires: 0.1});
+      location.href = location.origin + '/play/solo' + makePlayQuery( 'solo' );
+      $( '#output' ).text( 'Starting game...' );
+    } else {
+      var mode = '' + (game.queryObj.mode || 'join' )
+      var gameReq = $.post( '/', {
+        gameID: game.gameID,
+        mode: mode,
+        teamList: teamList
+      }, function(res) {
+        if (gameReq.status == 201) {
+          location.href = location.origin + '/play/' + game.gameID + makePlayQuery(mode);;
+          $( '#output' ).text( 'Starting game...' );
+        } else {
+          $( '#output' ).text( 'Error code: ' + gameReq.status);
+        }
+      });
+    }
   } else {
     $( '#notEnoughPlayers' ).removeClass( 'hidden' );
   }
@@ -83,8 +103,7 @@ function populatePlayerSelect() {
   $( '#allPlayers' ).append(captainsHTML + mascotsHTML + playersHTML);
 }
 
-function displayGameID() {
-  gameID = location.pathname.substr(1);
+function displayGameID(gameID, queryObj) {
   if (queryObj.mode && (queryObj.mode[0] == 'host')) {
     clientMode = 'host';
     joinURL = location.origin + '/' + gameID;
@@ -191,7 +210,12 @@ function rosterButton(rosterID) {
 }
 
 function loadRoster(rosterID) {
-  rosters = JSON.parse(Cookies.get( 'rosters' ));
+  rostersCookie = Cookies.get( 'rosters' );
+  console.log(rostersCookie);
+  rosters = [];
+  if (rostersCookie) {
+    rosters = JSON.parse(rostersCookie);
+  }
   if (rosters[rosterID].length == 0) {
     return false
   } else {
@@ -218,7 +242,7 @@ function showRoster(playerList) {
   });
 }
 
-function getSelectedPlayers() {
+function getSelectedTeam() {
   var players = [];
   $( '#allPlayers input[type=radio]:checked' ).each(function() {
     players.push($(this).attr('id').replace(/-butt$/, '' ));
@@ -228,17 +252,36 @@ function getSelectedPlayers() {
       players.push($(this).attr( 'id' ).replace(/-butt$/, '' ));
     }
   });
-  return players;
+  return makeTeamList(players, common.allPlayers);
 }
 
-function makePlayQuery(players) {
-  var query = '?';
-  query += 'mode=' + clientMode;
-  query += '&hpThreshold=' + $( '#lowHealthThreshold' ).val();
+function makeTeamList(players, allPlayers) {
+  var teamList = [];
+  var benchedPlayerObjs = [];
   for (var i = 0; i < players.length; i++) {
-    query += '&players=' + players[i];
+    var playerObj = _.find(allPlayers, function(item) {
+      return item.name == players[i]
+    });
+    playerObj.currHP = playerObj.hp;
+    teamList.push(playerObj);
+    if (playerObj.detach) {
+      var playerObjD = _.find(allPlayers, function(item) {
+        return item.name == playerObj.detach
+      });
+      playerObjD.currHP = playerObjD.hp;
+      benchedPlayerObjs.push(playerObjD);
+    }
   }
-  console.log(query);
+  for (var i = 0; i < benchedPlayerObjs.length; i++) {
+    teamList.push(benchedPlayerObjs[i]);
+  }
+  return teamList;
+}
+
+function makePlayQuery(mode) {
+  var query = '?';
+  query += 'mode=' + (mode || 'join');
+  query += '&hpThreshold=' + $( '#lowHealthThreshold' ).val();
   return query;
 }
 

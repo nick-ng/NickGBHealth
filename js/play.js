@@ -288,6 +288,7 @@ function soloSetup() {
   hookPlayerButtons();
 }
 
+// This is now in game.js
 function makePlayerList(allPlayers) {
   if (play.queryObj.players) {
     for (var i = 0; i < allPlayers.length; i++) {
