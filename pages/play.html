@@ -21,8 +21,8 @@
     <script src="/play.js" defer></script>
   </head>
   <body>
-    <div class="container-fluid">
-      <section id="fullscreen-content">
+    <section id="fullscreen-content">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
             <div id="soloHeader" class="row hidden">
@@ -69,38 +69,32 @@
             </div>
           </div>
           <div id="cardCol" class="hidden-xs col-sm-6 col-md-6 col-lg-4">
-            <div id="cardPanel" class="panel panel-default hidden">
-              <a id="flipCard" href="#">
-                <div class="panel-body">
-                  <div id="playerCard"></div>
-                </div>
-              </a>
+            <div id="cardPanel" class="hidden">
+              <a id="playerCard" href="#"></a>
             </div>
           </div>
           <div id="cardCol2" class="visible-lg-inline col-lg-4">
-            <div id="cardPanel2" class="panel panel-default hidden">
-              <div class="panel-body">
-                <div id="playerCard2"></div>
-              </div>
+            <div id="cardPanel2" class="hidden">
+              <div id="playerCard2"></div>
             </div>
           </div>
         </div>
-      </section>
-      <div class="row">
-        <div class="col-md-12">
-          <hr>
-          <div class="form-inline text-center">
-            <a class="btn btn-default" href="/options" role="button">Options</a>
-            <a class="btn btn-default" href="/" role="button">Home</a>
+        <div class="row">
+          <div class="col-md-12">
+            <hr>
+            <div class="form-inline text-center">
+              <a class="btn btn-default" href="/options" role="button">Options</a>
+              <a class="btn btn-default" href="/" role="button">Home</a>
+            </div>
+            <hr>
+            <footer class="text-center">
+              &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
+              Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved. Used with permission.<br>
+              <a href="http://glyphicons.com/">GLYPHICONS</a> used as part of <a href="http://getbootstrap.com/">Bootstrap</a>
+            </footer>
           </div>
-          <hr>
-          <footer class="text-center">
-            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
-            Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved. Used with permission.<br>
-            <a href="http://glyphicons.com/">GLYPHICONS</a> used as part of <a href="http://getbootstrap.com/">Bootstrap</a>
-          </footer>
         </div>
       </div>
-    </div>
+    </section>
   </body>
 </html>
