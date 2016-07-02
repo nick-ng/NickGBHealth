@@ -210,17 +210,14 @@ function rosterButton(rosterID) {
 }
 
 function loadRoster(rosterID) {
-  rostersCookie = Cookies.get( 'rosters' );
-  console.log(rostersCookie);
-  rosters = [];
+  var rostersCookie = Cookies.get( 'rosters' );
   if (rostersCookie) {
-    rosters = JSON.parse(rostersCookie);
+    var rosters = JSON.parse(rostersCookie);
+    if (rosters[rosterID].players && (rosters[rosterID].players.length > 0)) {
+      return rosters[rosterID];
+    }
   }
-  if (rosters[rosterID].length == 0) {
-    return false
-  } else {
-    return rosters[rosterID]
-  }
+  return false;
 }
 
 function showRoster(playerList) {

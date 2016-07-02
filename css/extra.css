@@ -103,5 +103,6 @@ button {
 /* Prevent background from going black when going fullscreen */
 section
 {
+  width: 100%;
 	background-color: #fff;
 }

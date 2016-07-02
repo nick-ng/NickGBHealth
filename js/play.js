@@ -89,7 +89,7 @@ $( '#plusOne' ).click(function() {
   changePlayerHP(currHP + 1, true);
 });
 
-$( '#flipCard' ).click(function() {
+$( '#playerCard' ).click(function() {
   if (play.cardFront) {
     play.cardFront = false;
   } else {
@@ -176,7 +176,7 @@ function populateHitPoints(player) {
     for (var i = 0; i < play.teamList[player.sideN][player.num].currHP; i++) {
       $( '#healthBoxes #' + i).removeClass( 'active' );
     }
-    if (play.teamList[player.sideN][player.num].sponge.length == 0) {
+    if (play.teamList[player.sideN][player.num].sponge[0] == 0) {
       $( '#icySponge' ).prop( 'disabled', true);
     } else {
       for (var i = 0; i < play.teamList[player.sideN][player.num].sponge.length; i++) {
@@ -429,13 +429,15 @@ function applySettings() {
 }
 
 function updatePlayerLists(teamArr) {
+  var teamLists = [];
   if (play.queryObj.mode == 'host') {
-    play.teamList[0] = JSON.parse(teamArr[0]);
-    play.teamList[1] = JSON.parse(teamArr[1]);
+    teamLists[0] = JSON.parse(teamArr[0]);
+    teamLists[1] = JSON.parse(teamArr[1]);
   } else {
-    play.teamList[0] = JSON.parse(teamArr[1]);
-    play.teamList[1] = JSON.parse(teamArr[0]);
+    teamLists[0] = JSON.parse(teamArr[1]);
+    teamLists[1] = JSON.parse(teamArr[0]);
   }
+  return teamLists;
 }
 
 function windowResized() {
@@ -526,12 +528,14 @@ function getResumeURL() {
 
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
+  /*
   if (play.queryObj.players && (play.teamList[0].length > 3)) {
     location.href = getResumeURL();
     return
   }
+  */
   $( '#opponents0' ).removeClass( 'hidden' );
-  updatePlayerLists(teamArr);
+  play.teamList = updatePlayerLists(teamArr);
   if (play.teamList[0].length > 3) {
     populateTeam( 'M' );
   }

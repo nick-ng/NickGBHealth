@@ -26,7 +26,7 @@ const KEY_EXPIRY = 20000; // in seconds
 // Variables
 var demoTeam0 = [
   {name:'shark', hp:17, sponge:[6, 12], role:'c', currHP:17},
-  {name:'salt', hp:8, sponge:[], role:'m', currHP:8},
+  {name:'salt', hp:8, sponge:[0], role:'m', currHP:8},
   {name:'angel', hp:12, sponge:[4, 8], currHP:12},
   {name:'siren', hp:10, sponge:[3, 6], currHP:10},
   {name:'greyscales', hp:15, sponge:[5, 10], currHP:15},
@@ -36,7 +36,7 @@ var demoTeam1 = [
   {name:'ox', hp:19, sponge:[6, 12], role:'c', currHP:19},
   {name:'boiler', hp:14, sponge:[5, 10], currHP:14},
   {name:'brisket', hp:12, sponge:[4, 8], currHP:12},
-  {name:'princess', hp:10, sponge:[], role:'m', currHP:10},
+  {name:'princess', hp:10, sponge:[0], role:'m', currHP:10},
   {name:'boar', hp:22, sponge:[7, 14], currHP:22},
   {name:'meathook', hp:14, sponge:[5, 10], currHP:14}
 ];
