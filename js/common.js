@@ -1,10 +1,10 @@
 // Common variables
-var common = {};
-common.cookieExpiry = 999; // 999 days
-
-// Default settings
-common.specialPos = {cap:{id:0, Name:'Captain'}, mas:{id:1, Name:'Mascot'}};
-common.fullscreenBehaviour = 'separate';
+var common = {
+  IMG_EXT: '.jpg',
+  cookieExpiry: 999, // 999 days
+  specialPos: {cap:{id:0, Name:'Captain'}, mas:{id:1, Name:'Mascot'}},
+  fullscreenBehaviour: 'separate'
+};
 
 // Common functions
 common.removeWhiteSpace = function removeWhiteSpace(someString) {

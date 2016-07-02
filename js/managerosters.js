@@ -1,3 +1,6 @@
+var roster = {
+  cardFront: true
+}
 var rosterID = 0;
 var rosterSize = [0, 0];
 var rosterStrings = ['', ''];
@@ -10,6 +13,15 @@ $(document).ready(function() {
   hookEvents();
   loadRoster();
 }); // $( document ).ready(function() {
+
+$( '#playerCard' ).click(function() {
+  if (roster.cardFront) {
+    roster.cardFront = false;
+  } else {
+    roster.cardFront = true;
+  }
+  displayCard($('#playerCard img').attr( 'alt' ));
+});
 
 function populateDOM() {
   for (var i = 0; i < common.allGuilds.length; i++) {
@@ -88,11 +100,13 @@ function hookEvents() {
       if ($(this).hasClass( 'btn-primary' )) {
         $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
         $(this).removeClass( 'active' );
-        rosters[rosterID] = _.without(rosters[rosterID], player)
+        rosters[rosterID].players = _.without(rosters[rosterID].players, player);
+        displayCard(player);
       } else {
         $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
         $(this).addClass( 'active' );
         rosters[rosterID].players.push(player);
+        displayCard(player);
       };
       $( '#rosterSize' ).text(rosters[rosterID].players.length);
     });
@@ -156,4 +170,27 @@ function resetRosterManager() {
   hideAllPlayerSelectors()
   $( '#guildSelector' ).removeClass( 'hidden' );
   $( '#guildBack' ).addClass( 'hidden' );
+}
+
+function displayCard(playerName) {
+  var imageURL = '/cards/card-narwhal.gif';
+  var imageURL2 = imageURL;
+  if ($( '#cardCol2' ).css( 'display' ) != 'none') {
+    roster.cardFront = true;
+    imageURL2 = '/cards/' + playerName + '_b' + common.IMG_EXT;
+    var imageTag = '<img src="' + imageURL2 + '" class="img-responsive center-block">';
+    $( '#playerCard2' ).html(imageTag);
+    $( '#cardPanel2' ).removeClass( 'hidden' );
+  }
+  imageURL = '/cards/' + playerName + '_';
+  if (roster.cardFront) {
+    imageURL += 'f' + common.IMG_EXT;
+  } else {
+    imageURL += 'b' + common.IMG_EXT;
+  }
+  if ($( '#cardCol' ).css( 'display' ) != 'none') {
+    var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + playerName + '">';
+    $( '#playerCard' ).html(imageTag);
+    $( '#cardPanel' ).removeClass( 'hidden' );
+  }
 }

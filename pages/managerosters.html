@@ -19,8 +19,7 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="hidden-xs col-sm-1 col-md-2 col-lg-3"></div>
-        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
           <p>
             <div id="rosterSelector" class="btn-group btn-group-justified" data-toggle="buttons">
               <label class="btn btn-default active">
@@ -59,6 +58,16 @@
             <button id="saveRosterButton" class="btn btn-default btn-block" type="button">Save Roster</button>
           </form>
           <p id="output"></p>
+        </div>
+        <div id="cardCol" class="hidden-xs col-sm-6 col-md-6 col-lg-4">
+          <div id="cardPanel" class="hidden">
+            <a id="playerCard" href="#"></a>
+          </div>
+        </div>
+        <div id="cardCol2" class="visible-lg-inline col-lg-4">
+          <div id="cardPanel2" class="hidden">
+            <div id="playerCard2"></div>
+          </div>
         </div>
       </div>
       <div class="row">
