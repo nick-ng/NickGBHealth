@@ -143,7 +143,7 @@ function populateHitPoints(player) {
     //$( '#healthBoxes' ).append('<div class="btn-group btn-group-justified" role="group">');
     for (var i = 0; i < common.mostHP; i++) {
       I = i + 1;
-      var html = '<button href="#" id="' + i + '" class="btn btn-default btn-hp ' + play.btnSize + ' hidden text-center" type="button">'
+      var html = '<button href="#" id="' + i + '" class="btn btn-default btn-hp ' + play.btnSize + ' text-center" type="button" disabled>'
       html += I + '</button>';
       if ((i % 10) == 9) {
         //html += '</div><div class=class="btn-group btn-group-justified" role="group">';
@@ -218,6 +218,7 @@ function hookPlayerButtons() {
       $( '#selectedPlayer' ).html(opponentText + player.Name + ' &ndash; <span id="selectedHP"></span>');
       play.currentPlayer = player;
       populateHitPoints(player);
+      play.cardFront = true;
       displayCard(player);
       if (!$(document).fullScreen() && (common.fullscreenBehaviour == 'player' )) {
         $( '#fullscreen-content' ).fullScreen(true);
@@ -247,9 +248,15 @@ function hookHPButtons() {
 function hookFullscreenChange() {
   $(document).bind("fullscreenchange", function() {
     if ($(document).fullScreen()) {
+      var windowHeight = $(window).height();
+      var windowWidth = $(window).width();
       $( '#makeFullscreen-div' ).addClass( 'hidden' );
+      $( '#fullscreen-content' ).addClass( 'fullscreen-view' )
+        .height(windowHeight).width(windowWidth - 10);
     } else if (common.fullscreenBehaviour == 'separate') {
       $( '#makeFullscreen-div' ).removeClass( 'hidden' );
+      $( '#fullscreen-content' ).removeClass( 'fullscreen-view' )
+        .css( 'height', '' ).css( 'width', '' );
     }
   });
 }
@@ -509,7 +516,6 @@ function getResumeURL() {
   var resumeURL = location.origin + location.pathname + '?';
   for (var i = 0; i < _.keys(play.queryObj).length; i++) {
     var key = _.keys(play.queryObj)[i];
-    console.log(key)
     if (key != 'players') {
       for (var j = 0; j < play.queryObj[key].length; j++) {
         resumeURL += key + '=' + play.queryObj[key][j] + '&';
