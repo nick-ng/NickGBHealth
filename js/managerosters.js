@@ -97,16 +97,16 @@ function hookEvents() {
     $(this).click(function() {
       $( '#saveSuccessAlert' ).addClass( 'hidden' );
       var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
+      roster.cardFront = true;
+      displayCard(player);
       if ($(this).hasClass( 'btn-primary' )) {
         $(this).removeClass( 'btn-primary' ).addClass( 'btn-default' );
         $(this).removeClass( 'active' );
         rosters[rosterID].players = _.without(rosters[rosterID].players, player);
-        displayCard(player);
       } else {
         $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
         $(this).addClass( 'active' );
         rosters[rosterID].players.push(player);
-        displayCard(player);
       };
       $( '#rosterSize' ).text(rosters[rosterID].players.length);
     });

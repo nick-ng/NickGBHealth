@@ -1,6 +1,17 @@
 $(document).ready(function() {
-  if (Cookies.get( 'resume-url' )) {
-    $( '#resumeGameButton' ).removeClass( 'hidden' );
+  var resumeURL = Cookies.get( 'resume-url' );
+  if (resumeURL) {
+    var destination = resumeURL.replace(location.origin + '/play/', '' );
+    destination = destination.replace( /\?.*$/, '' ).toLowerCase();
+    console.log(destination);
+    if (destination != 'demo' ) {
+      var resumeDestination = 'Solo';
+      if (!isNaN(destination)) {
+        resumeDestination = 'Game ID: ' + destination;
+      }
+      $( '#resumeDestination' ).text( ' (' + resumeDestination + ')' );
+      $( '#resumeGameButton' ).removeClass( 'hidden' );
+    }
   }
   Cookies.remove( 'roster0' ); // Remove these later
   Cookies.remove( 'roster1' );

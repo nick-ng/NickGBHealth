@@ -39,8 +39,8 @@ $(document).ready(function() {
   $( '#selectedPlayer' ).text( 'Ready' );
   hookFullscreenChange();
   displayCard();
-  windowResized();
   lastMinuteStyles();
+  windowResized();
   Cookies.set( 'resume-url', getResumeURL(), {expires: 0.1});
 });
 
