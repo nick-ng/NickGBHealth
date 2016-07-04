@@ -80,16 +80,38 @@ td.card-inf {
 }
 
 div.card-book {
-  font-size:32px;
-  height:101px;
+  height:94px;
   display:table-row;
   vertical-align: middle;
-  background: url(/images/cyan.png);
-  -moz-background-size: cover;
+  /*background: url(/images/magenta.png);
+  -moz-background-size: cover; */
 }
-.card-book img {
+.playbook-col {
+  display:table-cell;
+}
+.playbook-att {
+  display:block;
   height:46px;
   width:46px;
+}
+.playbook-att .blank {
+  height:46px;
+  width:46px;
+  padding-top:45px;
+  padding-left:45px;
+}
+.playbook-att.norm {
+  background: url(/images/card-parts/normal.svg);
+  color: #000;
+}
+.playbook-att.mom {
+  background: url(/images/card-parts/momentus.svg);
+}
+.playbook-full {
+  font-size: 24px;
+}
+.playbook-half {
+  font-size: 12px;
 }
 
 .dark-font {

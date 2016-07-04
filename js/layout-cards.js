@@ -86,8 +86,7 @@ function layoutCard(playerObj, captainsGuild) {
     cardF += '</tr></table>';
     
     cardF += '<div class="card-book ' + fontOnImg + '">';
-    cardF += '1';
-    //cardF += playBookHTML(playerObj.book);
+    cardF += playbookHTML(playerObj.playbook);
     cardF += '</div>';
     
     
@@ -98,23 +97,132 @@ function layoutCard(playerObj, captainsGuild) {
   }
 }
 
+function playbookHTML(playbook) {
+  var html = '';
+  for (var i = 0; i < playbook.length; i++) {
+    html += '<div class="playbook-col">';
+    if (playbook[i].att2) {
+      var classes = 'playbook-att ' + (playbook[i].att2.mom ? 'mom' : 'norm');
+      html += '<div class="' + classes + '">' + playbookAttHTML(playbook[i].att2) + '</div>';
+    } else {
+      html += '<div class="playbook-att blank"><span class="sr-only">a</span></div>';
+    }
+    var classes = 'playbook-att ' + (playbook[i].att1.mom ? 'mom' : 'norm');
+    html += '<div class="' + classes + '">' + playbookAttHTML(playbook[i].att1) + '</div></div>';
+  }
+  return html;
+}
+
+function playbookAttHTML(att) {
+  var html = '';
+  if (att.res.length == 1) {
+    var guildballs = att.res[0].match( /GB/ig );
+    if (guildballs) {
+      html += howManyGuildballs(guildballs, att.mom, false);
+    } else {
+      html += '<div class="playbook-full">' + att.res[0] + '</div>';
+    }
+  } else {
+    for (var i = 0; i < att.res.length; i++) {
+      var guildballs = att.res[0].match( /GB/ig );
+      if (guildballs) {
+        html += howManyGuildballs(guildballs, att.mom, true);
+      } else {
+        html += '<div class="playbook-half">' + att.res[i] + '</div>';
+      }
+    }
+  }
+  return html
+}
+
+function howManyGuildballs(guildballs, mom, half) {
+  var imgURL = '/images/card-parts/';
+  imgURL += half ? 'half' : '';
+  imgURL += mom ? 'mom' : '';
+  if (guildballs.length == 1) {
+    return '<img src="' + imgURL + 'gb.svg">';
+  } else {
+    return '<img src="' + imgURL + 'gbgb.svg">';
+  }
+}
+
 function basicStatsHTML(stats) {
-  var format = {
-      mov: ['&rdquo;', '&rdquo;'],
-      tac: [''],
-      kick: ['', '&rdquo;'],
-      def: [''],
-      arm: [''],
-      inf: ['', '']};
+  var columns = [
+    {
+      stat: 'MOV',
+      values: [
+        {
+          key: 'move',
+          units: '&rdquo;/'
+        },
+        {
+          key: 'sprint',
+          units: '&rdquo;'
+        }
+      ]
+    },
+    {
+      stat: 'TAC',
+      values: [
+        {
+          key: 'tac',
+        }
+      ]
+    },
+    {
+      stat: 'KICK',
+      values: [
+        {
+          key: 'kick',
+          units: '/'
+        },
+        {
+          key: 'kickDistance',
+          units: '&rdquo;'
+        }
+      ]
+    },
+    {
+      stat: 'DEF',
+      values: [
+        {
+          key: 'defence',
+          units: '+'
+        }
+      ]
+    },
+    {
+      stat: 'ARM',
+      values: [
+        {
+          key: 'armour'
+        }
+      ]
+    },
+    {
+      stat: 'INF',
+      values: [
+        {
+          key: 'influence',
+          units: '/'
+        },
+        {
+          key: 'influenceCap'
+        }
+      ]
+    }
+  ];
   var preHtml = '<td class="card-';
   var html = '';
-  var keys = _.keys(stats);
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    html += preHtml + key + '">' + key.toUpperCase() + '<br>';
-    html += stats[key][0] + format[key][0];
-    for (var j = 1; j < stats[key].length; j++) {
-      html += '/' + stats[key][j] + format[key][j];
+  for (var i = 0; i < columns.length; i++) {
+    html += preHtml + columns[i].stat.toLowerCase() + '">' + columns[i].stat.toUpperCase() + '<br>';
+    for (var j = 0; j < columns[i].values.length; j++) {
+      var key = columns[i].values[j].key;
+      var units = '';
+      if (columns[i].values[j].units != undefined) {
+        units = columns[i].values[j].units;
+      }
+      html += stats[key] + units;
     }
     html += '</td>';
   }

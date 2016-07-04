@@ -3397,9 +3397,9 @@
     "season": 1,
     "size": 30,
     "melee": 2,
-    "status": {
+    "stats": {
       "move": 5,
-      "charge": 7,
+      "sprint": 7,
       "tac": 6,
       "kick": 3,
       "kickDistance": 6,
@@ -3420,7 +3420,7 @@
         "att2": { "res": [ "1", "<<" ] }
       },
       {
-        "att1": { "res": [ "T" ] },
+        "att1": { "res": [ "T" ] }
       },
       {
         "att1": { "mom": true, "res": [ "GBGB" ] },
@@ -3441,17 +3441,17 @@
       },
       {
         "name": "commandingAura"
-      },
+      }
     ],
     "traits": [
       {
-        "name": "shadowLike",
+        "name": "shadowLike"
       }
     ],
     "heroicPlays": [ ],
     "legendaryPlays": [
       {
-        "name": "Strike from the Shadows",
+        "name": "Strike from the Shadows"
       }
     ],
     "hasCardData": true
