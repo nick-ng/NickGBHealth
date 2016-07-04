@@ -1,4 +1,6 @@
 div.card {
+  font-family: Georgia, serif;
+  text-decoration: none;
   z-index: 0;
   position:relative;
   width: 442px;
@@ -23,17 +25,15 @@ div.card {
 }
 
 div.card-title {
-  text-decoration: bold;
   font-size:32px;
   height:50px;
   display:table-row;
   vertical-align: middle;
-  background: url(/images/cyan.png);
-  -moz-background-size: cover;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
 }
 
 tr.card-basic-stats {
-  text-decoration: none;
   font-size: 20px;
   line-height:1;
   height:59px;
@@ -45,60 +45,62 @@ td.card-mov {
   padding-left:0;
   width: 56px;
   display:table-cell;
-  background: url(/images/magenta.png);
-  -moz-background-size: cover;
+  /*background: url(/images/magenta.png);
+  -moz-background-size: cover;*/
 }
 td.card-tac {
   width: 50px;
   display:table-cell;
-  background: url(/images/cyan.png);
-  -moz-background-size: cover;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
 }
 td.card-kick {
   width: 62px;
   display:table-cell;
-  background: url(/images/magenta.png);
-  -moz-background-size: cover;
+  /*background: url(/images/magenta.png);
+  -moz-background-size: cover;*/
 }
 td.card-def {
   width: 54px;
   display:table-cell;
-  background: url(/images/cyan.png);
-  -moz-background-size: cover;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
 }
 td.card-arm {
   width: 57px;
   display:table-cell;
-  background: url(/images/magenta.png);
-  -moz-background-size: cover;
+  /*background: url(/images/magenta.png);
+  -moz-background-size: cover;*/
 }
 td.card-inf {
   width: 60px;
   display:table-cell;
-  background: url(/images/cyan.png);
-  -moz-background-size: cover;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
 }
 
 div.card-book {
-  height:94px;
-  display:table-row;
-  vertical-align: middle;
-  /*background: url(/images/magenta.png);
+  height:101px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /*vertical-align: middle;
+  background: url(/images/magenta.png);
   -moz-background-size: cover; */
 }
 .playbook-col {
-  display:table-cell;
+  display: flex;
+  flex-direction: column;
 }
 .playbook-att {
-  display:block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
   height:46px;
   width:46px;
-}
-.playbook-att .blank {
-  height:46px;
-  width:46px;
-  padding-top:45px;
-  padding-left:45px;
 }
 .playbook-att.norm {
   background: url(/images/card-parts/normal.svg);
@@ -107,11 +109,27 @@ div.card-book {
 .playbook-att.mom {
   background: url(/images/card-parts/momentus.svg);
 }
+.playbook-full, .playbook-half {
+  text-align:center;
+  font-weight: bold;
+}
 .playbook-full {
-  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  font-size: 22px;
 }
 .playbook-half {
-  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+  font-size: 14px;
+  line-height: 0.9;
+}
+.playbook-half + .playbook-half {
+  justify-content: flex-start;
 }
 
 .dark-font {
