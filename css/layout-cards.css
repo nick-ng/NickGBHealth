@@ -1,0 +1,101 @@
+div.card {
+  z-index: 0;
+  position:relative;
+  width: 442px;
+  height: 620px;
+}
+
+.card-stats-bg {
+  z-index: 100;
+  position:absolute;
+  width: 442px;
+  height: 261px;
+  top:0;
+  left:0;
+}
+
+.card-stats {
+  z-index:200;
+  padding-left: 18px;
+  padding-top: 9px;
+  padding-bottom:0;
+  width:100%;
+}
+
+div.card-title {
+  text-decoration: bold;
+  font-size:32px;
+  height:50px;
+  display:table-row;
+  vertical-align: middle;
+  background: url(/images/cyan.png);
+  -moz-background-size: cover;
+}
+
+tr.card-basic-stats {
+  text-decoration: none;
+  font-size: 20px;
+  line-height:1;
+  height:59px;
+  display:table-row;
+  vertical-align: middle;
+  text-align: center;
+}
+td.card-mov {
+  padding-left:0;
+  width: 56px;
+  display:table-cell;
+  background: url(/images/magenta.png);
+  -moz-background-size: cover;
+}
+td.card-tac {
+  width: 50px;
+  display:table-cell;
+  background: url(/images/cyan.png);
+  -moz-background-size: cover;
+}
+td.card-kick {
+  width: 62px;
+  display:table-cell;
+  background: url(/images/magenta.png);
+  -moz-background-size: cover;
+}
+td.card-def {
+  width: 54px;
+  display:table-cell;
+  background: url(/images/cyan.png);
+  -moz-background-size: cover;
+}
+td.card-arm {
+  width: 57px;
+  display:table-cell;
+  background: url(/images/magenta.png);
+  -moz-background-size: cover;
+}
+td.card-inf {
+  width: 60px;
+  display:table-cell;
+  background: url(/images/cyan.png);
+  -moz-background-size: cover;
+}
+
+div.card-book {
+  font-size:32px;
+  height:101px;
+  display:table-row;
+  vertical-align: middle;
+  background: url(/images/cyan.png);
+  -moz-background-size: cover;
+}
+.card-book img {
+  height:46px;
+  width:46px;
+}
+
+.dark-font {
+  color: #000;
+}
+
+.light-font {
+  color: #fff;
+}

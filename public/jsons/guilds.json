@@ -3344,39 +3344,8 @@
     "race": "Raed, Human, Male,",
     "position": "Centre Back",
     "guild": ["union"],
-    "season": 1
-  }, {
-    "name": "blackheart",
-    "hp": 16,
-    "sponge": [5, 10],
-    "role": "c",
-    "size": 30,
-    "melee": 2,
-    "stats": {
-      "mov": [5, 7],
-      "tac": [6],
-      "kick": [3, 6],
-      "def": [3],
-      "arm": [2],
-      "inf": [4, 6]
-    },
-    "book": [
-      ["1", "m<"],
-      ["1<<", "2"],
-      ["", "t"],
-      ["kd", "mgbgb"],
-      ["m3<<", "m3t"],
-      ["m3", "m3kd"]
-    ],
-    "plays": ["Misdirection", "Commanding Aura"],
-    "legendary": "Strike from the Shadows",
-    "traits": [{
-      "name": "Shadow Like"
-    }],
-    "race": "Unknown, Human, Male, Captain,",
-    "position": "Central Midfielder",
-    "guild": ["union"],
-    "season": 1
+    "season": 1,
+    "hasCardData": true
   }, {
     "name": "coin",
     "hp": 10,
@@ -3417,6 +3386,39 @@
     "position": "Winger",
     "guild": ["union"],
     "season": 1
+  }, {
+    "name": "blackheart",
+    "hp": 16,
+    "sponge": [5, 10],
+    "role": "c",
+    "size": 30,
+    "melee": 2,
+    "stats": {
+      "mov": [5, 7],
+      "tac": [6],
+      "kick": [3, 6],
+      "def": [3],
+      "arm": [2],
+      "inf": [4, 6]
+    },
+    "book": [
+      ["1", "m<"],
+      ["1<<", "2"],
+      ["", "t"],
+      ["kd", "mgbgb"],
+      ["m3<<", "m3t"],
+      ["m3", "m3kd"]
+    ],
+    "plays": ["Misdirection", "Commanding Aura"],
+    "legendary": "Strike from the Shadows",
+    "traits": [{
+      "name": "Shadow Like"
+    }],
+    "race": "Unknown, Human, Male, Captain,",
+    "position": "Central Midfielder",
+    "guild": ["union"],
+    "season": 1,
+    "hasCardData": true
   }, {
     "name": "compound",
     "hp": 20,
