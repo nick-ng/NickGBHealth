@@ -1,0 +1,3937 @@
+[{
+  "name": "alchemists",
+  "players": [{
+    "name": "calculus",
+    "hp": 15,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "flask",
+    "hp": 10,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "katalyst",
+    "hp": 27,
+    "sponge": [9, 18],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "katalyst-v",
+    "hp": 29,
+    "sponge": [14, 24],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "mercury",
+    "hp": 15,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "midas",
+    "hp": 14,
+    "sponge": [5, 10],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "naja",
+    "hp": 7,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "smoke",
+    "hp": 16,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "venin",
+    "hp": 16,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }, {
+    "name": "vitriol",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["alchemists"],
+    "season": 1
+  }],
+  "union": ["avarisse", "compound", "decimate", "harry", "hemlocke", "mist", "snakeskin"],
+  "sort": "alchemists"
+}, {
+  "name": "brewers",
+  "players": [{
+    "name": "esters",
+    "hp": 22,
+    "sponge": [8, 16],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "friday",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "hooper",
+    "hp": 17,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "mash",
+    "hp": 17,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "quaff",
+    "hp": 10,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "scum",
+    "hp": 8,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "spigot",
+    "hp": 16,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "spigot-v",
+    "hp": 16,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "stave",
+    "hp": 23,
+    "sponge": [8, 16],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "stoker",
+    "hp": 18,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }, {
+    "name": "tapper",
+    "hp": 18,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["brewers"],
+    "season": 1
+  }],
+  "union": ["avarisse", "fangtooth", "gutter", "harry", "hemlocke", "rage"],
+  "sort": "brewers"
+}, {
+  "name": "butchers",
+  "players": [{
+    "name": "boar",
+    "hp": 22,
+    "sponge": [7, 14],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "boiler",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "brisket",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "brisket-v",
+    "hp": 13,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "fillet",
+    "hp": 16,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "meathook",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "ox",
+    "hp": 19,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "princess",
+    "hp": 10,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "shank",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "tenderiser",
+    "hp": 19,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }, {
+    "name": "truffles",
+    "hp": 11,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["butchers"],
+    "season": 1
+  }],
+  "union": ["avarisse", "decimate", "gutter", "harry", "minx", "rage"],
+  "sort": "butchers"
+}, {
+  "name": "engineers",
+  "players": [{
+    "name": "ballista",
+    "hp": 18,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "colossus",
+    "hp": 20,
+    "sponge": [7, 14],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "hoist",
+    "hp": 11,
+    "sponge": [4, 7],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "mainspring",
+    "hp": 6,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "mother",
+    "hp": 9,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "pinvice",
+    "hp": 16,
+    "sponge": [6, 12],
+    "role": "c",
+    "display": "Pin Vice",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "ratchet",
+    "hp": 17,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "salvo",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "velocity",
+    "hp": 11,
+    "sponge": [4, 7],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }, {
+    "name": "velocity-v",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["engineers"],
+    "season": 1
+  }],
+  "union": ["avarisse", "compound", "decimate", "gutter", "harry", "rage"],
+  "sort": "engineers"
+}, {
+  "name": "fishermen",
+  "players": [{
+    "name": "angel",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "corsair",
+    "hp": 18,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "greyscales",
+    "hp": 15,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "jac",
+    "hp": 15,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "kraken",
+    "hp": 20,
+    "sponge": [7, 14],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "sakana",
+    "hp": 15,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "salt",
+    "hp": 8,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "shark",
+    "hp": 17,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "siren",
+    "hp": 10,
+    "sponge": [3, 6],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "siren-v",
+    "hp": 10,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }, {
+    "name": "tentacles",
+    "hp": 9,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["fishermen"],
+    "season": 1
+  }],
+  "union": ["avarisse", "gutter", "hemlocke", "snakeskin"],
+  "sort": "fishermen"
+}, {
+  "name": "hunters",
+  "players": [{
+    "name": "chaska",
+    "hp": 16,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }, {
+    "name": "egret",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }, {
+    "name": "fahad",
+    "hp": 8,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }, {
+    "name": "hearne",
+    "hp": 20,
+    "sponge": [7, 14],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }, {
+    "name": "jaecar",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }, {
+    "name": "seenah",
+    "hp": 21,
+    "sponge": [7, 14],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }, {
+    "name": "theron",
+    "hp": 18,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }, {
+    "name": "zarola",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["hunters"],
+    "season": 1
+  }],
+  "union": ["avarisse", "hemlocke", "minx"],
+  "sort": "hunters"
+}, {
+  "name": "masons",
+  "players": [{
+    "name": "brick",
+    "hp": 19,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "chisel",
+    "hp": 13,
+    "sponge": [4, 8],
+    "nonsponge": [6],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "flint",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "hammer",
+    "hp": 18,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "harmony",
+    "hp": 10,
+    "sponge": [3, 6],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "harmony-v",
+    "hp": 10,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "honour",
+    "hp": 17,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "mallet",
+    "hp": 16,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "marbles",
+    "hp": 8,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "tower",
+    "hp": 18,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }, {
+    "name": "wrecker",
+    "hp": 10,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["masons"],
+    "season": 1
+  }],
+  "union": ["avarisse", "decimate", "minx", "mist", "snakeskin"],
+  "sort": "masons"
+}, {
+  "name": "morticians",
+  "players": [{
+    "name": "bonesaw",
+    "hp": 13,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "casket",
+    "hp": 17,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "cosset",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "dirge",
+    "hp": 5,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "ghast",
+    "hp": 21,
+    "sponge": [7, 14],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "graves",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "graves-v",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "obulus",
+    "hp": 16,
+    "sponge": [5, 10],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "scalpel",
+    "hp": 17,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "silence",
+    "hp": 15,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }, {
+    "name": "vileswarm",
+    "hp": 7,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["morticians"],
+    "season": 1
+  }],
+  "union": ["avarisse", "fangtooth", "minx", "mist", "rage"],
+  "sort": "morticians"
+}, {
+  "name": "union",
+  "players": [{
+    "name": "avarisse",
+    "hp": 20,
+    "sponge": [7, 14],
+    "detach": "greede",
+    "size": 40,
+    "melee": 1,
+    "stats": {
+      "mov": [4, 7],
+      "tac": [6],
+      "kick": [1, 6],
+      "def": [3],
+      "arm": [0],
+      "inf": [1, 3]
+    },
+    "book": [
+      ["1", "mgb"],
+      ["kd", "m>>"],
+      ["t", "2"],
+      ["3", "2>>"],
+      ["", "3>>"]
+    ],
+    "plays": ["Singled Out"],
+    "traits": [{
+      "name": "Selective",
+      "extra": ["All Guilds"]
+    }, {
+      "name": "Tough Hide"
+    }, {
+      "name": "Detach",
+      "extra": "Greede"
+    }],
+    "race": "Raed, Human, Male,",
+    "position": "Centre Back",
+    "guild": ["union"],
+    "season": 1,
+    "hasCardData": true
+  }, {
+    "name": "coin",
+    "hp": 10,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "blackheart",
+    "hp": 16,
+    "sponge": [5, 10],
+    "role": "c",
+    "size": 30,
+    "melee": 2,
+    "stats": {
+      "mov": [5, 7],
+      "tac": [6],
+      "kick": [3, 6],
+      "def": [3],
+      "arm": [2],
+      "inf": [4, 6]
+    },
+    "book": [
+      ["1", "m<"],
+      ["1<<", "2"],
+      ["", "t"],
+      ["kd", "mgbgb"],
+      ["m3<<", "m3t"],
+      ["m3", "m3kd"]
+    ],
+    "plays": ["Misdirection", "Commanding Aura"],
+    "legendary": "Strike from the Shadows",
+    "traits": [{
+      "name": "Shadow Like"
+    }],
+    "race": "Unknown, Human, Male, Captain,",
+    "position": "Central Midfielder",
+    "guild": ["union"],
+    "season": 1,
+    "hasCardData": true
+  }, {
+    "name": "compound",
+    "hp": 20,
+    "sponge": [6, 12],
+    "role": "nonunion",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "decimate",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "fangtooth",
+    "hp": 29,
+    "sponge": [10, 20],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "greede",
+    "hp": 4,
+    "sponge": [0],
+    "role": "benched",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "gutter",
+    "hp": 14,
+    "sponge": [5, 10],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "harry",
+    "hp": 19,
+    "sponge": [7, 14],
+    "display": "Harry &lsquo;the Hat&rsquo;",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "hemlocke",
+    "hp": 10,
+    "sponge": [3, 6],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "minx",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "mist",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "rage",
+    "hp": 17,
+    "sponge": [6, 12],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "rage-v",
+    "hp": 17,
+    "sponge": [6, 12],
+    "role": "c",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "snakeskin",
+    "hp": 12,
+    "sponge": [4, 8],
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }, {
+    "name": "strongbox",
+    "hp": 10,
+    "sponge": [0],
+    "role": "m",
+    "size": 30,
+    "melee": 1,
+    "stats": {
+      "mov": [1, 2],
+      "tac": [1],
+      "kick": [1, 2],
+      "def": [1],
+      "arm": [1],
+      "inf": [1, 2]
+    },
+    "book": [
+      ["mT", "1m"],
+      ["", "kD"],
+      ["><", "3"],
+      ["<", "gb"],
+      ["MgBGb", ">>"]
+    ],
+    "plays": ["example", "example 2"],
+    "heroic": "example",
+    "legendary": "example",
+    "traits": [{
+      "name": "Selective",
+      "extra": ["Brewers", "Fishermen", "Morticians"]
+    }, {
+      "name": "Shelling Out",
+      "extra": [4]
+    }, {
+      "name": "Furious"
+    }, {
+      "name": "GlUTtoNOuS mASs"
+    }],
+    "race": "Castellyian, Human, Female,",
+    "position": "Winger",
+    "guild": ["union"],
+    "season": 1
+  }],
+  "union": [],
+  "sort": "zzunion"
+}]

@@ -107,6 +107,10 @@ app.get( '/test-cards', function(req, res) {
   res.sendFile(PAGEDIR + '/home.html' );
 });
 
+app.get( '/layout-cards', function(req, res) {
+  res.sendFile(PAGEDIR + '/layout-cards.html' );
+});
+
 app.get( '/test', function(req, res) {
   if (process.env.TEST) {
     res.sendFile(PAGEDIR + '/test.html' );
