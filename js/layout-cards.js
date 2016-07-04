@@ -105,7 +105,7 @@ function playbookHTML(playbook) {
       var classes = 'playbook-att ' + (playbook[i].att2.mom ? 'mom' : 'norm');
       html += '<div class="' + classes + '">' + playbookAttHTML(playbook[i].att2) + '</div>';
     } else {
-      html += '<div class="playbook-att blank"><span class="sr-only">a</span></div>';
+      html += '<div class="playbook-att"><img src="/images/card-parts/spacer.svg" class="playbook-att"></div>';
     }
     var classes = 'playbook-att ' + (playbook[i].att1.mom ? 'mom' : 'norm');
     html += '<div class="' + classes + '">' + playbookAttHTML(playbook[i].att1) + '</div></div>';
