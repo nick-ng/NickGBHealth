@@ -8,7 +8,7 @@ var play = {
   teamList: [[],[]],
   animateDuration: 2000,
   cardFront: true,
-  fullSyncPeriod: 100,
+  fullSyncPeriod: 10000,
   singleSends: 0,
   btnSize: '',
   percentHeights: [
