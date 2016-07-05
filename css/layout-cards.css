@@ -1,0 +1,141 @@
+div.card {
+  font-family: Georgia, serif;
+  text-decoration: none;
+  z-index: 0;
+  position:relative;
+  width: 442px;
+  height: 620px;
+}
+
+.card-stats-bg {
+  z-index: 100;
+  position:absolute;
+  width: 442px;
+  height: 261px;
+  top:0;
+  left:0;
+}
+
+.card-stats {
+  z-index:200;
+  padding-left: 18px;
+  padding-top: 9px;
+  padding-bottom:0;
+  width:100%;
+}
+
+div.card-title {
+  font-size:32px;
+  height:50px;
+  display:table-row;
+  vertical-align: middle;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
+}
+
+tr.card-basic-stats {
+  font-size: 20px;
+  line-height:1;
+  height:59px;
+  display:table-row;
+  vertical-align: middle;
+  text-align: center;
+}
+td.card-mov {
+  padding-left:0;
+  width: 56px;
+  display:table-cell;
+  /*background: url(/images/magenta.png);
+  -moz-background-size: cover;*/
+}
+td.card-tac {
+  width: 50px;
+  display:table-cell;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
+}
+td.card-kick {
+  width: 62px;
+  display:table-cell;
+  /*background: url(/images/magenta.png);
+  -moz-background-size: cover;*/
+}
+td.card-def {
+  width: 54px;
+  display:table-cell;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
+}
+td.card-arm {
+  width: 57px;
+  display:table-cell;
+  /*background: url(/images/magenta.png);
+  -moz-background-size: cover;*/
+}
+td.card-inf {
+  width: 60px;
+  display:table-cell;
+  /*background: url(/images/cyan.png);
+  -moz-background-size: cover;*/
+}
+
+div.card-book {
+  height:101px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  /*vertical-align: middle;
+  background: url(/images/magenta.png);
+  -moz-background-size: cover; */
+}
+.playbook-col {
+  display: flex;
+  flex-direction: column;
+}
+.playbook-att {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  height:46px;
+  width:46px;
+}
+.playbook-att.norm {
+  background: url(/images/card-parts/normal.svg);
+  color: #000;
+}
+.playbook-att.mom {
+  background: url(/images/card-parts/momentus.svg);
+}
+.playbook-full, .playbook-half {
+  text-align:center;
+  font-weight: bold;
+}
+.playbook-full {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  font-size: 22px;
+}
+.playbook-half {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+  font-size: 14px;
+  line-height: 0.9;
+}
+.playbook-half + .playbook-half {
+  justify-content: flex-start;
+}
+
+.dark-font {
+  color: #000;
+}
+
+.light-font {
+  color: #fff;
+}

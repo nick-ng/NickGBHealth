@@ -8,94 +8,93 @@
     <link rel="shortcut icon" href="/images/narwhal-32.png" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/extra.css" rel="stylesheet">
+    <script src="/underscore-min.js" defer></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/jquery-2.2.4.min.js" defer></script>
+    <script src="/js/bootstrap.min.js" defer></script>
+    <script src="/js.cookie.js" defer></script>
+    <script src="/jquery.qrcode.min.js" defer></script>
+    <script src="/jquery.animate-colors-min.js" defer></script>
+    <script src="/jquery.fullscreen-min.js" defer></script>
+    <script src="/common.js" defer></script>
+    <script src="/guilds.js" defer></script>
+    <script src="/play.js" defer></script>
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-          <div id="soloHeader" class="row hidden">
-            <div class="col-xs-12">
-              <h3 class=" text-center">Solo Mode</h3>
-              <hr>
-            </div>
-          </div>
-          <div id="opponents0" class="row player-container hidden" data-toggle="buttons">
-            <h3 class="col-md-12 text-center">
-              Your opponent hasn't connected yet.<br>
-            </h3>
-          </div>
-          <div class="row">
-            <div id="gameID" class="col-xs-12 text-center"></div>
-          </div>
-          <div id="myPlayers0" class="row player-container" data-toggle="buttons">
-          </div>
-          <h4 id="selectedPlayer" class="text-center"></h4>
-          <div class="row">
-            <div id="quickHealth">
-              <button id="minusOne" class="btn btn-danger col-xs-2" type="button">-1<br>
-                <span class="glyphicon glyphicon-heart"></span>
-              </button>
-              <button id="minusTwo" class="btn btn-danger col-xs-2" type="button">-2<br>
-                <span class="glyphicon glyphicon-heart"></span>
-              </button>
-              <button id="minusThree" class="btn btn-danger col-xs-2" type="button">-3<br>
-                <span class="glyphicon glyphicon-heart"></span>
-              </button>
-              <button id="icySponge" class="btn btn-success col-xs-2" type="button">Icy<br>Sponge</button>
-              <button id="plusFour" class="btn btn-success col-xs-2" type="button">+4<br><span class="glyphicon glyphicon-heart"></span></button>
-              <button id="plusOne" class="btn btn-success col-xs-2" type="button">+1<br><span class="glyphicon glyphicon-heart"></span></button>
-            </div>
-          </div>
-          <div class="row">
-            <div id="healthBoxes" class="small-margin-top"></div>
-            <div id="isOpponent" class="small-margin-top">
-              <h3 class="text-center hidden">Opponent's player</h3>
-            </div>
-          </div>
-        </div>
-        <div id="cardCol" class="hidden-xs col-sm-6 col-md-6 col-lg-4">
-          <div id="cardPanel" class="panel panel-default hidden">
-            <a id="flipCard" href="#">
-              <div class="panel-body">
-                <div id="playerCard"></div>
+      <div id="fullscreen-content">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <div id="soloHeader" class="row hidden">
+              <div class="col-xs-12">
+                <h3 class=" text-center">Solo Mode</h3>
+                <hr>
               </div>
-            </a>
+            </div>
+            <div id="opponents0" class="row player-container hidden">
+              <h3 class="col-md-12 text-center">
+                Your opponent hasn't connected yet.<br>
+              </h3>
+            </div>
+            <div class="row">
+              <div id="gameID" class="col-xs-12 text-center"></div>
+            </div>
+            <div id="myPlayers0" class="row player-container">
+            </div>
+            <div class="row small-margin-top">
+              <div id="quickHealth">
+                <button id="minusOne" class="btn btn-danger" type="button" disabled>-1<br>
+                  <span class="glyphicon glyphicon-heart"></span>
+                </button>
+                <button id="minusTwo" class="btn btn-danger" type="button" disabled>-2<br>
+                  <span class="glyphicon glyphicon-heart"></span>
+                </button>
+                <button id="minusThree" class="btn btn-danger" type="button" disabled>-3<br>
+                  <span class="glyphicon glyphicon-heart"></span>
+                </button>
+                <button id="icySponge" class="btn btn-success" type="button" disabled>Icy<br><span class="sponge-text">Sponge</span></button>
+                <button id="plusFour" class="btn btn-success" type="button" disabled>+4<br><span class="glyphicon glyphicon-heart"></span></button>
+                <button id="plusOne" class="btn btn-success" type="button" disabled>+1<br><span class="glyphicon glyphicon-heart"></span></button>
+              </div>
+            </div>
+            <div class="row">
+              <div id="selectedPlayer" class="text-center"></div>
+              <div id="healthBoxes" class=""></div>
+              <div id="isOpponent" class="small-margin-top">
+                <h3 class="text-center hidden">Opponent's player</h3>
+              </div>
+              <div id="makeFullscreen-div" class="hidden">
+                <button id="makeFullscreen" class="btn btn-default btn-block" type="button">Fullscreen</button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div id="cardCol2" class="visible-lg-inline col-lg-4">
-          <div id="cardPanel2" class="panel panel-default hidden">
-            <div class="panel-body">
+          <div id="cardCol" class="hidden-xs col-sm-6 col-md-6 col-lg-4">
+            <div id="cardPanel" class="hidden">
+              <a id="playerCard" href="#"></a>
+            </div>
+          </div>
+          <div id="cardCol2" class="visible-lg-inline col-lg-4">
+            <div id="cardPanel2" class="hidden">
               <div id="playerCard2"></div>
             </div>
           </div>
         </div>
-      </div>
+      </div> <!-- fullscreen-view -->
       <div class="row">
         <div class="col-md-12">
           <hr>
-          <p class="text-center">
-            <button id="soloReset" class="btn btn-default hidden" type="button">
-              Reset Game
-            </button>
+          <div class="form-inline text-center">
+            <a class="btn btn-default" href="/options" role="button">Options</a>
             <a class="btn btn-default" href="/" role="button">Home</a>
-          </p>
+          </div>
+          <hr>
           <footer class="text-center">
-            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a> <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
-            Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved.<br>
+            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
+            Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved. Used with permission.<br>
             <a href="http://glyphicons.com/">GLYPHICONS</a> used as part of <a href="http://getbootstrap.com/">Bootstrap</a>
           </footer>
         </div>
       </div>
     </div>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/jquery-2.2.4.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js.cookie.js"></script>
-    <script src="/jquery.qrcode.min.js"></script>
-    <script src="/jquery.animate-colors-min.js"></script>
-    <script src="/common.js"></script>
-    <script src="/guilds.js"></script>
-    <script src="/play.js"></script>
   </body>
 </html>

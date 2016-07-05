@@ -1,6 +1,10 @@
 // Common variables
-var common = {};
-common.cookieExpiry = 999; // 999 days
+var common = {
+  IMG_EXT: '.jpg',
+  cookieExpiry: 999, // 999 days
+  specialPos: {cap:{id:0, Name:'Captain'}, mas:{id:1, Name:'Mascot'}},
+  fullscreenBehaviour: 'separate'
+};
 
 // Common functions
 common.removeWhiteSpace = function removeWhiteSpace(someString) {
@@ -43,18 +47,26 @@ common.getThisSearch = function getThisSearch() {
   return location.search.replace(/^\?/, '');
 };
 
-common.parseRosterCookie = function parseRosterCookie(rosterCookie) {
-  var guild = rosterCookie.match( /3([a-z])+2/ );
+common.parseRosterString = function parseRosterString(rosterString) {
+  var guild = rosterString.match( /3([a-z])+2/ );
   if (guild) {
     guild = guild[0].replace( /\d/g, '' );
   }
-  var players = rosterCookie.match( /1([a-z\-])+0/g );
+  var players = rosterString.match( /1([a-z\-])+0/g );
   if (players) {
     for (var i = 0; i < players.length; i++) {
       players[i] = players[i].replace( /\d/g, '' );
     }
   }
   return {guild:guild, players:players};
+}
+
+common.stringRosterObj = function stringRosterObj(rosterObj) {
+  var rosterString = '3' + rosterObj.guild + '2';
+  for (var i = 0; i < rosterObj.players.length; i++) {
+    rosterString += '1' + rosterObj.players[i] + '0';
+  }
+  return rosterString;
 }
 
 common.playerButtonHTML = function playerButtonHTML(name, special) {
@@ -74,6 +86,17 @@ common.getRosterName = function getRosterName(name) {
     displayName += ' &amp; ' + common.getRosterName(playerObj.detach);
   }
   return displayName
+}
+
+common.loadSettings = function loadSettings() {
+  for (var i = 0; i < _.keys(common.specialPos).length; i++) {
+    var key = _.keys(common.specialPos)[i];
+    var tempPos = parseInt(Cookies.get( 'options-' + key + '-pos' ));
+    if (!isNaN(tempPos)) {
+      common.specialPos[key].id = tempPos;
+    }
+  }
+  common.fullscreenBehaviour = Cookies.get( 'options-fullscreen' ) || common.fullscreenBehaviour;
 }
 
 common.sumArray = function sumArray(someArray, useFloat) {

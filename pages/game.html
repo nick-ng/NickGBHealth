@@ -8,13 +8,22 @@
     <link rel="shortcut icon" href="/images/narwhal-32.png" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/extra.css" rel="stylesheet">
+    <script src="/underscore-min.js" defer></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/jquery-2.2.4.min.js" defer></script>
+    <script src="/js/bootstrap.min.js" defer></script>
+    <script src="/js.cookie.js" defer></script>
+    <script src="/jquery.qrcode.min.js" defer></script>
+    <script src="/common.js" defer></script>
+    <script src="/guilds.js" defer></script>
+    <script src="/game.js" defer></script>
   </head>
   <body>
     <div class="container-fluid">
       <div class="row">
         <div class="hidden-xs col-sm-1 col-md-2 col-lg-3"></div>
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-          <p id="output"></p>
+          <h5 id="output" class="text-center"></h5>
           <div id="qrcode" class="text-center"></div>
           <h3 id="gameIDTitle" class="text-center">Game ID: <span id="gameIDHolder"></span></h3>
           <div id="rosterSelect">
@@ -31,10 +40,18 @@
           </div>
           <div id="playerSelect" class="hidden">
             <p>
-              <button id="chooseRoster" class="btn btn-default btn-block" type="button">test</button>
+              <button id="chooseRoster" class="btn btn-default btn-sm btn-block" type="button">test</button>
             </p>
             <p>Players: <span id="teamSize">0</span>/<span id="maxTeamSize">6</span></p>
             <div id="allPlayers"></div>
+            <div class="form-group">
+              <label for="lowHealthThreshold">Low Enemy Health Indicator Threshold</label>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <input type="number" class="form-control text-right" id="lowHealthThreshold" value=0>
+                </div>
+              </div>
+            </div>
             <div id="tooManyPlayers" class="alert alert-danger hidden" role="alert">Too many players. Remove another player first.</div>
             <hr>
             <div id="notEnoughPlayers" class="alert alert-danger hidden" role="alert">Please select <span id="maxTeamSize">6</span> players.</div>
@@ -51,21 +68,12 @@
             <a class="btn btn-default" href="/" role="button">Home</a>
           </p>
           <footer class="text-center">
-            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a> <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
-            Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved.<br>
+            &copy; 2016 <a href="http://nick-ng.com" target="_blank">Nick Ng</a>, <a href="https://github.com/nick-ng/NickGBHealth" target="_blank">GitHub</a><br>
+            Guild Ball<!--&#8482;--> guild logos &amp; player cards are &copy; 2015 <a href="http://steamforged.com/" target="_blank">Steamforged Games Ltd.</a> All Rights Reserved. Used with permission.<br>
             <a href="http://glyphicons.com/">GLYPHICONS</a> used as part of <a href="http://getbootstrap.com/">Bootstrap</a>
           </footer>
         </div>
       </div>
     </div>
-    
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/jquery-2.2.4.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js.cookie.js"></script>
-    <script src="/jquery.qrcode.min.js"></script>
-    <script src="/common.js"></script>
-    <script src="/guilds.js"></script>
-    <script src="/game.js"></script>
   </body>
 </html>

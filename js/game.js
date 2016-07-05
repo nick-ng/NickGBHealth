@@ -1,5 +1,7 @@
-var gameID;
-var queryObj;
+var game = {
+  gameID: null,
+  queryObj: null
+};
 var teamSize = 0;
 var maxTeamSize = 6;
 var captainSelected = 0;
@@ -8,8 +10,9 @@ var superPlayers = 2;
 var clientMode = 'solo';
 
 $(document).ready(function() {
-  queryObj = common.parseQueryString();
-  displayGameID();
+  game.queryObj = common.parseQueryString();
+  game.gameID = location.pathname.substr(1);
+  displayGameID(game.gameID, game.queryObj);
   populatePlayerSelect();
   nameRosterButtons();
   hookEvents();
@@ -48,9 +51,26 @@ $( '#chooseRoster' ).click(function() {
 $( '#play-butt' ).click(function() {
   $( '#tooManyPlayers' ).addClass( 'hidden' );
   if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
-    var players = getSelectedPlayers();
-    var query = makePlayQuery(players);
-    location.href = location.origin + '/play/' + gameID + query;
+    var teamList = getSelectedTeam();
+    if (game.gameID == 'solo') {
+      Cookies.set( 'solo-mode', JSON.stringify(teamList), {expires: 0.1});
+      location.href = location.origin + '/play/solo' + makePlayQuery( 'solo' );
+      $( '#output' ).text( 'Starting game...' );
+    } else {
+      var mode = '' + (game.queryObj.mode || 'join' )
+      var gameReq = $.post( '/', {
+        gameID: game.gameID,
+        mode: mode,
+        teamList: teamList
+      }, function(res) {
+        if (gameReq.status == 201) {
+          location.href = location.origin + '/play/' + game.gameID + makePlayQuery(mode);;
+          $( '#output' ).text( 'Starting game...' );
+        } else {
+          $( '#output' ).text( 'Error code: ' + gameReq.status);
+        }
+      });
+    }
   } else {
     $( '#notEnoughPlayers' ).removeClass( 'hidden' );
   }
@@ -83,8 +103,7 @@ function populatePlayerSelect() {
   $( '#allPlayers' ).append(captainsHTML + mascotsHTML + playersHTML);
 }
 
-function displayGameID() {
-  gameID = location.pathname.substr(1);
+function displayGameID(gameID, queryObj) {
   if (queryObj.mode && (queryObj.mode[0] == 'host')) {
     clientMode = 'host';
     joinURL = location.origin + '/' + gameID;
@@ -94,10 +113,10 @@ function displayGameID() {
     clientMode = 'join';
   }
   if (isNaN(parseInt(gameID))) {
-    $( '#gameIDHolder' ).text(gameID);
-  } else {
     $( '#gameIDTitle' ).text( 'Solo Mode' );
     clientMode = 'solo';
+  } else {
+    $( '#gameIDHolder' ).text(gameID);
   }
 }
 
@@ -133,7 +152,7 @@ function hookEvents() {
       }
       styleRadioButton($(this));
       $( '#teamSize' ).text(captainSelected + mascotSelected + teamSize);
-      //~ $( '#output' ).text(rosterCookies[rosterID]);
+      //~ $( '#output' ).text(rosterStrings[rosterID]);
     });
   });
 }
@@ -171,15 +190,17 @@ function rosterButton(rosterID) {
   if (rosterID > -1) {
     var RosterID = rosterID + 1;
     var rosterObj = loadRoster(rosterID)
-    if (rosterObj) {
+    if (rosterObj.players.length > 0) {
       showRoster(rosterObj.players);
+      $( '#lowHealthThreshold' ).val(rosterObj.hpThreshold);
     }
     chooseRosterText = 'Roster ' + RosterID + ' selected (' + common.capFirst(rosterObj.guild) + ').';
   } else {
     showRoster(['*']);
     chooseRosterText = 'Ad hoc roster.';
+    $( '#lowHealthThreshold' ).val(0);
   }
-  $( '#chooseRoster' ).text( chooseRosterText + ' Click here to choose a different roster.' );
+  $( '#chooseRoster' ).html( chooseRosterText + '<br>Click here to choose a different roster.' );
   teamSize = 0;
   captainSelected = 0;
   mascotSelected = 0;
@@ -189,13 +210,14 @@ function rosterButton(rosterID) {
 }
 
 function loadRoster(rosterID) {
-  var cookieName = 'roster' + rosterID;
-  var tempCookie = Cookies.get(cookieName);
-  if (tempCookie) {
-    return common.parseRosterCookie(tempCookie);
-  } else {
-    return false
+  var rostersCookie = Cookies.get( 'rosters' );
+  if (rostersCookie) {
+    var rosters = JSON.parse(rostersCookie);
+    if (rosters[rosterID].players && (rosters[rosterID].players.length > 0)) {
+      return rosters[rosterID];
+    }
   }
+  return false;
 }
 
 function showRoster(playerList) {
@@ -217,7 +239,7 @@ function showRoster(playerList) {
   });
 }
 
-function getSelectedPlayers() {
+function getSelectedTeam() {
   var players = [];
   $( '#allPlayers input[type=radio]:checked' ).each(function() {
     players.push($(this).attr('id').replace(/-butt$/, '' ));
@@ -227,15 +249,36 @@ function getSelectedPlayers() {
       players.push($(this).attr( 'id' ).replace(/-butt$/, '' ));
     }
   });
-  return players;
+  return makeTeamList(players, common.allPlayers);
 }
 
-function makePlayQuery(players) {
-  var query = '?';
-  query += 'mode=' + clientMode;
+function makeTeamList(players, allPlayers) {
+  var teamList = [];
+  var benchedPlayerObjs = [];
   for (var i = 0; i < players.length; i++) {
-    query += '&players=' + players[i];
+    var playerObj = _.find(allPlayers, function(item) {
+      return item.name == players[i]
+    });
+    playerObj.currHP = playerObj.hp;
+    teamList.push(playerObj);
+    if (playerObj.detach) {
+      var playerObjD = _.find(allPlayers, function(item) {
+        return item.name == playerObj.detach
+      });
+      playerObjD.currHP = playerObjD.hp;
+      benchedPlayerObjs.push(playerObjD);
+    }
   }
+  for (var i = 0; i < benchedPlayerObjs.length; i++) {
+    teamList.push(benchedPlayerObjs[i]);
+  }
+  return teamList;
+}
+
+function makePlayQuery(mode) {
+  var query = '?';
+  query += 'mode=' + (mode || 'join');
+  query += '&hpThreshold=' + $( '#lowHealthThreshold' ).val();
   return query;
 }
 
@@ -253,6 +296,6 @@ function playerButtonHTML(name, special) {
 function playerRadioHTML(name, special, radioName) {
   var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
   var html = '<label id="' + name + '-butt" name="' + radioName + '" class="btn btn-default">';
-  html += '<input type="radio" name="' + radioName + '" id="' + name + '-butt" autocomplete="off" checked>' + Name + '</label>';
+  html += '<input type="radio" name="' + radioName + '" id="' + name + '-butt" autocomplete="off">' + Name + '</label>';
   return html
 }

@@ -4,63 +4,34 @@
     <meta charset=utf-8>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Manage Rosters &mdash; Nick's Guild Ball Health Tracker</title>
+    <title>Test Card Layout &mdash; Nick's Guild Ball Health Tracker</title>
     <link rel="shortcut icon" href="/images/narwhal-32.png" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/extra.css" rel="stylesheet">
+    <link href="/layout-cards.css" rel="stylesheet">
     <script src="/underscore-min.js" defer></script>
     <script src="/jquery-2.2.4.min.js" defer></script>
     <script src="/js/bootstrap.min.js" defer></script>
     <script src="/js.cookie.js" defer></script>
     <script src="/common.js" defer></script>
     <script src="/guilds.js" defer></script>
-    <script src="/managerosters.js" defer></script>
+    <script src="/layout-cards.js" defer></script>
   </head>
   <body>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <h6>
+            <input id="player-name" class="form-control" type="text" placeholder="Start typing a player's name" autocomplete="off">
+            <button id="show-avarisse" class="btn btn-default">Avarisse</button>
+            <button id="show-blackheart" class="btn btn-default">Blackheart</button>
+          </h6>
           <p>
-            <div id="rosterSelector" class="btn-group btn-group-justified" data-toggle="buttons">
-              <label class="btn btn-default active">
-                <input type="radio" name="rosters" id="0" autocomplete="off" checked>Roster 1
-              </label>
-              <label class="btn btn-default">
-                <input type="radio" name="rosters" id="1" autocomplete="off">Roster 2
-              </label>
-            </div>
+            <textarea id="json-output" class="form-control" rows="20"></textarea>
           </p>
-          <div id="guildBack" class="hidden">
-            <p>
-              <button id="guildBack-butt" class="btn btn-default btn-block" type="button"></button>
-            </p>
-          </div>
-          <div class="row">
-            <div id="guildSelector" class="col-xs-12">
-              <h3 class="text-center">Choose a Guild</h3>
-              <!-- Guild selection buttons go here -->
-            </div>
-          </div>
-          <div id="saveSuccessAlert" class="alert alert-success hidden" role="alert"></div>
-          <div id="allPlayers" class="hidden">
-            <p>Choose Players &ndash; <span id="rosterSize">0</span>/<span id="maxRosterSize"> Something went wrong! </span></p>
-            <!-- Player selection buttons go here -->
-          </div>
-          <form id="saveControl" class="hidden">
-            <div class="form-group">
-              <label for="lowHealthThreshold">Low Enemy Health Indicator Threshold</label>
-              <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <input type="number" class="form-control text-right" id="lowHealthThreshold" value=0>
-                </div>
-              </div>
-            </div>
-            <button id="saveRosterButton" class="btn btn-default btn-block" type="button">Save Roster</button>
-          </form>
-          <p id="output"></p>
         </div>
         <div id="cardCol" class="hidden-xs col-sm-6 col-md-6 col-lg-4">
-          <div id="cardPanel" class="hidden">
+          <div id="cardPanel" class="">
             <a id="playerCard" href="#"></a>
           </div>
         </div>
