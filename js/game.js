@@ -52,16 +52,23 @@ $( '#play-butt' ).click(function() {
   $( '#tooManyPlayers' ).addClass( 'hidden' );
   if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
     var teamList = getSelectedTeam();
+    var teamObj = {
+      players: teamList,
+      vps: 0,
+      goals: 0,
+      bodys: 0
+    };
     if (game.gameID == 'solo') {
-      Cookies.set( 'solo-mode', JSON.stringify(teamList), {expires: 0.1});
+      Cookies.set( 'solo-mode', JSON.stringify(teamObj), {expires: 0.1});
       location.href = location.origin + '/play/solo' + makePlayQuery( 'solo' );
       $( '#output' ).text( 'Starting game...' );
     } else {
-      var mode = '' + (game.queryObj.mode || 'join' )
+      var mode = '' + game.queryObj.mode;
+      mode = (mode == 'host') ? 'host' : 'join';
       var gameReq = $.post( '/', {
         gameID: game.gameID,
         mode: mode,
-        teamList: teamList
+        teamObj: teamObj
       }, function(res) {
         if (gameReq.status == 201) {
           location.href = location.origin + '/play/' + game.gameID + makePlayQuery(mode);;

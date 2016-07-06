@@ -24,22 +24,30 @@ const KEY_PREFIX = 'game_';
 const KEY_EXPIRY = 20000; // in seconds
 
 // Variables
-var demoTeam0 = [
-  {name:'shark', hp:17, sponge:[6, 12], role:'c', currHP:17},
-  {name:'salt', hp:8, sponge:[0], role:'m', currHP:8},
-  {name:'angel', hp:12, sponge:[4, 8], currHP:12},
-  {name:'siren', hp:10, sponge:[3, 6], currHP:10},
-  {name:'greyscales', hp:15, sponge:[5, 10], currHP:15},
-  {name:'kraken', hp:20, sponge:[7, 14], currHP:20}
-];
-var demoTeam1 = [
-  {name:'ox', hp:19, sponge:[6, 12], role:'c', currHP:19},
-  {name:'boiler', hp:14, sponge:[5, 10], currHP:14},
-  {name:'brisket', hp:12, sponge:[4, 8], currHP:12},
-  {name:'princess', hp:10, sponge:[0], role:'m', currHP:10},
-  {name:'boar', hp:22, sponge:[7, 14], currHP:22},
-  {name:'meathook', hp:14, sponge:[5, 10], currHP:14}
-];
+var demoTeam0 = {
+  players: [
+    {name:'shark', hp:17, sponge:[6, 12], role:'c', currHP:17},
+    {name:'salt', hp:8, sponge:[0], role:'m', currHP:8},
+    {name:'angel', hp:12, sponge:[4, 8], currHP:12},
+    {name:'siren', hp:10, sponge:[3, 6], currHP:10},
+    {name:'greyscales', hp:15, sponge:[5, 10], currHP:15},
+    {name:'kraken', hp:20, sponge:[7, 14], currHP:20}
+  ],
+  vps: 0,
+  goals: 0
+};
+var demoTeam1 = {
+  players: [
+    {name:'ox', hp:19, sponge:[6, 12], role:'c', currHP:19},
+    {name:'boiler', hp:14, sponge:[5, 10], currHP:14},
+    {name:'brisket', hp:12, sponge:[4, 8], currHP:12},
+    {name:'princess', hp:10, sponge:[0], role:'m', currHP:10},
+    {name:'boar', hp:22, sponge:[7, 14], currHP:22},
+    {name:'meathook', hp:14, sponge:[5, 10], currHP:14}
+  ],
+  vps: 0,
+  goals: 0
+};
 var remainingDemo = 0;
 
 app.set( 'port', ( process.env.PORT || 3434 ));
@@ -75,7 +83,7 @@ app.post( '/', function(req, res) {
       }
       var newID = funcs.generateNewKey(idLength, idList);
       if (newID) {
-        client.rpush( KEY_PREFIX + newID, '[]', '[]' );
+        client.rpush( KEY_PREFIX + newID, '{}', '{}' );
         res.status(201).json({id:newID});
         client.expire( KEY_PREFIX + newID, KEY_EXPIRY );
       } else {
@@ -91,7 +99,9 @@ app.post( '/', function(req, res) {
       teamNum = 1;
     }
     if (teamNum >= 0) {
-      client.setTeam(req.body.gameID, teamNum, req.body.teamList, function(statusCode,err) {
+      console.log(teamNum); //debug
+      console.log(req.body.teamObj); //debug
+      client.setTeam(req.body.gameID, teamNum, req.body.teamObj, function(statusCode,err) {
         res.status(statusCode).send('0');
         client.getTeams(req.body.gameID, function(teamArr) {
           io.to(req.body.gameID).emit( 'broadcastRosters', teamArr);
@@ -154,7 +164,7 @@ http.listen( app.get( 'port' ), function(){
 
 // Redis client object
 client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
-  if (teamObj && teamObj.length >= 3) {
+  if (teamObj && teamObj.players.length >= 3) {
     this.lset(KEY_PREFIX + gameID, teamNum, JSON.stringify(teamObj), function(err, reply) {
       if (err) {
         console.log(err);
@@ -169,13 +179,13 @@ client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
 }
 
 client.getTeams = function getTeams(gameID, callback) {
-  this.lrange(KEY_PREFIX + gameID, 0, 1, function(err, reply) {
+  this.lrange(KEY_PREFIX + gameID, 0, 1, function(err, reply) { // reply should be team array.
     if (err) {
       console.log(err);
       callback(reply,err);
       return
     }
-    callback(reply);
+    callback(reply); // reply is team array.
   });
 }
 
@@ -187,7 +197,7 @@ client.updateOnePlayer = function updateOnePlayer(gameID, teamNum, playerObj, pl
       return
     }
     teamArr = JSON.parse(reply);
-    teamArr[playerNum] = playerObj;
+    teamArr.players[playerNum] = playerObj;
     thisClient.setTeam(gameID, teamNum, teamArr, function() {});
   });
 }
@@ -212,7 +222,7 @@ function createDemos(thisClient) {
 function omniDemo() {
   client.getTeams( '0001', function(teamArr) {
     var teamJSON2 = JSON.stringify();
-    io.to('0001').emit( 'broadcastRosters', ['[]', teamArr[1]]);
+    io.to('0001').emit( 'broadcastRosters', ['{}', teamArr[1]]);
     var timesToChange = 50;
     var initialDelay = 750;
     var initialDelay2 = 500;
@@ -231,7 +241,7 @@ function omniDemo() {
 function changeDemoHP() {
   remainingDemo--;
   var playerNum = funcs.getRandomInt(0, 6);
-  var playerObj = demoTeam0[playerNum];
+  var playerObj = demoTeam0.players[playerNum];
   playerObj.currHP = funcs.getRandomInt(0, playerObj.hp + 1);
   var currentPlayer = {};
   currentPlayer.id = '' + playerNum + 'M_' + playerObj.name;
@@ -256,26 +266,14 @@ io.on( 'connection', function(socket) {
     socket.join(room);
   });
   
-  socket.on( 'joinGame', function(teamObj, mode) {
+  socket.on( 'joinGame', function(mode) {
     if (!room) {
       io.to(socket.id).emit( 'reconnect' );
       return
     }
-    if (teamObj.length >= 3) {
-      var teamNum = 1;
-      if (mode == 'host') {
-        teamNum = 0;
-      }
-      client.setTeam(room, teamNum, teamObj, function() {
-        client.getTeams(room, function(teamArr) {
-          io.to(room).emit( 'broadcastRosters', teamArr);
-        });
-      });
-    } else {
-      client.getTeams(room, function(teamArr) {
-        io.to(room).emit( 'broadcastRosters', teamArr);
-      });
-    }
+    client.getTeams(room, function(teamArr) {
+      io.to(room).emit( 'broadcastRosters', teamArr);
+    });
   });
   
   socket.on( 'resyncRosterToServer', function(teamObj, mode) {

@@ -86,6 +86,19 @@
   border-color: #0a2730;
 }
 
+#goal-buttons button, .my-score-div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.my-score-div {
+  width:16.666666666666666666666%;
+  display: inline-block;
+  float: left;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .img-preload {
   max-width:2.5%;
   height: auto;

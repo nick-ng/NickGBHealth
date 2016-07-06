@@ -58,12 +58,28 @@
               </div>
             </div>
             <div class="row">
-              <div id="selectedPlayer" class="text-center"></div>
+              <div id="selectedPlayer" class="col-xs-12 text-center"></div>
               <div id="healthBoxes" class=""></div>
-              <div id="isOpponent" class="small-margin-top">
-                <h3 class="text-center hidden">Opponent's player</h3>
+              <div id="goal-buttons"></div>
+              <div id="bodycount-buttons"></div>
+              
+              <div class="input-group input-group-lg">
+                <span class="input-group-btn">
+                  <button id="clockout-down" class="btn btn-default small-margin-top" type="button">
+                    Clockout
+                    <span class="glyphicon glyphicon-minus"></span>
+                  </button>
+                </span>
+                <input id="clockout-vps" type="tel" class="form-control text-center small-margin-top" value="0" readonly>
+                <span class="input-group-btn">
+                  <button id="clockout-up" class="btn btn-default small-margin-top" type="button">
+                    Clockout
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </span>
               </div>
-              <div id="makeFullscreen-div" class="hidden">
+              
+              <div id="makeFullscreen-div" class="small-margin-top hidden">
                 <button id="makeFullscreen" class="btn btn-default btn-block" type="button">Fullscreen</button>
               </div>
             </div>
