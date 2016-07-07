@@ -19,8 +19,8 @@ function populatePlayers(sidesIn) {
   for (var teamNum = 0; teamNum < sidesIn.length; teamNum++) {
     if (sidesIn[teamNum].players) {
       var teamGuild = false;
-      var captainHTML;
-      var mascotHTML;
+      var captainHTML = '';
+      var mascotHTML = '';
       var playersHTML = [ '', '' ];
       var playerList = sidesIn[teamNum].players;
       for (var i = 0; i < playerList.length; i++) {
