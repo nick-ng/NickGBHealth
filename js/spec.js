@@ -1,7 +1,7 @@
 var socket = io();
 var queryObj;
 var gameID;
-var sides = [[],[]];
+var sides = [{},{}];
 var animateDuration = 2000;
 
 $(document).ready(function() {
@@ -15,31 +15,39 @@ $(document).ready(function() {
 
 // DOM generators
 function populatePlayers(sidesIn) {
+  console.log(sidesIn);
   for (var teamNum = 0; teamNum < sidesIn.length; teamNum++) {
-    var teamGuild = false;
-    var captainHTML;
-    var mascotHTML;
-    var playersHTML = '';
-    var playerList = sidesIn[teamNum];
-    console.log(playerList.length);
-    for (var i = 0; i < playerList.length; i++) {
-      var playerObj = playerList[i];
-      if (playerObj.role == 'c') {
-        captainHTML = playerHTML(playerObj, teamNum);
-        teamGuild = getGuildFromCaptain(playerObj);
-      } else if (playerObj.role == 'm') {
-        mascotHTML = playerHTML(playerObj, teamNum);
-      } else {
-        playersHTML += playerHTML(playerObj, teamNum);
+    if (sidesIn[teamNum].players) {
+      var teamGuild = false;
+      var captainHTML;
+      var mascotHTML;
+      var playersHTML = [ '', '' ];
+      var playerList = sidesIn[teamNum].players;
+      for (var i = 0; i < playerList.length; i++) {
+        var playerObj = playerList[i];
+        if (playerObj.role == 'c') {
+          captainHTML = playerHTML(playerObj, teamNum);
+          teamGuild = getGuildFromCaptain(playerObj);
+        } else if (playerObj.role == 'm') {
+          mascotHTML = playerHTML(playerObj, teamNum);
+        } else {
+          var onePlayerHTML = playerHTML(playerObj, teamNum);
+          for (var j = 0; j < playersHTML.length; j++) {
+            playersHTML[j] += onePlayerHTML[j];
+          }
+        }
       }
-    }
-    $( 'div [id=content-' + teamNum + ']' ).each(function() {
-      $(this).html('<ul class="list-unstyled">' + captainHTML + mascotHTML + playersHTML + '</ul>');
-    });
-    if (teamGuild) {
-      $( 'div [id=guild-' + teamNum + ']' ).each(function() {
-        $(this).text(common.capFirst(teamGuild));
-      })
+      $( 'div [class=content-' + teamNum + ']' ).each(function() {
+        var forRightSide = ($(this).parent( 'div' )).hasClass( 'right-side' );
+        var sideNum = forRightSide ? 1 : 0;
+        console.log(sideNum);
+        $(this).html('<ul class="list-unstyled">' + captainHTML[sideNum] + mascotHTML[sideNum] + playersHTML[sideNum] + '</ul>');
+      });
+      if (teamGuild) {
+        $( 'div [class=guild-' + teamNum + ']' ).each(function() {
+          $(this).text(common.capFirst(teamGuild));
+        });
+      }
     }
   }
   $( '.right-side .progress-bar' ).each(function() {
@@ -48,18 +56,15 @@ function populatePlayers(sidesIn) {
 }
 
 function lastMinuteStyles() {
-  $( 'div[role=team-display]' ).each(function() {
-    $(this).addClass( 'col-xs-6 col-sm-5 col-md-3 col-lg-2' );
-  });
-  $( '.right-side[role=team-display]' ).each(function() {
+  $( '.right-side.team-display' ).each(function() {
     $(this).addClass('text-right');
   });
 }
 
 // Generated DOM events
-$( 'button[id=swap]' ).each(function() {
+$( '#swap' ).each(function() {
   $(this).click(function() {
-    $( 'div[role=team-display]' ).each(function() {
+    $( 'div.team-display' ).each(function() {
       $(this).toggleClass( 'hidden' );
     });
   });
@@ -68,7 +73,7 @@ $( 'button[id=swap]' ).each(function() {
 // Normal functions
 function joinGame(id) {
   socket.emit( 'joinRoom', id );
-  socket.emit( 'joinGame', [], 'spec' );
+  socket.emit( 'joinGame', 'spec' );
 }
 
 function getGuildFromCaptain(playerObj) {
@@ -83,20 +88,22 @@ function getGuildFromCaptain(playerObj) {
 }
 
 function updatePlayersHP(playerList, teamNum) {
-  for (var i = 0; i < playerList.length; i++) {
-    var playerObj = playerList[i];
-    var percent = 100 * (playerObj.currHP / playerObj.hp);
-    var hpID = teamNum + '_' + playerObj.name + '_hp';
-    var barID = teamNum + '_' + playerObj.name + '_bar';
-    var oldPercent = parseInt($( '#' + barID ).attr( 'aria-valuenow' ));
-    var duration = 0.01 * Math.abs(percent - oldPercent) * animateDuration;
-    $( 'div [id=' + barID + ']' ).each(function() {
-      animateHealthBars(this, percent, duration);
-      $(this).attr( 'aria-valuenow', percent);
-    });
-    $( 'span[id=' + hpID + ']' ).each(function() {
-      $(this).text(playerObj.currHP);
-    });
+  if (playerList) {
+    for (var i = 0; i < playerList.length; i++) {
+      var playerObj = playerList[i];
+      var percent = 100 * (playerObj.currHP / playerObj.hp);
+      var hpID = teamNum + '_' + playerObj.name + '_hp';
+      var barID = teamNum + '_' + playerObj.name + '_bar';
+      var oldPercent = parseInt($( '#' + barID ).attr( 'aria-valuenow' ));
+      var duration = 0.01 * Math.abs(percent - oldPercent) * animateDuration;
+      $( 'div [id=' + barID + ']' ).each(function() {
+        animateHealthBars(this, percent, duration);
+        $(this).attr( 'aria-valuenow', percent);
+      });
+      $( 'span[id=' + hpID + ']' ).each(function() {
+        $(this).text(playerObj.currHP);
+      });
+    }
   }
 }
 
@@ -112,6 +119,20 @@ function animateHealthBars(selector, percent, duration) {
       duration: duration};
     $(selector).animate(properties, options);
   }
+}
+
+function updateVPs(scoreObj, sideNum) {
+  var totalVPs = scoreObj.goals * 4 + scoreObj.bodys * 2 + +scoreObj.clocks;
+  $( '.score-' + sideNum).each(function() {
+    console.log('h');
+    $(this).text(totalVPs);
+  });
+  $( '.goals-' + sideNum).each(function() {
+    $(this).text(scoreObj.goals);
+  });
+  $( '.bodys-' + sideNum).each(function() {
+    $(this).text(scoreObj.bodys);
+  });
 }
 
 function colourHealthBars(percent) {
@@ -134,22 +155,25 @@ function playerHTML(playerObj, teamNum) {
   var currHPID = id + '_hp';
   var barID = id + '_bar';
   var barDef = 'class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" style="width: 0%;"';
-  var barHTML = '<div class="progress hidden-xs"><div id="' + barID + '" ' + barDef + '></div></div>';
+  var barHTML = '<div class="progress hidden-xs!"><div id="' + barID + '" ' + barDef + '></div></div>';
   //var barHTML = '<div class="progress hidden-xs"><div id="' + barID + '" ' + barDef + '><strong><span id="' + currHPID + '">' + currHP + '</span></strong></div></div>';
   var hLvl = 4;
   var textHTML = '<h' + hLvl + '>' + Name + ' &ndash; <span id="' + currHPID + '">' + currHP + '</span>/' + maxHP + '</h' + hLvl + '>';
+  var textHTMLr = '<h' + hLvl + '><span id="' + currHPID + '">' + currHP + '</span>/' + maxHP + ' &ndash; ' + Name + '</h' + hLvl + '>';
   //var textHTML = '<h' + hLvl + '>' + Name + '</h' + hLvl + '>';
-  return '<li>' + textHTML + barHTML + '</li>';
+  return [ '<li>' + textHTML + barHTML + '</li>', '<li>' + textHTMLr + barHTML + '</li>' ];
 };
 
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
   for (var i = 0; i < 2; i++) {
     sides[i] = JSON.parse(teamArr[i]);
+    sides[i].players = _.sortBy(sides[i].players, 'name' );
   }
   populatePlayers(sides);
   for (var i = 0; i < 2; i++) {
-    updatePlayersHP(sides[i], i);
+    updatePlayersHP(sides[i].players, i);
+    updateVPs(sides[i], i)
   }
 });
 
@@ -159,4 +183,12 @@ socket.on( 'onePlayerToClient', function(playerObj, currentPlayer, mode) {
     teamNum = 0;
   }
   updatePlayersHP([playerObj], teamNum);
+});
+
+socket.on( 'scoreToClient', function(scoreObj, mode) {
+  if (mode == 'host') {
+    updateVPs(scoreObj, 0);
+  } else if (mode == 'join') {
+    updateVPs(scoreObj, 1);
+  }
 });

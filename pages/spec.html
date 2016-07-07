@@ -20,49 +20,45 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <h1 class="hidden-xs text-center">
-            Spectating <span id="gameID"></span>
-          </h1>
-          <p class="visible-xs-block">
-            <button id="swap" class="btn btn-default btn-block">Switch Sides</button>
-          </p>
+        <div class="col-xs-6">
+          <h2><span class="guild-0"></span> &ndash; <span class="h1">18</span></h2>
+        </div>
+        <div class="col-xs-6">
+          <h2 class="text-right"><span class="h1">18</span> &ndash; <span class="guild-1"></span></h2>
         </div>
       </div>
       <div class="row">
-        <div id="default-0" class="left-side" role="team-display">
-          <h2 id="guild-0" class="hidden-xs"></h2>
-          <h3 id="guild-0" class="visible-xs-block"></h3>
-          <div id="content-0"></div>
+        <div class="col-xs-12 text-center">
+          The line above is to check if the score will wrap.
+          <button id="swap" class="btn btn-default btn-xs btn-block">Switch Sides</button>
         </div>
-        <div id="swap-1" class="left-side hidden" role="team-display">
-          <h2 id="guild-1" class="hidden-xs"></h2>
-          <h3 id="guild-1" class="visible-xs-block"></h3>
-          <div id="content-1"></div>
+      </div>
+      <div class="row">
+        <div id="default-0" class="col-xs-6 left-side team-display">
+          <h2><span class="guild-0"></span> &ndash; <span class="score-0 h1">0</span></h2>
+          <p>Goals &ndash; <span class="goals-0">0</span><br>Body Count &ndash; <span class="bodys-0">0</span></p>
+          <div class="content-0"></div>
         </div>
-        <div id="middle" class="hidden-xs col-sm-2 col-md-6 col-lg-8">
-          <p class="text-center">
-            <button id="swap" class="btn btn-default">Switch Sides</button>
-          </p>
+        <div id="swap-1" class="col-xs-6 left-side hidden team-display">
+          <h2><span class="guild-1"></span> &ndash; <span class="score-1 h1">0</span></h2>
+          <p>Goals &ndash; <span class="goals-1">0</span><br>Body Count &ndash; <span class="bodys-1">0</span></p>
+          <div class="content-1"></div>
         </div>
-        <div id="default-1" class="right-side" role="team-display">
-          <h2 id="guild-1" class="hidden-xs"></h2>
-          <h3 id="guild-1" class="visible-xs-block"></h3>
-          <div id="content-1"></div>
+        <div id="default-1" class="col-xs-6 right-side team-display">
+          <h2><span class="score-1 h1">0</span> &ndash; <span class="guild-1"></span></h2>
+          <p><span class="goals-1">0</span> &ndash; Goals<br><span class="bodys-1">0</span> &ndash; Body Count</p>
+          <div class="content-1"></div>
         </div>
-        <div id="swap-0" class="right-side hidden" role="team-display">
-          <h2 id="guild-0" class="hidden-xs"></h2>
-          <h3 id="guild-0" class="visible-xs-block"></h3>
-          <div id="content-0"></div>
+        <div id="swap-0" class="col-xs-6 right-side hidden team-display">
+          <h2><span class="h1 score-0">0</span> &ndash; <span class="guild-0"></span></h2>
+          <p><span class="goals-0">0</span> &ndash; Goals<br><span class="bodys-0">0</span> &ndash; Body Count</p>
+          <div class="content-0"></div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
           <hr>
           <p class="text-center">
-            <button id="soloReset" class="btn btn-default hidden" type="button">
-              Reset Game
-            </button>
             <a class="btn btn-default" href="/" role="button">Home</a>
           </p>
           <footer class="text-center">
