@@ -54,9 +54,9 @@ $( '#play-butt' ).click(function() {
     var teamList = getSelectedTeam();
     var teamObj = {
       players: teamList,
-      vps: 0,
       goals: 0,
-      bodys: 0
+      bodys: 0,
+      clocks: 0
     };
     if (game.gameID == 'solo') {
       Cookies.set( 'solo-mode', JSON.stringify(teamObj), {expires: 0.1});

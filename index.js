@@ -33,8 +33,9 @@ var demoTeam0 = {
     {name:'greyscales', hp:15, sponge:[5, 10], currHP:15},
     {name:'kraken', hp:20, sponge:[7, 14], currHP:20}
   ],
-  vps: 0,
-  goals: 0
+  bodys: 0,
+  goals: 0,
+  clocks: 0
 };
 var demoTeam1 = {
   players: [
@@ -45,8 +46,9 @@ var demoTeam1 = {
     {name:'boar', hp:22, sponge:[7, 14], currHP:22},
     {name:'meathook', hp:14, sponge:[5, 10], currHP:14}
   ],
-  vps: 0,
-  goals: 0
+  bodys: 0,
+  goals: 0,
+  clocks: 0
 };
 var remainingDemo = 0;
 
@@ -99,8 +101,6 @@ app.post( '/', function(req, res) {
       teamNum = 1;
     }
     if (teamNum >= 0) {
-      console.log(teamNum); //debug
-      console.log(req.body.teamObj); //debug
       client.setTeam(req.body.gameID, teamNum, req.body.teamObj, function(statusCode,err) {
         res.status(statusCode).send('0');
         client.getTeams(req.body.gameID, function(teamArr) {
@@ -196,14 +196,29 @@ client.updateOnePlayer = function updateOnePlayer(gameID, teamNum, playerObj, pl
       console.log(err);
       return
     }
-    teamArr = JSON.parse(reply);
-    teamArr.players[playerNum] = playerObj;
-    thisClient.setTeam(gameID, teamNum, teamArr, function() {});
+    teamObj = JSON.parse(reply);
+    teamObj.players[playerNum] = playerObj;
+    thisClient.setTeam(gameID, teamNum, teamObj, function() {});
+  });
+}
+
+client.updateOneScore = function updateOneScore(gameID, teamNum, scoreObj) {
+  thisClient = this;
+  thisClient.lindex(KEY_PREFIX + gameID, teamNum, function(err, reply) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    teamObj = JSON.parse(reply);
+    teamObj.goals = scoreObj.goals;
+    teamObj.bodys = scoreObj.bodys;
+    teamObj.clocks = scoreObj.clocks;
+    thisClient.setTeam(gameID, teamNum, teamObj, function() {});
   });
 }
 
 client.on( 'ready', function() {
-  console.log('Connected to Redis server');
+  console.log( 'Connected to Redis server' );
   createDemos(this);
 });
 
@@ -212,9 +227,9 @@ client.on( 'ready', function() {
 function createDemos(thisClient) {
   // delete all demos (if they exist) first.
   thisClient.del(KEY_PREFIX + '0001', function() {
-    console.log('Deleted old demo key')
+    console.log( 'Deleted old demo key' );
     thisClient.rpush( KEY_PREFIX + '0001', JSON.stringify(demoTeam0), JSON.stringify(demoTeam1), function() {
-      console.log('Created demo key');
+      console.log( 'Created demo key' );
     });
   })
 }
@@ -309,11 +324,24 @@ io.on( 'connection', function(socket) {
     }
     client.updateOnePlayer(room, teamNum, playerObj, currentPlayer.num);
   });
+  
+  socket.on( 'scoreToServer', function(scoreObj, mode) {
+    if (!room) {
+      io.to(socket.id).emit( 'reconnect' );
+      return
+    };
+    io.to(room).emit( 'scoreToClient', scoreObj, mode);
+    var teamNum = 1;
+    if (mode == 'host') {
+      teamNum = 0;
+    }
+    client.updateOneScore(room, teamNum, scoreObj);
+  });
 });
 
 // log redis errors.
-client.on("error", function (err) {
-    console.log("Redis error: " + err);
+client.on( 'error', function (err) {
+    console.log( 'Redis error: ' + err);
 });
 
 //~ client.set('test', 'onetwo');

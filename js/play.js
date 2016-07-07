@@ -36,7 +36,10 @@ $(document).ready(function() {
   makePlayerList(common.allPlayers);
   setupGame();
   populateHitPoints('init');
-  populateScoreControls();
+  if (play.queryObj.mode[0] != 'solo') {
+    // If your opponent isn't using this app, don't track the score with this app.
+    populateScoreControls();
+  }
   $( '#selectedPlayer' ).text( 'Ready' );
   hookFullscreenChange();
   displayCard();
@@ -94,7 +97,7 @@ $( '#clockout-down' ).click(function() {
   vps = vps || 0;
   vps = Math.max(vps - 1, 0);
   $( '#clockout-vps' ).val(vps);
-  updateMyVPs();
+  countMyVPs(false);
 });
 
 $( '#clockout-up' ).click(function() {
@@ -102,7 +105,7 @@ $( '#clockout-up' ).click(function() {
   vps = vps || 0;
   vps = Math.max(vps + 1, 0);
   $( '#clockout-vps' ).val(vps);
-  updateMyVPs();
+  countMyVPs(false);
 });
 
 $( '#playerCard' ).click(function() {
@@ -207,14 +210,16 @@ function populateHitPoints(player) {
 }
 
 function populateScoreControls() {
+  $( '#clockout-controls' ).removeClass( 'hidden' );
+  $( '#score-row' ).removeClass( 'hidden' );
   var goalsHTML = '';
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < 3; i++) {
     var id = i + 1;
-    goalsHTML += '<button id="' + id + '" class="btn btn-default btn-lg col-xs-5">Goal ' + id + '</button>';
+    goalsHTML += '<button id="' + id + '" class="btn btn-default btn-lg col-xs-4">Goal ' + id + '</button>';
   }
-  $( '#goal-buttons' ).html(goalsHTML + '<div class="my-score-div">VPs:<br><span id="my-score">0</span></div>');
+  $( '#goal-buttons' ).html(goalsHTML);
   var bodycountHTML = '';
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 6; i++) {
     var id = i + 1;
     bodycountHTML += '<button id="' + id + '" class="btn btn-default col-xs-4">Body Count<br>' + id + '</button>';
   }
@@ -246,7 +251,7 @@ function hookPlayerButtons() {
       var player = idParser(id);
       var opponentText = '';
       if (player.side == 'O') {
-        opponentText = 'Opponent ';
+        opponentText = 'Opp. ';
       }
       $( '#selectedPlayer' ).html(opponentText + player.Name + ' &ndash; <span id="selectedHP"></span>');
       play.currentPlayer = player;
@@ -281,11 +286,13 @@ function hookHPButtons() {
 function hookScoreButtons() {
   $( '#goal-buttons > button' ).each(function() {
     $(this).click(function() {
+      console.log( 'goal ' + $(this).attr( 'id' ));
       toggleScoreButton($(this));
     });
   });
   $( '#bodycount-buttons > button' ).each(function() {
     $(this).click(function() {
+      console.log( 'bodycount ' + $(this).attr( 'id' ));
       toggleScoreButton($(this));
     });
   });
@@ -332,7 +339,7 @@ function soloSetup() {
     return
   }
   play.teamList[0] = JSON.parse(Cookies.get( 'solo-mode' ));
-  populateTeam( 'M' );
+  populateTeam(play.teamList[0].players, 'M' );
   hookPlayerButtons();
 }
 
@@ -448,11 +455,11 @@ function toggleScoreButton($this, state) {
       .addClass( 'btn-default' );
   } else {
     $this.toggleClass( 'btn-primary btn-default' );
+    countMyVPs(false);
   }
-  updateMyVPs();
 }
 
-function updateMyVPs() {
+function countMyVPs(dontBroadcast) {
   var myGoals = 0;
   var myBodys = 0;
   $( '#goal-buttons > button' ).each(function() {
@@ -465,13 +472,47 @@ function updateMyVPs() {
       myBodys++;
     }
   });
-  var myVPs = myGoals * 4 + myBodys * 2;
-  var clockoutVPs = parseInt($( '#clockout-vps' ).val()) || 0;
-  myVPs = myVPs + clockoutVPs;
+  var myClocks = parseInt($( '#clockout-vps' ).val()) || 0;
   play.teamList[0].goals = myGoals;
   play.teamList[0].bodys = myBodys;
-  play.teamList[0].vps = myVPs;
+  play.teamList[0].clocks = myClocks;
+  var scoreObj = {
+    goals: myGoals,
+    bodys: myBodys,
+    clocks: myClocks
+  };
+  var myVPs = myGoals * 4 + myBodys * 2 + myClocks;
   $( '#my-score' ).text(myVPs);
+  if ((!dontBroadcast) && (play.queryObj.mode[0] != 'solo')) {
+    socket.emit( 'scoreToServer', scoreObj, play.queryObj.mode[0]);
+  }
+}
+
+function updateMyVPs(scoreObj) {
+  $( '#goal-buttons > button' ).each(function() {
+    $this = $(this);
+    if ($this.attr( 'id' ) <= scoreObj.goals) {
+      toggleScoreButton($this, 'on' );
+    } else {
+      toggleScoreButton($this, 'off' );
+    }
+  });
+  $( '#bodycount-buttons > button' ).each(function() {
+    $this = $(this);
+    if ($this.attr( 'id' ) <= scoreObj.bodys) {
+      toggleScoreButton($this, 'on' );
+    } else {
+      toggleScoreButton($this, 'off' );
+    }
+  });
+  var clockout = scoreObj.clocks || 0;
+  $( '#clockout-vps' ).val(clockout);
+  countMyVPs(true); // true means dontbroadcast to server
+}
+
+function updateOppVPs(scoreObj) {
+  var oppScore = scoreObj.goals * 4 + scoreObj.bodys * 2 + +scoreObj.clocks;
+  $( '#opp-score' ).text(oppScore + ' (G: ' + scoreObj.goals + ')' );
 }
 
 function displayCard(player) {
@@ -613,25 +654,8 @@ socket.on( 'broadcastRosters', function(teamArr) {
     populateTeam(play.teamList[1].players, 'O' );
   }
   hookPlayerButtons();
-  $( '#goal-buttons > button' ).each(function() {
-    $this = $(this);
-    if ($this.attr( 'id' ) <= play.teamList[0].goals) {
-      toggleScoreButton($this, 'on' );
-    } else {
-      toggleScoreButton($this, 'off' );
-    }
-  });
-  $( '#bodycount-buttons > button' ).each(function() {
-    $this = $(this);
-    if ($this.attr( 'id' ) <= play.teamList[0].bodys) {
-      toggleScoreButton($this, 'on' );
-    } else {
-      toggleScoreButton($this, 'off' );
-    }
-  });
-  var clockout = play.teamList[0].vps - (play.teamList[0].goals * 4) - (play.teamList[0].bodys * 2);
-  $( '#clockout-vps' ).val(clockout);
-  updateMyVPs();
+  updateMyVPs(play.teamList[0]);
+  updateOppVPs(play.teamList[1]);
 });
 
 socket.on( 'resyncRosterToClient', function(teamArr) {
@@ -649,6 +673,14 @@ socket.on( 'resyncRosterToClient', function(teamArr) {
 });
 
 socket.on( 'onePlayerToClient', updateOpponentHP);
+
+socket.on( 'scoreToClient', function(scoreObj, mode) {
+  if (mode == play.queryObj.mode) {
+    updateMyVPs(scoreObj);
+  } else {
+    updateOppVPs(scoreObj);
+  }
+});
 
 socket.on( 'reconnect', function() {
   console.log( 'Reconnecting' );

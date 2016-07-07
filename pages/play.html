@@ -41,7 +41,15 @@
             </div>
             <div id="myPlayers0" class="row player-container">
             </div>
-            <div class="row small-margin-top">
+            <div id="score-row" class="row hidden">
+              <div class="score-div text-right">
+                Your VPs &nbsp;&ndash;&nbsp; <span id="my-score">0</span> :
+              </div>
+              <div class="score-div text-left">
+                : <span id="opp-score">0</span> &nbsp;&ndash;&nbsp; Opp.
+              </div>
+            </div>
+            <div class="row">
               <div id="quickHealth">
                 <button id="minusOne" class="btn btn-danger" type="button" disabled>-1<br>
                   <span class="glyphicon glyphicon-heart"></span>
@@ -62,8 +70,7 @@
               <div id="healthBoxes" class=""></div>
               <div id="goal-buttons"></div>
               <div id="bodycount-buttons"></div>
-              
-              <div class="input-group input-group-lg">
+              <div id="clockout-controls" class="input-group input-group-lg hidden">
                 <span class="input-group-btn">
                   <button id="clockout-down" class="btn btn-default small-margin-top" type="button">
                     Clockout

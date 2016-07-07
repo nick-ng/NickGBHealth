@@ -37,14 +37,14 @@ function populatePlayers(sidesIn) {
           }
         }
       }
-      $( 'div [id=content-' + teamNum + ']' ).each(function() {
+      $( 'div [class=content-' + teamNum + ']' ).each(function() {
         var forRightSide = ($(this).parent( 'div' )).hasClass( 'right-side' );
         var sideNum = forRightSide ? 1 : 0;
         console.log(sideNum);
         $(this).html('<ul class="list-unstyled">' + captainHTML[sideNum] + mascotHTML[sideNum] + playersHTML[sideNum] + '</ul>');
       });
       if (teamGuild) {
-        $( 'div [id=guild-' + teamNum + ']' ).each(function() {
+        $( 'div [class=guild-' + teamNum + ']' ).each(function() {
           $(this).text(common.capFirst(teamGuild));
         });
       }
@@ -56,18 +56,15 @@ function populatePlayers(sidesIn) {
 }
 
 function lastMinuteStyles() {
-  $( 'div[role=team-display]' ).each(function() {
-    $(this).addClass( 'col-xs-6 col-sm-4 col-md-3 col-lg-2' );
-  });
-  $( '.right-side[role=team-display]' ).each(function() {
+  $( '.right-side.team-display' ).each(function() {
     $(this).addClass('text-right');
   });
 }
 
 // Generated DOM events
-$( 'button[id=swap]' ).each(function() {
+$( '#swap' ).each(function() {
   $(this).click(function() {
-    $( 'div[role=team-display]' ).each(function() {
+    $( 'div.team-display' ).each(function() {
       $(this).toggleClass( 'hidden' );
     });
   });
@@ -124,6 +121,20 @@ function animateHealthBars(selector, percent, duration) {
   }
 }
 
+function updateVPs(scoreObj, sideNum) {
+  var totalVPs = scoreObj.goals * 4 + scoreObj.bodys * 2 + +scoreObj.clocks;
+  $( '.score-' + sideNum).each(function() {
+    console.log('h');
+    $(this).text(totalVPs);
+  });
+  $( '.goals-' + sideNum).each(function() {
+    $(this).text(scoreObj.goals);
+  });
+  $( '.bodys-' + sideNum).each(function() {
+    $(this).text(scoreObj.bodys);
+  });
+}
+
 function colourHealthBars(percent) {
   if (percent <= 25) {
     return '#d9534f';
@@ -157,10 +168,12 @@ function playerHTML(playerObj, teamNum) {
 socket.on( 'broadcastRosters', function(teamArr) {
   for (var i = 0; i < 2; i++) {
     sides[i] = JSON.parse(teamArr[i]);
+    sides[i].players = _.sortBy(sides[i].players, 'name' );
   }
   populatePlayers(sides);
   for (var i = 0; i < 2; i++) {
     updatePlayersHP(sides[i].players, i);
+    updateVPs(sides[i], i)
   }
 });
 
@@ -170,4 +183,12 @@ socket.on( 'onePlayerToClient', function(playerObj, currentPlayer, mode) {
     teamNum = 0;
   }
   updatePlayersHP([playerObj], teamNum);
+});
+
+socket.on( 'scoreToClient', function(scoreObj, mode) {
+  if (mode == 'host') {
+    updateVPs(scoreObj, 0);
+  } else if (mode == 'join') {
+    updateVPs(scoreObj, 1);
+  }
 });
