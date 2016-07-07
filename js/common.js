@@ -70,8 +70,8 @@ common.stringRosterObj = function stringRosterObj(rosterObj) {
 }
 
 common.playerButtonHTML = function playerButtonHTML(name, special) {
-  var Name = common.getRosterName(name);
-  return '<button id="' + name + '-butt" class="btn btn-default" type="button">' + Name + '</button>';
+  var Name = common.getRosterName(name) + special;
+  return '<button value="' + name + '" class="btn btn-default btn-lg" type="button">' + Name + '</button>';
 }
 
 common.getRosterName = function getRosterName(name) {

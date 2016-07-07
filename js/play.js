@@ -214,14 +214,14 @@ function populateScoreControls() {
   $( '#score-row' ).removeClass( 'hidden' );
   var goalsHTML = '';
   for (var i = 0; i < 3; i++) {
-    var id = i + 1;
-    goalsHTML += '<button id="' + id + '" class="btn btn-default btn-lg col-xs-4">Goal ' + id + '</button>';
+    var num = i + 1;
+    goalsHTML += '<button value="' + num + '" class="btn btn-default btn-lg col-xs-4">Goal ' + num + '</button>';
   }
   $( '#goal-buttons' ).html(goalsHTML);
   var bodycountHTML = '';
   for (var i = 0; i < 6; i++) {
-    var id = i + 1;
-    bodycountHTML += '<button id="' + id + '" class="btn btn-default col-xs-4">Body Count<br>' + id + '</button>';
+    var num = i + 1;
+    bodycountHTML += '<button value="' + num + '" class="btn btn-default col-xs-4">Body Count<br>' + num + '</button>';
   }
   $( '#bodycount-buttons' ).html(bodycountHTML);
   hookScoreButtons();
@@ -286,13 +286,13 @@ function hookHPButtons() {
 function hookScoreButtons() {
   $( '#goal-buttons > button' ).each(function() {
     $(this).click(function() {
-      console.log( 'goal ' + $(this).attr( 'id' ));
+      console.log( 'goal ' + $(this).val());
       toggleScoreButton($(this));
     });
   });
   $( '#bodycount-buttons > button' ).each(function() {
     $(this).click(function() {
-      console.log( 'bodycount ' + $(this).attr( 'id' ));
+      console.log( 'bodycount ' + $(this).val());
       toggleScoreButton($(this));
     });
   });
@@ -491,7 +491,8 @@ function countMyVPs(dontBroadcast) {
 function updateMyVPs(scoreObj) {
   $( '#goal-buttons > button' ).each(function() {
     $this = $(this);
-    if ($this.attr( 'id' ) <= scoreObj.goals) {
+    console.log($this.val());
+    if ($this.val() <= scoreObj.goals) {
       toggleScoreButton($this, 'on' );
     } else {
       toggleScoreButton($this, 'off' );
@@ -499,7 +500,8 @@ function updateMyVPs(scoreObj) {
   });
   $( '#bodycount-buttons > button' ).each(function() {
     $this = $(this);
-    if ($this.attr( 'id' ) <= scoreObj.bodys) {
+    console.log($this.val());
+    if ($this.val() <= scoreObj.bodys) {
       toggleScoreButton($this, 'on' );
     } else {
       toggleScoreButton($this, 'off' );
