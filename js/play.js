@@ -38,7 +38,10 @@ $(document).ready(function() {
   populateHitPoints('init');
   if (play.queryObj.mode[0] != 'solo') {
     // If your opponent isn't using this app, don't track the score with this app.
-    populateScoreControls();
+    $( '#clockouts-controls' ).removeClass( 'hidden' );
+    $( '#goals-controls' ).removeClass( 'hidden' );
+    $( '#bodycounts-controls' ).removeClass( 'hidden' );
+    $( '#score-row' ).removeClass( 'hidden' );
   }
   $( '#selectedPlayer' ).text( 'Ready' );
   hookFullscreenChange();
@@ -92,20 +95,19 @@ $( '#plusOne' ).click(function() {
   changePlayerHP(currHP + 1, true);
 });
 
-$( '#clockout-down' ).click(function() {
-  var vps = parseInt($( '#clockout-vps' ).val());
-  vps = vps || 0;
-  vps = Math.max(vps - 1, 0);
-  $( '#clockout-vps' ).val(vps);
-  countMyVPs(false);
-});
-
-$( '#clockout-up' ).click(function() {
-  var vps = parseInt($( '#clockout-vps' ).val());
-  vps = vps || 0;
-  vps = Math.max(vps + 1, 0);
-  $( '#clockout-vps' ).val(vps);
-  countMyVPs(false);
+$( '.vp-btn' ).each(function() {
+  $(this).click(function() {
+    var $this = $(this);
+    var thisName = $this.attr( 'name' );
+    var $thisInput = $( '.vp-score[name=' + thisName + ']' );
+    var currVal = parseInt($thisInput.val()) || 0;
+    var thisVal = parseInt($this.val()) || 0;
+    var newVal = currVal + thisVal;
+    if (newVal >= 0) {
+      $thisInput.val(newVal);
+      countMyVPs(false);
+    }
+  })
 });
 
 $( '#playerCard' ).click(function() {
@@ -209,24 +211,6 @@ function populateHitPoints(player) {
   windowResized();
 }
 
-function populateScoreControls() {
-  $( '#clockout-controls' ).removeClass( 'hidden' );
-  $( '#score-row' ).removeClass( 'hidden' );
-  var goalsHTML = '';
-  for (var i = 0; i < 3; i++) {
-    var num = i + 1;
-    goalsHTML += '<button value="' + num + '" class="btn btn-default btn-lg col-xs-4">Goal ' + num + '</button>';
-  }
-  $( '#goal-buttons' ).html(goalsHTML);
-  var bodycountHTML = '';
-  for (var i = 0; i < 6; i++) {
-    var num = i + 1;
-    bodycountHTML += '<button value="' + num + '" class="btn btn-default col-xs-4">Body Count<br>' + num + '</button>';
-  }
-  $( '#bodycount-buttons' ).html(bodycountHTML);
-  hookScoreButtons();
-}
-
 function lastMinuteStyles() {
   $( '#quickHealth button' ).each(function() {
     $(this).addClass( play.btnSize );
@@ -279,21 +263,6 @@ function hookHPButtons() {
           changePlayerHP(hp - 1, true);
         }
       }
-    });
-  });
-}
-
-function hookScoreButtons() {
-  $( '#goal-buttons > button' ).each(function() {
-    $(this).click(function() {
-      console.log( 'goal ' + $(this).val());
-      toggleScoreButton($(this));
-    });
-  });
-  $( '#bodycount-buttons > button' ).each(function() {
-    $(this).click(function() {
-      console.log( 'bodycount ' + $(this).val());
-      toggleScoreButton($(this));
     });
   });
 }
@@ -460,19 +429,9 @@ function toggleScoreButton($this, state) {
 }
 
 function countMyVPs(dontBroadcast) {
-  var myGoals = 0;
-  var myBodys = 0;
-  $( '#goal-buttons > button' ).each(function() {
-    if ($(this).hasClass( 'btn-primary' )) {
-      myGoals++;
-    }
-  });
-  $( '#bodycount-buttons > button' ).each(function() {
-    if ($(this).hasClass( 'btn-primary' )) {
-      myBodys++;
-    }
-  });
-  var myClocks = parseInt($( '#clockout-vps' ).val()) || 0;
+  var myGoals = parseInt($( '#goals-scored' ).val()) || 0;
+  var myBodys = parseInt($( '#bodycounts-scored' ).val()) || 0;
+  var myClocks = parseInt($( '#clockouts-scored' ).val()) || 0;
   play.teamList[0].goals = myGoals;
   play.teamList[0].bodys = myBodys;
   play.teamList[0].clocks = myClocks;
@@ -489,26 +448,9 @@ function countMyVPs(dontBroadcast) {
 }
 
 function updateMyVPs(scoreObj) {
-  $( '#goal-buttons > button' ).each(function() {
-    $this = $(this);
-    console.log($this.val());
-    if ($this.val() <= scoreObj.goals) {
-      toggleScoreButton($this, 'on' );
-    } else {
-      toggleScoreButton($this, 'off' );
-    }
-  });
-  $( '#bodycount-buttons > button' ).each(function() {
-    $this = $(this);
-    console.log($this.val());
-    if ($this.val() <= scoreObj.bodys) {
-      toggleScoreButton($this, 'on' );
-    } else {
-      toggleScoreButton($this, 'off' );
-    }
-  });
-  var clockout = scoreObj.clocks || 0;
-  $( '#clockout-vps' ).val(clockout);
+  $( '#goals-scored' ).val(scoreObj.goals || 0);
+  $( '#bodycounts-scored' ).val(scoreObj.bodys || 0);
+  $( '#clockouts-scored' ).val(scoreObj.clocks || 0);
   countMyVPs(true); // true means dontbroadcast to server
 }
 
