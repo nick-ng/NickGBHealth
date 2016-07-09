@@ -51,6 +51,10 @@ var demoTeam1 = {
   clocks: 0
 };
 var remainingDemo = 0;
+var analytics = {
+  currentGames: 0,
+  maxGames: 0
+}
 
 app.set( 'port', ( process.env.PORT || 3434 ));
 app.set( 'views', __dirname + '/public' );
@@ -62,7 +66,17 @@ app.use( express.static( __dirname + '/bootstrap' ) );
 
 // The pages
 app.get( '/', function(req, res) {
-  res.sendFile(PAGEDIR + '/home.html' );
+  if (req.query.analytics) {
+    if (req.query.analytics == 'all') {
+      res.status(200).json(analytics);
+    } else if (typeof analytics[req.query.analytics] != 'undefined') {
+      res.status(200).send(analytics[req.query.analytics]);
+    } else {
+      res.sendStatus(400);
+    }
+  } else {
+    res.sendFile(PAGEDIR + '/home.html' );
+  }
 });
 
 app.post( '/', function(req, res) {
@@ -83,6 +97,13 @@ app.post( '/', function(req, res) {
       while (Math.pow(10, idLength) < idExtra) {
         idLength++;
       }
+      /* These values will be one less than the actual number of games
+       * (including the demo game) but I want to exclude the demo game
+       * from the count so this is working as intended.
+      */
+      analytics.currentGames = idList.length;
+      analytics.maxGames = Math.max(idList.length, analytics.maxGames);
+      console.log(analytics.currentGames); // To be caught by Heroku's Papertrail add-on
       var newID = funcs.generateNewKey(idLength, idList);
       if (newID) {
         client.rpush( KEY_PREFIX + newID, '{}', '{}' );
