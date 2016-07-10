@@ -5,10 +5,8 @@ var rosterID = 0;
 var rosterSize = [0, 0];
 var rosterStrings = ['', ''];
 var rosters = [];
-var maxRosterSize = 9;
 
 $(document).ready(function() {
-  $( '#maxRosterSize' ).text(maxRosterSize);
   populateDOM();
   hookEvents();
   loadRoster();
