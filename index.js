@@ -124,7 +124,7 @@ app.post( '/', function(req, res) {
       teamNum = 1;
     }
     if (teamNum >= 0) {
-      client.setTeam(req.body.gameID, teamNum, req.body.teamObj, function(statusCode,err) {
+      client.setTeam(req.body.gameID, teamNum, JSON.parse(req.body.teamObj), function(statusCode,err) {
         res.status(statusCode).send('0');
         client.getTeams(req.body.gameID, function(teamArr) {
           io.to(req.body.gameID).emit( 'broadcastRosters', teamArr);

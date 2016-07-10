@@ -87,7 +87,7 @@ $( '#play-butt' ).click(function() {
       var gameReq = $.post( '/', {
         gameID: game.gameID,
         mode: mode,
-        teamObj: teamObj
+        teamObj: JSON.stringify(teamObj)
       }, function(res) {
         if (gameReq.status == 201) {
           location.href = location.origin + '/play/' + game.gameID + makePlayQuery(mode);;
