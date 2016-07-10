@@ -412,7 +412,7 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
 }
 
 function colourButtonLowHP(playerObj, buttonSelector) {
-  if (play.queryObj.hpThreshold && (playerObj.currHP <= play.queryObj.hpThreshold[0])) {
+  if (play.queryObj.hpThreshold && (+playerObj.currHP <= +play.queryObj.hpThreshold[0])) {
     $(buttonSelector).addClass( 'btn-low-hp' );
   } else {
     $(buttonSelector).removeClass( 'btn-low-hp' );
@@ -459,8 +459,11 @@ function updateMyVPs(scoreObj) {
 }
 
 function updateOppVPs(scoreObj) {
-  var oppScore = scoreObj.goals * 4 + scoreObj.bodys * 2 + +scoreObj.clocks;
-  $( '#opp-score' ).text(oppScore + ' (G: ' + scoreObj.goals + ')' );
+  var goals = (+scoreObj.goals) || 0;
+  var oppScore = goals * 4;
+  oppScore += (scoreObj.bodys * 2) || 0;
+  oppScore += (+scoreObj.clocks) || 0;
+  $( '#opp-score' ).text(oppScore + ' (G: ' + goals + ')' );
 }
 
 function displayCard(player) {

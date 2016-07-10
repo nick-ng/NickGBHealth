@@ -16,7 +16,9 @@ $(document).ready(function() {
   populatePlayerSelect();
   nameRosterButtons();
   hookEvents();
-  $( '#maxTeamSize' ).text(maxTeamSize);
+  $( '.maxTeamSize' ).each(function() {
+    $(this).text(maxTeamSize);
+  });
 }); // $( document ).ready(function() {
 
 // Static DOM events
@@ -66,7 +68,8 @@ $( '#low-health-up' ).click(function() {
 
 $( '#play-butt' ).click(function() {
   $( '#tooManyPlayers' ).addClass( 'hidden' );
-  if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
+  var isMaxTeamSize = (captainSelected + mascotSelected + teamSize) == maxTeamSize;
+  if (isMaxTeamSize || confirm( 'Fewer than ' + maxTeamSize + ' players selected. Play anyway?' )) {
     var teamList = getSelectedTeam();
     var teamObj = {
       players: teamList,

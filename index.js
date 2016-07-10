@@ -102,7 +102,9 @@ app.post( '/', function(req, res) {
        * from the count so this is working as intended.
       */
       analytics.currentGames = idList.length;
-      analytics.maxGames = Math.max(idList.length, analytics.maxGames);
+      client.updateMaxGames(analytics.currentGames, function(newMax) {
+        analytics.maxGames = newMax;
+      });
       console.log( 'Current games: ' + analytics.currentGames); // To be caught by Heroku's Papertrail add-on
       var newID = funcs.generateNewKey(idLength, idList);
       if (newID) {
@@ -185,6 +187,9 @@ http.listen( app.get( 'port' ), function(){
 
 // Redis client object
 client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
+  if (typeof callback != 'function') {
+    callback = function() {}
+  }
   if (teamObj && teamObj.players.length >= 3) {
     this.lset(KEY_PREFIX + gameID, teamNum, JSON.stringify(teamObj), function(err, reply) {
       if (err) {
@@ -200,6 +205,9 @@ client.setTeam = function setTeam(gameID, teamNum, teamObj, callback) {
 }
 
 client.getTeams = function getTeams(gameID, callback) {
+  if (typeof callback != 'function') {
+    callback = function() {}
+  }
   this.lrange(KEY_PREFIX + gameID, 0, 1, function(err, reply) { // reply should be team array.
     if (err) {
       console.log(err);
@@ -211,7 +219,7 @@ client.getTeams = function getTeams(gameID, callback) {
 }
 
 client.updateOnePlayer = function updateOnePlayer(gameID, teamNum, playerObj, playerNum) {
-  thisClient = this;
+  var thisClient = this;
   thisClient.lindex(KEY_PREFIX + gameID, teamNum, function(err, reply) {
     if (err) {
       console.log(err);
@@ -224,7 +232,7 @@ client.updateOnePlayer = function updateOnePlayer(gameID, teamNum, playerObj, pl
 }
 
 client.updateOneScore = function updateOneScore(gameID, teamNum, scoreObj) {
-  thisClient = this;
+  var thisClient = this;
   thisClient.lindex(KEY_PREFIX + gameID, teamNum, function(err, reply) {
     if (err) {
       console.log(err);
@@ -238,9 +246,28 @@ client.updateOneScore = function updateOneScore(gameID, teamNum, scoreObj) {
   });
 }
 
+client.updateMaxGames = function updateMaxGames(currentGames, callback) {
+  if (typeof callback != 'function') {
+    callback = function() {}
+  }
+  var thisClient = this;
+  var keyName = 'analytics_maxgames';
+  thisClient.get(keyName, function(err, reply) {
+    if (err) {
+      console.log(err);
+      return
+    }
+    var dbMax = parseInt(reply) || 0;
+    var newMax = Math.max(currentGames, dbMax);
+    callback(newMax);
+    thisClient.set(keyName, newMax);
+  });
+}
+
 client.on( 'ready', function() {
   console.log( 'Connected to Redis server' );
   createDemos(this);
+  this.updateMaxGames(analytics.currentGames);
 });
 
 // Demos
