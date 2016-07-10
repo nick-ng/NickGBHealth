@@ -370,13 +370,14 @@ function changePlayerHP(newHP, broadcast) {
 function updateOpponentHP(playerObj, theirCurrent, mode) {
   /* play.queryObj.mode is a list with a single element.
    * Doing it this way lets us handle an undefined play.queryObj.mode
-   */  var sameTeam = false; // Start with different.
+   */
   if (('' + mode) !== ('' + play.queryObj.mode)) {
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
     var oldHP = parseInt($(hpSelector).text());
     play.teamList[1][theirCurrent.num] = playerObj;
     var buttonSelector = 'button[id=' + theirID + ']';
+    colourButtonLowHP(playerObj, buttonSelector);
     animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
     $(hpSelector).text(playerObj.currHP);
     if (theirID == play.currentPlayer.id) {
@@ -386,11 +387,6 @@ function updateOpponentHP(playerObj, theirCurrent, mode) {
 }
 
 function animateButtonBG(buttonSelector, oldHP, newHP) {
-  if (play.queryObj.hpThreshold && (newHP <= play.queryObj.hpThreshold[0])) {
-    $(buttonSelector).addClass( 'btn-low-hp' );
-  } else {
-    $(buttonSelector).removeClass( 'btn-low-hp' );
-  }
   var originalBG = $(buttonSelector).css( 'background-color' );
   if (oldHP > newHP) {
     // animate lose hp
@@ -412,6 +408,14 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
         $(buttonSelector).css( 'background-color', '' );
       }
     });
+  }
+}
+
+function colourButtonLowHP(playerObj, buttonSelector) {
+  if (play.queryObj.hpThreshold && (playerObj.currHP <= play.queryObj.hpThreshold[0])) {
+    $(buttonSelector).addClass( 'btn-low-hp' );
+  } else {
+    $(buttonSelector).removeClass( 'btn-low-hp' );
   }
 }
 
@@ -596,6 +600,11 @@ socket.on( 'broadcastRosters', function(teamArr) {
   }
   if (play.teamList[1].players) {
     populateTeam(play.teamList[1].players, 'O' );
+    for (var i = 0; i < play.teamList[1].players.length; i++) {
+      var theirID = i + 'O_' + play.teamList[1].players[i].name;
+      var buttonSelector = 'button[id=' + theirID + ']';
+      colourButtonLowHP(play.teamList[1].players[i], buttonSelector)
+    }
   }
   hookPlayerButtons();
   updateMyVPs(play.teamList[0]);

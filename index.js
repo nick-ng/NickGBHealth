@@ -103,7 +103,7 @@ app.post( '/', function(req, res) {
       */
       analytics.currentGames = idList.length;
       analytics.maxGames = Math.max(idList.length, analytics.maxGames);
-      console.log(analytics.currentGames); // To be caught by Heroku's Papertrail add-on
+      console.log( 'Current games: ' + analytics.currentGames); // To be caught by Heroku's Papertrail add-on
       var newID = funcs.generateNewKey(idLength, idList);
       if (newID) {
         client.rpush( KEY_PREFIX + newID, '{}', '{}' );
@@ -248,9 +248,9 @@ client.on( 'ready', function() {
 function createDemos(thisClient) {
   // delete all demos (if they exist) first.
   thisClient.del(KEY_PREFIX + '0001', function() {
-    console.log( 'Deleted old demo key' );
+    //console.log( 'Deleted old demo key' );
     thisClient.rpush( KEY_PREFIX + '0001', JSON.stringify(demoTeam0), JSON.stringify(demoTeam1), function() {
-      console.log( 'Created demo key' );
+      //console.log( 'Created demo key' );
     });
   })
 }
