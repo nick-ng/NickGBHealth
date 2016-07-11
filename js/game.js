@@ -12,7 +12,7 @@ var clientMode = 'solo';
 $(document).ready(function() {
   game.queryObj = common.parseQueryString();
   game.gameID = location.pathname.substr(1);
-  displayGameID(game.gameID, game.queryObj);
+  setClientMode(game.gameID, game.queryObj);
   populatePlayerSelect();
   nameRosterButtons();
   hookEvents();
@@ -22,6 +22,10 @@ $(document).ready(function() {
 }); // $( document ).ready(function() {
 
 // Static DOM events
+$( '#show-qr-butt' ).click(function() {
+  displayGameID(game.gameID, game.queryObj);
+});
+
 $( '#roster0-butt' ).click(function() {
   rosterButton(0);
 });
@@ -129,12 +133,10 @@ function populatePlayerSelect() {
   $( '#allPlayers' ).append(captainsHTML + mascotsHTML + playersHTML);
 }
 
-function displayGameID(gameID, queryObj) {
+function setClientMode(gameID, queryObj) {
   if (queryObj.mode && (queryObj.mode[0] == 'host')) {
     clientMode = 'host';
-    joinURL = location.origin + '/' + gameID;
-    $( '#qrcode' ).qrcode(joinURL);
-    console.log( 'Join game url: ' + joinURL);
+    $( '#show-qr-butt' ).removeClass( 'hidden' );
   } else {
     clientMode = 'join';
   }
@@ -144,6 +146,13 @@ function displayGameID(gameID, queryObj) {
   } else {
     $( '#gameIDHolder' ).text(gameID);
   }
+}
+
+function displayGameID(gameID, queryObj) {
+  clientMode = 'host';
+  joinURL = location.origin + '/' + gameID;
+  $( '#qrcode' ).qrcode(joinURL);
+  $( '#show-qr-butt' ).addClass( 'hidden' );
 }
 
 // Generated DOM events
