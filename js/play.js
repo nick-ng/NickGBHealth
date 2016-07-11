@@ -375,7 +375,7 @@ function updateOpponentHP(playerObj, theirCurrent, mode) {
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
     var oldHP = parseInt($(hpSelector).text());
-    play.teamList[1][theirCurrent.num] = playerObj;
+    play.teamList[1].players[theirCurrent.num] = playerObj;
     var buttonSelector = 'button[id=' + theirID + ']';
     colourButtonLowHP(playerObj, buttonSelector);
     animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
