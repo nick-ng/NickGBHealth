@@ -5,15 +5,15 @@ var play = {
   currentPlayer: {},
   queryObj: null,
   gameID: null,
-  teamList: [[],[]],
+  teamList: [{},{}],
   animateDuration: 2000,
   cardFront: true,
   fullSyncPeriod: 10000,
   singleSends: 0,
   btnSize: '',
   percentHeights: [
-    {selector:'.btn-player', height:0.115},
-    {selector:'#quickHealth button', height:0.25, constant:-70},
+    {selector:'.btn-player', height:0.1},
+    {selector:'#quickHealth button', height:0.12, constant:0},
     {selector:'.btn-hp', height:0.05, minHeight:function() {
       var ratio = 0.9;
       if (isBiggerThanPhone()) {
@@ -35,7 +35,14 @@ $(document).ready(function() {
   applySettings();
   makePlayerList(common.allPlayers);
   setupGame();
-  populateHitPoints('init')
+  populateHitPoints('init');
+  if (play.queryObj.mode[0] != 'solo') {
+    // If your opponent isn't using this app, don't track the score with this app.
+    $( '#clockouts-controls' ).removeClass( 'hidden' );
+    $( '#goals-controls' ).removeClass( 'hidden' );
+    $( '#bodycounts-controls' ).removeClass( 'hidden' );
+    $( '#score-row' ).removeClass( 'hidden' );
+  }
   $( '#selectedPlayer' ).text( 'Ready' );
   hookFullscreenChange();
   displayCard();
@@ -55,37 +62,52 @@ $( '#soloReset' ).click(function() {
 });
 
 $( '#minusOne' ).click(function() {
-  var currHP = play.teamList[0][play.currentPlayer.num].currHP;
+  var currHP = play.teamList[0].players[play.currentPlayer.num].currHP;
   changePlayerHP(currHP - 1, true);
 });
 
 $( '#minusTwo' ).click(function() {
-  var currHP = play.teamList[0][play.currentPlayer.num].currHP;
+  var currHP = play.teamList[0].players[play.currentPlayer.num].currHP;
   changePlayerHP(currHP - 2, true);
 });
 
 $( '#minusThree' ).click(function() {
-  var currHP = play.teamList[0][play.currentPlayer.num].currHP;
+  var currHP = play.teamList[0].players[play.currentPlayer.num].currHP;
   changePlayerHP(currHP - 3, true);
 });
 
 $( '#icySponge' ).click(function() {
-  for (var i = 0; i < play.teamList[0][play.currentPlayer.num].sponge.length; i++) {
-    if (play.teamList[0][play.currentPlayer.num].currHP < play.teamList[0][play.currentPlayer.num].sponge[i]) {
-      changePlayerHP(play.teamList[0][play.currentPlayer.num].sponge[i], true);
+  for (var i = 0; i < play.teamList[0].players[play.currentPlayer.num].sponge.length; i++) {
+    if (play.teamList[0].players[play.currentPlayer.num].currHP < play.teamList[0].players[play.currentPlayer.num].sponge[i]) {
+      changePlayerHP(play.teamList[0].players[play.currentPlayer.num].sponge[i], true);
       return
     }
   }
 });
 
 $( '#plusFour' ).click(function() {
-  var currHP = play.teamList[0][play.currentPlayer.num].currHP;
+  var currHP = play.teamList[0].players[play.currentPlayer.num].currHP;
   changePlayerHP(currHP + 4, true);
 });
 
 $( '#plusOne' ).click(function() {
-  var currHP = play.teamList[0][play.currentPlayer.num].currHP;
+  var currHP = play.teamList[0].players[play.currentPlayer.num].currHP;
   changePlayerHP(currHP + 1, true);
+});
+
+$( '.vp-btn' ).each(function() {
+  $(this).click(function() {
+    var $this = $(this);
+    var thisName = $this.attr( 'name' );
+    var $thisInput = $( '.vp-score[name=' + thisName + ']' );
+    var currVal = parseInt($thisInput.val()) || 0;
+    var thisVal = parseInt($this.val()) || 0;
+    var newVal = currVal + thisVal;
+    if (newVal >= 0) {
+      $thisInput.val(newVal);
+      countMyVPs(false);
+    }
+  })
 });
 
 $( '#playerCard' ).click(function() {
@@ -100,7 +122,7 @@ $( '#playerCard' ).click(function() {
 $(window).resize(windowResized);
 
 // DOM generators
-function populateTeam(side) {
+function populateTeam(players, side) {
   var teamNum = 0;
   var $targetDiv = $( '#myPlayers0' );
   if (side == 'O') {
@@ -109,22 +131,22 @@ function populateTeam(side) {
   }
   $targetDiv.html( '' );
   var htmls = [];
-  for (var i = 0; i < play.teamList[teamNum].length; i++) {
-    if (play.teamList[teamNum][i].role == 'c') {
-      common.specialPos.cap.mHTML = playerButtonHTML(play.teamList[teamNum], i, side);
-    } else if (play.teamList[teamNum][i].role == 'm') {
-      common.specialPos.mas.mHTML = playerButtonHTML(play.teamList[teamNum], i, side);
-    } else if (play.teamList[teamNum][i].role != 'benched') {
-      htmls.push(playerButtonHTML(play.teamList[teamNum], i, side));
+  for (var i = 0; i < players.length; i++) {
+    if (players[i].role == 'c') {
+      common.specialPos.cap.HTML = playerButtonHTML(players, i, side);
+    } else if (players[i].role == 'm') {
+      common.specialPos.mas.HTML = playerButtonHTML(players, i, side);
+    } else if (players[i].role != 'benched') {
+      htmls.push(playerButtonHTML(players, i, side));
     }
   }
   htmls.sort();
-  for (var i = 0; i < play.teamList[teamNum].length; i++) {
+  for (var i = 0; i < players.length; i++) {
     var hasPlayer = false;
     for (var j = 0; j < _.keys(common.specialPos).length; j++) {
       var key = _.keys(common.specialPos)[j];
       if (i == common.specialPos[key].id) {
-        $targetDiv.append(common.specialPos[key].mHTML);
+        $targetDiv.append(common.specialPos[key].HTML);
         hasPlayer = true;
       }
     }
@@ -169,22 +191,22 @@ function populateHitPoints(player) {
         $(this).prop( 'disabled', true);
       }
     });
-    for (var i = 0; i < play.teamList[player.sideN][player.num].hp; i++) {
+    for (var i = 0; i < play.teamList[player.sideN].players[player.num].hp; i++) {
       $( '#healthBoxes #' + i).removeClass( 'hidden' );
     }
-    for (var i = 0; i < play.teamList[player.sideN][player.num].currHP; i++) {
+    for (var i = 0; i < play.teamList[player.sideN].players[player.num].currHP; i++) {
       $( '#healthBoxes #' + i).removeClass( 'active' );
     }
-    if (play.teamList[player.sideN][player.num].sponge[0] == 0) {
+    if (play.teamList[player.sideN].players[player.num].sponge[0] == 0) {
       $( '#icySponge' ).prop( 'disabled', true);
     } else {
-      for (var i = 0; i < play.teamList[player.sideN][player.num].sponge.length; i++) {
-        var s = play.teamList[player.sideN][player.num].sponge[i] - 1;
+      for (var i = 0; i < play.teamList[player.sideN].players[player.num].sponge.length; i++) {
+        var s = play.teamList[player.sideN].players[player.num].sponge[i] - 1;
         $( '#healthBoxes #' + s).removeClass( 'btn-default' );
         $( '#healthBoxes #' + s).addClass( 'btn-info' );
       }
     }
-    changePlayerHP(play.teamList[player.sideN][player.num].currHP, false);
+    changePlayerHP(play.teamList[player.sideN].players[player.num].currHP, false);
   }
   windowResized();
 }
@@ -192,7 +214,7 @@ function populateHitPoints(player) {
 function lastMinuteStyles() {
   $( '#quickHealth button' ).each(function() {
     $(this).addClass( play.btnSize );
-    //$(this).prop( 'disabled', true);
+    $(this).prop( 'disabled', true);
   });
   $( '#makeFullscreen' ).prop( 'disabled', false);
 };
@@ -213,7 +235,7 @@ function hookPlayerButtons() {
       var player = idParser(id);
       var opponentText = '';
       if (player.side == 'O') {
-        opponentText = 'Opponent ';
+        opponentText = 'Opp. ';
       }
       $( '#selectedPlayer' ).html(opponentText + player.Name + ' &ndash; <span id="selectedHP"></span>');
       play.currentPlayer = player;
@@ -272,11 +294,7 @@ function setupGame() {
   } else {
     socket.emit( 'joinRoom', play.gameID );
     $( '#gameID' ).text( 'Game ID: ' + play.gameID);
-    if (play.queryObj.mode == 'host') {
-      socket.emit( 'joinGame', play.teamList[0], 'host' );
-    } else if (play.queryObj.mode == 'join') {
-      socket.emit( 'joinGame', play.teamList[0], 'join' );
-    }
+    socket.emit( 'joinGame', play.queryObj.mode);
   }
 }
 
@@ -290,7 +308,7 @@ function soloSetup() {
     return
   }
   play.teamList[0] = JSON.parse(Cookies.get( 'solo-mode' ));
-  populateTeam( 'M' );
+  populateTeam(play.teamList[0].players, 'M' );
   hookPlayerButtons();
 }
 
@@ -326,21 +344,21 @@ function changePlayerHP(newHP, broadcast) {
     }
   });
   newHP = Math.max(0, newHP);
-  newHP = Math.min(newHP, play.teamList[sideN][num].hp);
-  if (play.teamList[sideN][num].currHP == newHP) {
+  newHP = Math.min(newHP, play.teamList[sideN].players[num].hp);
+  if (play.teamList[sideN].players[num].currHP == newHP) {
     // player's HP won't change so no point sending it to server.
     broadcast = false;
   } else {
-    play.teamList[sideN][num].currHP = newHP; // This works becsue playerObj is a reference to the object that player/play.teamList[1][num] also refers to?
+    play.teamList[sideN].players[num].currHP = newHP; // This works becsue playerObj is a reference to the object that player/play.teamList[1][num] also refers to?
   }
   var selector = play.currentPlayer.id + '_hp';
-  $( '#' + selector ).text(play.teamList[sideN][num].currHP);
-  $( '#selectedHP' ).text(play.teamList[sideN][num].currHP + '/' + play.teamList[sideN][num].hp);
+  $( '#' + selector ).text(play.teamList[sideN].players[num].currHP);
+  $( '#selectedHP' ).text(play.teamList[sideN].players[num].currHP + '/' + play.teamList[sideN].players[num].hp);
   if (play.queryObj.mode == 'solo') {
     Cookies.set( 'solo-mode', JSON.stringify(play.teamList[0]), {expires: 0.1});
     Cookies.set( 'resume-url', getResumeURL(), {expires: 0.1});
   } else if (broadcast && play.currentPlayer.side == 'M') {
-    socket.emit( 'onePlayerToServer', play.teamList[sideN][num], play.currentPlayer, play.queryObj.mode);
+    socket.emit( 'onePlayerToServer', play.teamList[sideN].players[num], play.currentPlayer, play.queryObj.mode);
     play.singleSends++
     play.singleSends = play.singleSends % play.fullSyncPeriod;
     if (play.singleSends == 0) {
@@ -352,13 +370,14 @@ function changePlayerHP(newHP, broadcast) {
 function updateOpponentHP(playerObj, theirCurrent, mode) {
   /* play.queryObj.mode is a list with a single element.
    * Doing it this way lets us handle an undefined play.queryObj.mode
-   */  var sameTeam = false; // Start with different.
+   */
   if (('' + mode) !== ('' + play.queryObj.mode)) {
     theirID = theirCurrent.id.replace( 'M_', 'O_' );
     var hpSelector = '#' + theirID + '_hp';
     var oldHP = parseInt($(hpSelector).text());
-    play.teamList[1][theirCurrent.num] = playerObj;
+    play.teamList[1].players[theirCurrent.num] = playerObj;
     var buttonSelector = 'button[id=' + theirID + ']';
+    colourButtonLowHP(playerObj, buttonSelector);
     animateButtonBG(buttonSelector, oldHP, playerObj.currHP);
     $(hpSelector).text(playerObj.currHP);
     if (theirID == play.currentPlayer.id) {
@@ -368,11 +387,6 @@ function updateOpponentHP(playerObj, theirCurrent, mode) {
 }
 
 function animateButtonBG(buttonSelector, oldHP, newHP) {
-  if (play.queryObj.hpThreshold && (newHP <= play.queryObj.hpThreshold[0])) {
-    $(buttonSelector).addClass( 'btn-low-hp' );
-  } else {
-    $(buttonSelector).removeClass( 'btn-low-hp' );
-  }
   var originalBG = $(buttonSelector).css( 'background-color' );
   if (oldHP > newHP) {
     // animate lose hp
@@ -395,6 +409,61 @@ function animateButtonBG(buttonSelector, oldHP, newHP) {
       }
     });
   }
+}
+
+function colourButtonLowHP(playerObj, buttonSelector) {
+  if (play.queryObj.hpThreshold && (+playerObj.currHP <= +play.queryObj.hpThreshold[0])) {
+    $(buttonSelector).addClass( 'btn-low-hp' );
+  } else {
+    $(buttonSelector).removeClass( 'btn-low-hp' );
+  }
+}
+
+function toggleScoreButton($this, state) {
+  if (state == 'on' ) {
+    $this.addClass( 'btn-primary' )
+      .removeClass( 'btn-default' );
+  } else if (state == 'off' ) {
+    $this.removeClass( 'btn-primary' )
+      .addClass( 'btn-default' );
+  } else {
+    $this.toggleClass( 'btn-primary btn-default' );
+    countMyVPs(false);
+  }
+}
+
+function countMyVPs(dontBroadcast) {
+  var myGoals = parseInt($( '#goals-scored' ).val()) || 0;
+  var myBodys = parseInt($( '#bodycounts-scored' ).val()) || 0;
+  var myClocks = parseInt($( '#clockouts-scored' ).val()) || 0;
+  play.teamList[0].goals = myGoals;
+  play.teamList[0].bodys = myBodys;
+  play.teamList[0].clocks = myClocks;
+  var scoreObj = {
+    goals: myGoals,
+    bodys: myBodys,
+    clocks: myClocks
+  };
+  var myVPs = myGoals * 4 + myBodys * 2 + myClocks;
+  $( '#my-score' ).text(myVPs);
+  if ((!dontBroadcast) && (play.queryObj.mode[0] != 'solo')) {
+    socket.emit( 'scoreToServer', scoreObj, play.queryObj.mode[0]);
+  }
+}
+
+function updateMyVPs(scoreObj) {
+  $( '#goals-scored' ).val(scoreObj.goals || 0);
+  $( '#bodycounts-scored' ).val(scoreObj.bodys || 0);
+  $( '#clockouts-scored' ).val(scoreObj.clocks || 0);
+  countMyVPs(true); // true means dontbroadcast to server
+}
+
+function updateOppVPs(scoreObj) {
+  var goals = (+scoreObj.goals) || 0;
+  var oppScore = goals * 4;
+  oppScore += (scoreObj.bodys * 2) || 0;
+  oppScore += (+scoreObj.clocks) || 0;
+  $( '#opp-score' ).text(oppScore + ' (G: ' + goals + ')' );
 }
 
 function displayCard(player) {
@@ -527,21 +596,22 @@ function getResumeURL() {
 
 // Socket.IO ons
 socket.on( 'broadcastRosters', function(teamArr) {
-  /*
-  if (play.queryObj.players && (play.teamList[0].length > 3)) {
-    location.href = getResumeURL();
-    return
-  }
-  */
   $( '#opponents0' ).removeClass( 'hidden' );
   play.teamList = updatePlayerLists(teamArr);
-  if (play.teamList[0].length > 3) {
-    populateTeam( 'M' );
+  if (play.teamList[0].players) {
+    populateTeam(play.teamList[0].players, 'M' );
   }
-  if (play.teamList[1].length > 3) {
-    populateTeam( 'O' );
+  if (play.teamList[1].players) {
+    populateTeam(play.teamList[1].players, 'O' );
+    for (var i = 0; i < play.teamList[1].players.length; i++) {
+      var theirID = i + 'O_' + play.teamList[1].players[i].name;
+      var buttonSelector = 'button[id=' + theirID + ']';
+      colourButtonLowHP(play.teamList[1].players[i], buttonSelector)
+    }
   }
   hookPlayerButtons();
+  updateMyVPs(play.teamList[0]);
+  updateOppVPs(play.teamList[1]);
 });
 
 socket.on( 'resyncRosterToClient', function(teamArr) {
@@ -559,6 +629,14 @@ socket.on( 'resyncRosterToClient', function(teamArr) {
 });
 
 socket.on( 'onePlayerToClient', updateOpponentHP);
+
+socket.on( 'scoreToClient', function(scoreObj, mode) {
+  if (mode == play.queryObj.mode) {
+    updateMyVPs(scoreObj);
+  } else {
+    updateOppVPs(scoreObj);
+  }
+});
 
 socket.on( 'reconnect', function() {
   console.log( 'Reconnecting' );

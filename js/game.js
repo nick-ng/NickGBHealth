@@ -12,14 +12,20 @@ var clientMode = 'solo';
 $(document).ready(function() {
   game.queryObj = common.parseQueryString();
   game.gameID = location.pathname.substr(1);
-  displayGameID(game.gameID, game.queryObj);
+  setClientMode(game.gameID, game.queryObj);
   populatePlayerSelect();
   nameRosterButtons();
   hookEvents();
-  $( '#maxTeamSize' ).text(maxTeamSize);
+  $( '.maxTeamSize' ).each(function() {
+    $(this).text(maxTeamSize);
+  });
 }); // $( document ).ready(function() {
 
 // Static DOM events
+$( '#show-qr-butt' ).click(function() {
+  displayGameID(game.gameID, game.queryObj);
+});
+
 $( '#roster0-butt' ).click(function() {
   rosterButton(0);
 });
@@ -48,20 +54,44 @@ $( '#chooseRoster' ).click(function() {
   });
 });
 
+$( '#low-health-down' ).click(function() {
+  var lowHP = parseInt($( '#low-health-threshold' ).val());
+  lowHP = lowHP || 0;
+  lowHP = Math.max(lowHP - 1, 0);
+  $( '#low-health-threshold' ).val(lowHP);
+  countMyVPs(false);
+});
+
+$( '#low-health-up' ).click(function() {
+  var lowHP = parseInt($( '#low-health-threshold' ).val());
+  lowHP = lowHP || 0;
+  lowHP = Math.max(lowHP + 1, 0);
+  $( '#low-health-threshold' ).val(lowHP);
+  countMyVPs(false);
+});
+
 $( '#play-butt' ).click(function() {
   $( '#tooManyPlayers' ).addClass( 'hidden' );
-  if ((captainSelected + mascotSelected + teamSize) == maxTeamSize) {
+  var isMaxTeamSize = (captainSelected + mascotSelected + teamSize) == maxTeamSize;
+  if (isMaxTeamSize || confirm( 'Fewer than ' + maxTeamSize + ' players selected. Play anyway?' )) {
     var teamList = getSelectedTeam();
+    var teamObj = {
+      players: teamList,
+      goals: 0,
+      bodys: 0,
+      clocks: 0
+    };
     if (game.gameID == 'solo') {
-      Cookies.set( 'solo-mode', JSON.stringify(teamList), {expires: 0.1});
+      Cookies.set( 'solo-mode', JSON.stringify(teamObj), {expires: 0.1});
       location.href = location.origin + '/play/solo' + makePlayQuery( 'solo' );
       $( '#output' ).text( 'Starting game...' );
     } else {
-      var mode = '' + (game.queryObj.mode || 'join' )
+      var mode = '' + game.queryObj.mode;
+      mode = (mode == 'host') ? 'host' : 'join';
       var gameReq = $.post( '/', {
         gameID: game.gameID,
         mode: mode,
-        teamList: teamList
+        teamObj: JSON.stringify(teamObj)
       }, function(res) {
         if (gameReq.status == 201) {
           location.href = location.origin + '/play/' + game.gameID + makePlayQuery(mode);;
@@ -103,12 +133,10 @@ function populatePlayerSelect() {
   $( '#allPlayers' ).append(captainsHTML + mascotsHTML + playersHTML);
 }
 
-function displayGameID(gameID, queryObj) {
+function setClientMode(gameID, queryObj) {
   if (queryObj.mode && (queryObj.mode[0] == 'host')) {
     clientMode = 'host';
-    joinURL = location.origin + '/' + gameID;
-    $( '#qrcode' ).qrcode(joinURL);
-    console.log( 'Join game url: ' + joinURL);
+    $( '#show-qr-butt' ).removeClass( 'hidden' );
   } else {
     clientMode = 'join';
   }
@@ -118,6 +146,13 @@ function displayGameID(gameID, queryObj) {
   } else {
     $( '#gameIDHolder' ).text(gameID);
   }
+}
+
+function displayGameID(gameID, queryObj) {
+  clientMode = 'host';
+  joinURL = location.origin + '/' + gameID;
+  $( '#qrcode' ).qrcode(joinURL);
+  $( '#show-qr-butt' ).addClass( 'hidden' );
 }
 
 // Generated DOM events
@@ -175,7 +210,7 @@ function nameRosterButtons() {
 
 function styleRadioButton(element) {
   var playerRole = element.attr( 'name' );
-  var player = element.attr( 'id' ).replace(/-butt$/, '' );;
+  var player = element.val();
   $( '#allPlayers label[name=' + playerRole + ']' ).each(function() {
     if ($(this).attr( 'id' ).replace(/-butt$/, '' ) == player) {
       $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
@@ -192,13 +227,13 @@ function rosterButton(rosterID) {
     var rosterObj = loadRoster(rosterID)
     if (rosterObj.players.length > 0) {
       showRoster(rosterObj.players);
-      $( '#lowHealthThreshold' ).val(rosterObj.hpThreshold);
+      $( '#low-health-threshold' ).val(rosterObj.hpThreshold);
     }
     chooseRosterText = 'Roster ' + RosterID + ' selected (' + common.capFirst(rosterObj.guild) + ').';
   } else {
     showRoster(['*']);
     chooseRosterText = 'Ad hoc roster.';
-    $( '#lowHealthThreshold' ).val(0);
+    $( '#low-health-threshold' ).val(0);
   }
   $( '#chooseRoster' ).html( chooseRosterText + '<br>Click here to choose a different roster.' );
   teamSize = 0;
@@ -222,7 +257,7 @@ function loadRoster(rosterID) {
 
 function showRoster(playerList) {
   $( '#allPlayers button' ).each(function() {
-    var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
+    var player = $(this).val();
     if ((playerList[0] != '*' ) && (playerList.indexOf(player) == -1)) {
       $(this).addClass('hidden');
     } else {
@@ -242,11 +277,11 @@ function showRoster(playerList) {
 function getSelectedTeam() {
   var players = [];
   $( '#allPlayers input[type=radio]:checked' ).each(function() {
-    players.push($(this).attr('id').replace(/-butt$/, '' ));
+    players.push($(this).val());
   });
   $( '#allPlayers button' ).each(function() {
     if ($(this).hasClass( 'btn-primary' )) {
-      players.push($(this).attr( 'id' ).replace(/-butt$/, '' ));
+      players.push($(this).val());
     }
   });
   return makeTeamList(players, common.allPlayers);
@@ -278,24 +313,13 @@ function makeTeamList(players, allPlayers) {
 function makePlayQuery(mode) {
   var query = '?';
   query += 'mode=' + (mode || 'join');
-  query += '&hpThreshold=' + $( '#lowHealthThreshold' ).val();
+  query += '&hpThreshold=' + $( '#low-health-threshold' ).val();
   return query;
-}
-
-function playerButtonHTML(name, special) {
-  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
-  if (name == 'avarisse') {
-    Name = 'Avarisse &amp; Greede';
-  }
-  if (name == 'harry') {
-    Name = 'Harry &lsquo;the Hat&rsquo;';
-  }
-  return '<button id="' + name + '-butt" class="btn btn-default btn-block" type="button">' + Name + '</button>';
 }
 
 function playerRadioHTML(name, special, radioName) {
   var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
-  var html = '<label id="' + name + '-butt" name="' + radioName + '" class="btn btn-default">';
-  html += '<input type="radio" name="' + radioName + '" id="' + name + '-butt" autocomplete="off">' + Name + '</label>';
+  var html = '<label id="' + name + '-butt" name="' + radioName + '" class="btn btn-default btn-lg">';
+  html += '<input type="radio" name="' + radioName + '" value="' + name + '" autocomplete="off">' + Name + '</label>';
   return html
 }

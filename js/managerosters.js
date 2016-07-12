@@ -5,10 +5,8 @@ var rosterID = 0;
 var rosterSize = [0, 0];
 var rosterStrings = ['', ''];
 var rosters = [];
-var maxRosterSize = 9;
 
 $(document).ready(function() {
-  $( '#maxRosterSize' ).text(maxRosterSize);
   populateDOM();
   hookEvents();
   loadRoster();
@@ -23,11 +21,27 @@ $( '#playerCard' ).click(function() {
   displayCard($('#playerCard img').attr( 'alt' ));
 });
 
+$( '#low-health-down' ).click(function() {
+  var lowHP = parseInt($( '#low-health-threshold' ).val());
+  lowHP = lowHP || 0;
+  lowHP = Math.max(lowHP - 1, 0);
+  $( '#low-health-threshold' ).val(lowHP);
+  countMyVPs(false);
+});
+
+$( '#low-health-up' ).click(function() {
+  var lowHP = parseInt($( '#low-health-threshold' ).val());
+  lowHP = lowHP || 0;
+  lowHP = Math.max(lowHP + 1, 0);
+  $( '#low-health-threshold' ).val(lowHP);
+  countMyVPs(false);
+});
+
 function populateDOM() {
   for (var i = 0; i < common.allGuilds.length; i++) {
     var guildObj = common.allGuilds[i];
     var guildHTML = '<div id="' + guildObj.name + 'Players" class="hidden">';
-    var selectorHTML = '<button id="' + guildObj.name + '-butt" ' +
+    var selectorHTML = '<button value="' + guildObj.name + '" ' +
       'class="col-xs-4 btn btn-default" type="button">' +
       '<img src="/images/' + guildObj.name + '.png" ' +
       'alt="' + common.capFirst(guildObj.name) + '" class="img-responsive center-block"></button>';
@@ -77,7 +91,7 @@ function hookEvents() {
 
   $( '#saveRosterButton' ).click(function() {
     cookieName = 'roster' + rosterID;
-    rosters[rosterID].hpThreshold = $( '#lowHealthThreshold' ).val();
+    rosters[rosterID].hpThreshold = $( '#low-health-threshold' ).val();
     Cookies.set( 'rosters', JSON.stringify(rosters), { expires: common.cookieExpiry });
     var rosterNumber = rosterID + 1;
     $( '#saveSuccessAlert' ).text( 'Roster ' + rosterNumber + ' saved.' );
@@ -87,7 +101,7 @@ function hookEvents() {
   $( '#guildSelector button' ).each(function() {
     $(this).click(function() {
       $( '#saveSuccessAlert' ).addClass( 'hidden' );
-      var guild = $(this).attr( 'id' ).replace(/-butt$/, '' );
+      var guild = $(this).val();
       hideAllPlayerSelectors()
       chooseGuild(guild);
     });
@@ -96,7 +110,7 @@ function hookEvents() {
   $( '#allPlayers button' ).each(function() {
     $(this).click(function() {
       $( '#saveSuccessAlert' ).addClass( 'hidden' );
-      var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
+      var player = $(this).val();
       roster.cardFront = true;
       displayCard(player);
       if ($(this).hasClass( 'btn-primary' )) {
@@ -126,7 +140,7 @@ function chooseGuild(guildName) {
 
 function choosePlayers(playerList) {
   $( '#allPlayers button' ).each(function() {
-    var player = $(this).attr( 'id' ).replace(/-butt$/, '' );
+    var player = $(this).val();
     if (playerList.indexOf(player) > -1) { // It's in the list
       $(this).removeClass( 'btn-default' ).addClass( 'btn-primary' );
       $(this).addClass( 'active' );
@@ -150,7 +164,7 @@ function hideAllPlayerSelectors() {
 }
 
 function loadRoster() {
-  rosterID = parseInt($( 'input[name=rosters]:checked' ).attr('id'));
+  rosterID = parseInt($( 'input[name=rosters]:checked' ).val());
   var tempCookie = Cookies.get( 'rosters' );
   if (tempCookie) {
     rosters = JSON.parse(tempCookie);
@@ -161,7 +175,7 @@ function loadRoster() {
     chooseGuild(rosters[rosterID].guild);
     choosePlayers(rosters[rosterID].players);
     $( '#rosterSize' ).text(rosters[rosterID].players.length);
-    $( '#lowHealthThreshold' ).val(rosters[rosterID].hpThreshold || 0);
+    $( '#low-health-threshold' ).val(rosters[rosterID].hpThreshold || 0);
   }
 }
 

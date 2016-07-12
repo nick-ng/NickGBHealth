@@ -41,7 +41,15 @@
             </div>
             <div id="myPlayers0" class="row player-container">
             </div>
-            <div class="row small-margin-top">
+            <div id="score-row" class="row hidden">
+              <div class="score-div text-right">
+                Your VPs &nbsp;&ndash;&nbsp; <span id="my-score">0</span> :
+              </div>
+              <div class="score-div text-left">
+                : <span id="opp-score">0</span> &nbsp;&ndash;&nbsp; Opp.
+              </div>
+            </div>
+            <div class="row">
               <div id="quickHealth">
                 <button id="minusOne" class="btn btn-danger" type="button" disabled>-1<br>
                   <span class="glyphicon glyphicon-heart"></span>
@@ -58,23 +66,67 @@
               </div>
             </div>
             <div class="row">
-              <div id="selectedPlayer" class="text-center"></div>
+              <div id="selectedPlayer" class="col-xs-12 text-center"></div>
               <div id="healthBoxes" class=""></div>
-              <div id="isOpponent" class="small-margin-top">
-                <h3 class="text-center hidden">Opponent's player</h3>
+              <div id="goals-controls" class="input-group input-group-lg hidden">
+                <span class="input-group-btn">
+                  <button id="goals-down" class="btn btn-default vp-btn small-margin-top" type="button" name="goals" value="-1">
+                    Goals
+                    <span class="glyphicon glyphicon-minus"></span>
+                  </button>
+                </span>
+                <input id="goals-scored" type="text" class="form-control vp-score text-center small-margin-top" name="goals" value="0" readonly>
+                <span class="input-group-btn">
+                  <button id="goals-up" class="btn btn-default vp-btn small-margin-top" type="button" name="goals" value="1">
+                    Goals
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </span>
               </div>
-              <div id="makeFullscreen-div" class="hidden">
-                <button id="makeFullscreen" class="btn btn-default btn-block" type="button">Fullscreen</button>
+              <div id="bodycounts-controls" class="input-group input-group-lg hidden">
+                <span class="input-group-btn">
+                  <button id="bodycounts-down" class="btn btn-default vp-btn small-margin-top" type="button" name="bodycounts" value="-1">
+                    KOs
+                    <span class="glyphicon glyphicon-minus"></span>
+                  </button>
+                </span>
+                <input id="bodycounts-scored" type="text" class="form-control vp-score text-center small-margin-top" name="bodycounts" value="0" readonly>
+                <span class="input-group-btn">
+                  <button id="bodycounts-up" class="btn btn-default vp-btn small-margin-top" type="button" name="bodycounts" value="1">
+                    KOs
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </span>
+              </div>
+              <div id="clockouts-controls" class="input-group input-group-lg hidden">
+                <span class="input-group-btn">
+                  <button id="clockouts-down" class="btn btn-default vp-btn small-margin-top" type="button" name="clockouts" value="-1">
+                    Opp.
+                    <span class="glyphicon glyphicon-time"></span>
+                    <span class="glyphicon glyphicon-minus"></span>
+                  </button>
+                </span>
+                <input id="clockouts-scored" type="text" class="form-control vp-score text-center small-margin-top" name="clockouts" value="0" readonly>
+                <span class="input-group-btn">
+                  <button id="clockouts-up" class="btn btn-default vp-btn small-margin-top" type="button" name="clockouts" value="1">
+                    Opp.
+                    <span class="glyphicon glyphicon-time"></span>
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </span>
               </div>
             </div>
           </div>
           <div id="cardCol" class="hidden-xs col-sm-6 col-md-6 col-lg-4">
-            <div id="cardPanel" class="hidden">
+            <div id="makeFullscreen-div" class="small-margin-top hidden">
+              <button id="makeFullscreen" class="btn btn-default btn-block" type="button">Fullscreen</button>
+            </div>
+            <div id="cardPanel">
               <a id="playerCard" href="#"></a>
             </div>
           </div>
           <div id="cardCol2" class="visible-lg-inline col-lg-4">
-            <div id="cardPanel2" class="hidden">
+            <div id="cardPanel2">
               <div id="playerCard2"></div>
             </div>
           </div>
