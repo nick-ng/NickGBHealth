@@ -3,7 +3,6 @@ $(document).ready(function() {
   if (resumeURL) {
     var destination = resumeURL.replace(location.origin + '/play/', '' );
     destination = destination.replace( /\?.*$/, '' ).toLowerCase();
-    console.log(destination);
     if (destination != 'demo' ) {
       var resumeDestination = 'Solo';
       if (!isNaN(destination)) {
@@ -34,21 +33,25 @@ $( '#newGameButton' ).click(function() {
 
 $( '#joinGameForm' ).submit(function() {
   var id = $( '#gameID' ).val();
-  if (id) {
-    location.href = '/' + id;
-  } else {
-    $( '#joinAlert' ).removeClass( 'hidden' );
-  }
+  isValidID(id, function(data) {
+    if (data.exists) {
+      location.href = '/' + id;
+    } else {
+      $( '#joinAlert' ).removeClass( 'hidden' );
+    }
+  });
   return false
 });
 
 $( '#specGameForm' ).submit(function() {
   var id = $( '#gameIDSpec' ).val();
-  if (id) {
-    location.href = '/spec/' + id;
-  } else {
-    $( '#specAlert' ).removeClass( 'hidden' );
-  }
+  isValidID(id, function(data) {
+    if (data.exists) {
+      location.href = '/spec/' + id;
+    } else {
+      $( '#specAlert' ).removeClass( 'hidden' );
+    }
+  });
   return false
 });
 
@@ -65,3 +68,15 @@ $( '#spectatorDemo' ).click(function() {
   }
   location.href = '/spec/demo';
 });
+
+function isValidID(id, callback) {
+  if (isNaN(parseInt(id))) {
+    callback({exists: false})
+  } else {
+    $.get( '/?checkid=' + id, function(data) {
+      callback(data);
+      console.log(data.exists)
+    });
+  }
+  return 0
+}
