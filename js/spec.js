@@ -153,7 +153,8 @@ function windowResized() {
   var w0 = $( '#default-0' ).width();
   var w1 = $( '#default-1' ).width();
   $( '#element-dimensions' ).html( 'w' + w0 + ', h' + h0 +
-    ' / w' + w1 + ', h' + h1);
+    ' / w' + w1 + ', h' + h1 + '<br>' +
+    'Difference in height: ' + Math.abs(h0-h1));
   var ww = $(window).width();
   var hw = $(window).height();
   $( '#window-dimensions' ).html( 'Window: w' + ww + ', h' + hw);
@@ -190,6 +191,7 @@ socket.on( 'broadcastRosters', function(teamArr) {
     updatePlayersHP(sides[i].players, i);
     updateVPs(sides[i], i)
   }
+  windowResized()
 });
 
 socket.on( 'onePlayerToClient', function(playerObj, currentPlayer, mode) {
