@@ -281,7 +281,9 @@ client.updateMaxGames = function updateMaxGames(currentGames, callback) {
 client.on( 'ready', function() {
   console.log( 'Connected to Redis server' );
   createDemos(this);
-  this.updateMaxGames(analytics.currentGames);
+  this.updateMaxGames(analytics.currentGames, function(newMax) {
+    analytics.maxGames = newMax;
+  });
 });
 
 // Demos
