@@ -66,7 +66,21 @@ app.use( express.static( __dirname + '/bootstrap' ) );
 
 // The pages
 app.get( '/', function(req, res) {
-  if (req.query.analytics) {
+  if (req.query.checkid) {
+    var tempID = KEY_PREFIX + req.query.checkid;
+    client.keys( KEY_PREFIX + '*', function(err, reply) {
+      if (err) {
+        console.log(err);
+        res.status(500).json(err);
+        return
+      }
+      if (reply.indexOf(tempID) > -1) {
+        res.status(200).json({exists: true});
+      } else {
+        res.status(200).json({exists: false});
+      }
+    });
+  } else if (req.query.analytics) {
     if (req.query.analytics == 'all') {
       res.status(200).json(analytics);
     } else if (typeof analytics[req.query.analytics] != 'undefined') {
@@ -267,7 +281,9 @@ client.updateMaxGames = function updateMaxGames(currentGames, callback) {
 client.on( 'ready', function() {
   console.log( 'Connected to Redis server' );
   createDemos(this);
-  this.updateMaxGames(analytics.currentGames);
+  this.updateMaxGames(analytics.currentGames, function(newMax) {
+    analytics.maxGames = newMax;
+  });
 });
 
 // Demos

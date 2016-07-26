@@ -8,10 +8,12 @@ $(document).ready(function() {
   queryObj = common.parseQueryString();
   gameID = location.pathname.replace( /^\/spec\//, '' );
   joinGame(gameID);
+  windowResized()
   lastMinuteStyles();
 }); // $( document ).ready(function() {
 
 // Static DOM events
+$(window).resize(windowResized);
 
 // DOM generators
 function populatePlayers(sidesIn) {
@@ -145,16 +147,30 @@ function colourHealthBars(percent) {
   }
 }
 
+function windowResized() {
+  var h0 = $( '#default-0' ).height();
+  var h1 = $( '#default-1' ).height();
+  var w0 = $( '#default-0' ).width();
+  var w1 = $( '#default-1' ).width();
+  $( '#element-dimensions' ).html( 'w' + w0 + ', h' + h0 +
+    ' / w' + w1 + ', h' + h1 + '<br>' +
+    'Difference in height: ' + Math.abs(h0-h1));
+  var ww = $(window).width();
+  var hw = $(window).height();
+  $( '#window-dimensions' ).html( 'Window: w' + ww + ', h' + hw);
+}
+
 // "Helper" functions
 function playerHTML(playerObj, teamNum) {
   var name = playerObj.name;
   var maxHP = playerObj.hp;
   var currHP = playerObj.currHP;
+  var percent = 100. * currHP / maxHP;
   var Name = common.capFirst(name).replace( /-v$/, ', Veteran' )
   var id = teamNum + '_' + name;
   var currHPID = id + '_hp';
   var barID = id + '_bar';
-  var barDef = 'class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" style="width: 0%;"';
+  var barDef = 'class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="' + percent + '" style="width: ' + percent + '%;"';
   var barHTML = '<div class="progress hidden-xs!"><div id="' + barID + '" ' + barDef + '></div></div>';
   //var barHTML = '<div class="progress hidden-xs"><div id="' + barID + '" ' + barDef + '><strong><span id="' + currHPID + '">' + currHP + '</span></strong></div></div>';
   var hLvl = 4;
@@ -175,6 +191,7 @@ socket.on( 'broadcastRosters', function(teamArr) {
     updatePlayersHP(sides[i].players, i);
     updateVPs(sides[i], i)
   }
+  windowResized()
 });
 
 socket.on( 'onePlayerToClient', function(playerObj, currentPlayer, mode) {
