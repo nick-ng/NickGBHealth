@@ -1,5 +1,12 @@
 var funcs = {};
 
+var badNumbers = [
+  '69',
+  '666',
+  '6969',
+  '80085'
+];
+
 funcs.randomString = function randomString(strLength, charSet) {
   var result = [];
   strLength = strLength || 5;
@@ -15,6 +22,9 @@ funcs.getRandomInt = function getRandomInt(min, max) {
 }
 
 funcs.generateNewKey = function generateNewKey(keyLength, keyList) {
+  for (var i = 0; i < badNumbers.length; i++) {
+    keyList.push(badNumbers[i]);
+  }
   while (true) {
     var maxAttempts = Math.pow(10, keyLength);
     while (maxAttempts--) {
