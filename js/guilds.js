@@ -133,14 +133,14 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'hunters';
 common.allGuilds[L].players = [
-  {name:'theron', hp:18, sponge:[6, 12], role:'c'},
-  {name:'fahad', hp:8, sponge:[0], role:'m'},
-  {name:'chaska', hp:16, sponge:[6, 12]},
-  {name:'egret', hp:12, sponge:[4, 8]},
-  {name:'hearne', hp:20, sponge:[7, 14]},
-  {name:'jaecar', hp:14, sponge:[5, 10]},
-  {name:'seenah', hp:21, sponge:[7, 14]},
-  {name:'zarola', hp:12, sponge:[4, 8]},
+  {name:'theron', hp:18, sponge:[9], role:'c'},
+  {name:'fahad', hp:6, sponge:[3], role:'m'},
+  {name:'chaska', hp:16, sponge:[8]},
+  {name:'egret', hp:12, sponge:[6]},
+  {name:'hearne', hp:20, sponge:[10]},
+  {name:'jaecar', hp:14, sponge:[7]},
+  {name:'seenah', hp:21, sponge:[11]},
+  {name:'zarola', hp:12, sponge:[6]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -203,22 +203,22 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'union';
 common.allGuilds[L].players = [
-  {name:'compound', hp:20, sponge:[6, 12], role:'nonunion'},
-  {name:'blackheart', hp:16, sponge:[5, 10], role:'c'},
-  {name:'rage-v', hp:17, sponge:[6, 12], role:'c'},
-  {name:'coin', hp:10, sponge:[0], role:'m'},
-  {name:'strongbox', hp:10, sponge:[0], role:'m'},
-  {name:'avarisse', hp:20, sponge:[7, 14], detach:'greede'},
-  {name:'greede', hp:4, sponge:[0], role:'benched'},
-  {name:'decimate', hp:14, sponge:[5, 10]},
-  {name:'fangtooth', hp:29, sponge:[10, 20]},
-  {name:'gutter', hp:14, sponge:[5, 10]},
-  {name:'harry', hp:19, sponge:[7, 14], display:'Harry &lsquo;the Hat&rsquo;'},
-  {name:'hemlocke', hp:10, sponge:[3, 6]},
-  {name:'minx', hp:12, sponge:[4, 8]},
-  {name:'mist', hp:12, sponge:[4, 8]},
-  {name:'rage', hp:17, sponge:[6, 12]},
-  {name:'snakeskin', hp:12, sponge:[4, 8]},
+  {name:'compound', hp:20, sponge:[10], role:'nonunion'},
+  {name:'blackheart', hp:16, sponge:[8], role:'c'},
+  {name:'rage-v', hp:17, sponge:[9], role:'c'},
+  {name:'coin', hp:8, sponge:[4], role:'m'},
+  {name:'strongbox', hp:8, sponge:[4], role:'m'},
+  {name:'avarisse', hp:20, sponge:[10], detach:'greede'},
+  {name:'greede', hp:7, sponge:[4], role:'benched'},
+  {name:'decimate', hp:14, sponge:[7]},
+  {name:'fangtooth', hp:29, sponge:[15]},
+  {name:'gutter', hp:14, sponge:[7]},
+  {name:'harry', hp:19, sponge:[12], display:'Harry &lsquo;the Hat&rsquo;'},
+  {name:'hemlocke', hp:10, sponge:[5]},
+  {name:'minx', hp:12, sponge:[6]},
+  {name:'mist', hp:12, sponge:[6]},
+  {name:'rage', hp:17, sponge:[9]},
+  {name:'snakeskin', hp:12, sponge:[6]},
 ];
 common.allGuilds[L].union = [];
 
