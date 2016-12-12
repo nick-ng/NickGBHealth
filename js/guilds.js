@@ -109,17 +109,17 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'fishermen';
 common.allGuilds[L].players = [
-  {name:'corsair', hp:18, sponge:[6, 12], role:'c'},
-  {name:'shark', hp:17, sponge:[6, 12], role:'c'},
-  {name:'salt', hp:8, sponge:[0], role:'m'},
-  {name:'tentacles', hp:9, sponge:[0], role:'m'},
-  {name:'angel', hp:12, sponge:[4, 8]},
-  {name:'greyscales', hp:15, sponge:[5, 10]},
-  {name:'jac', hp:15, sponge:[5, 10]},
-  {name:'kraken', hp:20, sponge:[7, 14]},
-  {name:'sakana', hp:15, sponge:[5, 10]},
-  {name:'siren', hp:10, sponge:[3, 6]},
-  {name:'siren-v', hp:10, sponge:[4, 8]},
+  {name:'corsair', hp:18, sponge:[9], role:'c'},
+  {name:'shark', hp:17, sponge:[9], role:'c'},
+  {name:'salt', hp:7, sponge:[4], role:'m'},
+  {name:'tentacles', hp:9, sponge:[5], role:'m'},
+  {name:'angel', hp:12, sponge:[6]},
+  {name:'greyscales', hp:13, sponge:[7]},
+  {name:'jac', hp:15, sponge:[8]},
+  {name:'kraken', hp:20, sponge:[10]},
+  {name:'sakana', hp:15, sponge:[8]},
+  {name:'siren', hp:10, sponge:[5]},
+  {name:'siren-v', hp:10, sponge:[5]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -178,17 +178,17 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'morticians';
 common.allGuilds[L].players = [
-  {name:'obulus', hp:16, sponge:[5, 10], role:'c'},
-  {name:'scalpel', hp:17, sponge:[6, 12], role:'c'},
-  {name:'dirge', hp:5, sponge:[0], role:'m'},
-  {name:'vileswarm', hp:7, sponge:[0], role:'m'},
-  {name:'bonesaw', hp:13, sponge:[4, 8]},
-  {name:'casket', hp:17, sponge:[6, 12]},
-  {name:'cosset', hp:12, sponge:[4, 8]},
-  {name:'ghast', hp:21, sponge:[7, 14]},
-  {name:'graves', hp:14, sponge:[5, 10]},
-  {name:'graves-v', hp:14, sponge:[5, 10]},
-  {name:'silence', hp:15, sponge:[5, 10]},
+  {name:'obulus', hp:14, sponge:[7], role:'c'},
+  {name:'scalpel', hp:17, sponge:[9], role:'c'},
+  {name:'dirge', hp:5, sponge:[3], role:'m'},
+  {name:'vileswarm', hp:7, sponge:[4], role:'m'},
+  {name:'bonesaw', hp:12, sponge:[6]},
+  {name:'casket', hp:17, sponge:[9]},
+  {name:'cosset', hp:12, sponge:[7]},
+  {name:'ghast', hp:21, sponge:[11]},
+  {name:'graves', hp:14, sponge:[7]},
+  {name:'graves-v', hp:14, sponge:[7]},
+  {name:'silence', hp:12, sponge:[6]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
