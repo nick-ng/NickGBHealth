@@ -6,16 +6,16 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'alchemists';
 common.allGuilds[L].players = [
-  {name:'midas', hp:14, sponge:[5, 10], role:'c'},
-  {name:'smoke', hp:16, sponge:[6, 12], role:'c'},
-  {name:'flask', hp:10, sponge:[0], role:'m'},
-  {name:'naja', hp:7, sponge:[0], role:'m'},
-  {name:'calculus', hp:15, sponge:[5, 10]},
-  {name:'katalyst', hp:27, sponge:[9, 18]},
-  {name:'katalyst-v', hp:29, sponge:[14, 24]},
-  {name:'mercury', hp:15, sponge:[5, 10]},
-  {name:'venin', hp:16, sponge:[5, 10]},
-  {name:'vitriol', hp:12, sponge:[4, 8]},
+  {name:'midas', hp:14, sponge:[7], role:'c'},
+  {name:'smoke', hp:16, sponge:[8], role:'c'},
+  {name:'flask', hp:8, sponge:[4], role:'m'},
+  {name:'naja', hp:7, sponge:[4], role:'m'},
+  {name:'calculus', hp:15, sponge:[8]},
+  {name:'katalyst', hp:27, sponge:[15]},
+  {name:'katalyst-v', hp:29, sponge:[19]},
+  {name:'mercury', hp:15, sponge:[8]},
+  {name:'venin', hp:16, sponge:[10]},
+  {name:'vitriol', hp:12, sponge:[6]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -32,17 +32,17 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'brewers';
 common.allGuilds[L].players = [
-  {name:'esters', hp:22, sponge:[8, 16], role:'c'},
-  {name:'tapper', hp:18, sponge:[6, 12], role:'c'},
-  {name:'quaff', hp:10, sponge:[0], role:'m'},
-  {name:'scum', hp:8, sponge:[0], role:'m'},
-  {name:'friday', hp:12, sponge:[4, 8]},
-  {name:'hooper', hp:17, sponge:[6, 12]},
-  {name:'mash', hp:17, sponge:[6, 12]},
-  {name:'spigot', hp:16, sponge:[5, 10]},
-  {name:'spigot-v', hp:16, sponge:[6,12]},
-  {name:'stave', hp:23, sponge:[8, 16]},
-  {name:'stoker', hp:18, sponge:[6, 12]},
+  {name:'esters', hp:22, sponge:[11], role:'c'},
+  {name:'tapper', hp:18, sponge:[9], role:'c'},
+  {name:'quaff', hp:8, sponge:[4], role:'m'},
+  {name:'scum', hp:6, sponge:[6], role:'m'},
+  {name:'friday', hp:12, sponge:[6]},
+  {name:'hooper', hp:17, sponge:[9]},
+  {name:'mash', hp:17, sponge:[9]},
+  {name:'spigot', hp:16, sponge:[8]},
+  {name:'spigot-v', hp:16, sponge:[8]},
+  {name:'stave', hp:23, sponge:[12]},
+  {name:'stoker', hp:16, sponge:[8]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -58,17 +58,17 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'butchers';
 common.allGuilds[L].players = [
-  {name:'fillet', hp:16, sponge:[6, 12], role:'c'},
-  {name:'ox', hp:19, sponge:[6, 12], role:'c'},
-  {name:'princess', hp:10, sponge:[0], role:'m'},
-  {name:'truffles', hp:11, sponge:[0], role:'m'},
-  {name:'boar', hp:22, sponge:[7, 14]},
-  {name:'boiler', hp:14, sponge:[5, 10]},
-  {name:'brisket', hp:12, sponge:[4, 8]},
-  {name:'brisket-v', hp:13, sponge:[5, 10]},
-  {name:'meathook', hp:14, sponge:[5, 10]},
-  {name:'shank', hp:14, sponge:[5, 10]},
-  {name:'tenderiser', hp:19, sponge:[6, 12]},
+  {name:'fillet', hp:14, sponge:[7], role:'c'},
+  {name:'ox', hp:19, sponge:[10], role:'c'},
+  {name:'princess', hp:8, sponge:[4], role:'m'},
+  {name:'truffles', hp:11, sponge:[6], role:'m'},
+  {name:'boar', hp:20, sponge:[10]},
+  {name:'boiler', hp:14, sponge:[7]},
+  {name:'brisket', hp:12, sponge:[6]},
+  {name:'brisket-v', hp:13, sponge:[7]},
+  {name:'meathook', hp:14, sponge:[7]},
+  {name:'shank', hp:14, sponge:[7]},
+  {name:'tenderiser', hp:19, sponge:[10]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -84,16 +84,16 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'engineers';
 common.allGuilds[L].players = [
-  {name:'ballista', hp:18, sponge:[6, 12], role:'c'},
-  {name:'pinvice', hp:16, sponge:[6, 12], role:'c', display:'Pin Vice'},
-  {name:'mainspring', hp:6, sponge:[0], role:'m'},
-  {name:'mother', hp:9, sponge:[0], role:'m'},
-  {name:'colossus', hp:20, sponge:[7, 14]},
-  {name:'hoist', hp:11, sponge:[4, 7]},
-  {name:'ratchet', hp:17, sponge:[6, 12]},
-  {name:'salvo', hp:14, sponge:[5, 10]},
-  {name:'velocity', hp:11, sponge:[4, 7]},
-  {name:'velocity-v', hp:14, sponge:[5, 10]},
+  {name:'ballista', hp:18, sponge:[9], role:'c'},
+  {name:'pinvice', hp:11, sponge:[6], role:'c', display:'Pin Vice'},
+  {name:'mainspring', hp:7, sponge:[4], role:'m'},
+  {name:'mother', hp:9, sponge:[5], role:'m'},
+  {name:'colossus', hp:20, sponge:[10]},
+  {name:'hoist', hp:11, sponge:[6]},
+  {name:'ratchet', hp:17, sponge:[9]},
+  {name:'salvo', hp:14, sponge:[7]},
+  {name:'velocity', hp:11, sponge:[6]},
+  {name:'velocity-v', hp:14, sponge:[7]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -153,17 +153,17 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'masons';
 common.allGuilds[L].players = [
-  {name:'hammer', hp:18, sponge:[6, 12], role:'c'},
-  {name:'honour', hp:17, sponge:[6, 12], role:'c'},
-  {name:'marbles', hp:8, sponge:[0], role:'m'},
-  {name:'wrecker', hp:10, sponge:[0], role:'m'},
-  {name:'brick', hp:19, sponge:[6, 12]},
-  {name:'chisel', hp:13, sponge:[4, 8], nonsponge:[6]},
-  {name:'flint', hp:14, sponge:[5, 10]},
-  {name:'harmony', hp:10, sponge:[3, 6]},
-  {name:'harmony-v', hp:10, sponge:[4, 8]},
-  {name:'mallet', hp:16, sponge:[5, 10]},
-  {name:'tower', hp:18, sponge:[6, 12]},
+  {name:'hammer', hp:18, sponge:[9], role:'c'},
+  {name:'honour', hp:17, sponge:[9], role:'c'},
+  {name:'marbles', hp:8, sponge:[4], role:'m'},
+  {name:'wrecker', hp:9, sponge:[5], role:'m'},
+  {name:'brick', hp:19, sponge:[10]},
+  {name:'chisel', hp:13, sponge:[9], nonsponge:[6]},
+  {name:'flint', hp:14, sponge:[7]},
+  {name:'harmony', hp:10, sponge:[5]},
+  {name:'harmony-v', hp:10, sponge:[5]},
+  {name:'mallet', hp:16, sponge:[8]},
+  {name:'tower', hp:18, sponge:[9]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
