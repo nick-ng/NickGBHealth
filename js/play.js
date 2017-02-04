@@ -535,7 +535,7 @@ function playerButtonHTML(playerList, playerNum, side) {
   if (Name.match( /-v$/ )) {
     Name = 'v' + Name.replace( /-v$/, '' );
   }
-  if (playerList[playerNum].role) {
+  if (playerList[playerNum].role && playerList[playerNum].role.length === 1) {
     Name += ' (' + playerList[playerNum].role.toUpperCase() + ')';
   }
   var id = playerNum + side + '_' + name;
