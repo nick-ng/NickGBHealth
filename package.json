@@ -4,7 +4,8 @@
   "description": "Tracks health of players for both participants in a Guild Ball game and displays health to both participants via Socket.IO",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
