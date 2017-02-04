@@ -117,7 +117,7 @@ function populatePlayerSelect() {
       captainsHTML += playerRadioHTML(player.name, ' (C)', 'captains');
     } else if (player.role == 'm') {
       mascotsHTML += playerRadioHTML(player.name, ' (M)', 'mascots');
-    } else if (!player.role) {
+    } else if ( player.role !== 'benched' ) {
       playersHTML += common.playerButtonHTML(player.name, '' );
     }
   }
