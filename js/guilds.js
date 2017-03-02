@@ -69,6 +69,7 @@ common.allGuilds[L].players = [
   {name:'meathook', hp:14, sponge:[7]},
   {name:'shank', hp:14, sponge:[7]},
   {name:'tenderiser', hp:19, sponge:[10]},
+  {name:'ox-v', hp:19, sponge:[10]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -120,6 +121,7 @@ common.allGuilds[L].players = [
   {name:'sakana', hp:15, sponge:[8]},
   {name:'siren', hp:10, sponge:[5]},
   {name:'siren-v', hp:10, sponge:[5]},
+  {name:'hag', hp:14, sponge:[7]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -189,6 +191,8 @@ common.allGuilds[L].players = [
   {name:'graves', hp:14, sponge:[7]},
   {name:'graves-v', hp:14, sponge:[7]},
   {name:'silence', hp:12, sponge:[6]},
+  {name:'brainpan', hp:14, sponge:[7], detach:'memory'},
+  {name:'memory', hp:3, sponge:[], role:'benched'},
 ];
 common.allGuilds[L].union = [
   'avarisse',

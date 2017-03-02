@@ -28,7 +28,7 @@ common.findInArray = function findInArray(array, searchValue, searchKey, returnK
   for (var i = 0; i < array.length; i++) {
     var item = array[i];
     if (item[searchKey] == searchValue) {
-      returnObj = item;
+      returnObj = $.extend(true, {}, item, { index: i });
       break
     }
   }
