@@ -528,6 +528,7 @@ function windowResized() {
 // "Helper" functions
 function playerButtonHTML(playerList, playerNum, side) {
   side = side.toUpperCase() || 'M';
+  var playerObject = playerList[playerNum];
   var name = playerList[playerNum].name;
   var maxHP = playerList[playerNum].hp;
   var currHP = playerList[playerNum].currHP;
@@ -542,14 +543,14 @@ function playerButtonHTML(playerList, playerNum, side) {
   var currHPID = id + '_hp';
   var colSize = 'col-xs-4';
   var html2 = '';
-  if (name == 'avarisse') {
+  if (playerObject.detach) {
+    var name2 = playerObject.detach;
     //Name = 'Ava<span class="hidden-xs">risse</span><span class="visible-xs-inline">.</span>';
-    Name = 'Avarisse';
     colSize = 'col-xs-2';
     //var Name2 = 'Gre<span class="hidden-xs">ede</span><span class="visible-xs-inline">.</span>';
-    var Name2 = 'Greede';
-    var playerNum2 = 6;
-    var playerObj2 = playerList[playerNum2];
+    var playerObject2 = common.findInArray(playerList, name2, 'name')
+    var Name2 = common.capFirst(playerObject2.name);
+    var playerNum2 = playerObject2.index;
     var name2 = playerList[playerNum2].name;
     var maxHP2 = playerList[playerNum2].hp;
     var currHP2 = playerList[playerNum2].currHP;
