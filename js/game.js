@@ -318,7 +318,7 @@ function makePlayQuery(mode) {
 }
 
 function playerRadioHTML(name, special, radioName) {
-  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ) + special;
+  var Name = common.capFirst(name).replace( /-v$/, ', Veteran' ).replace(/-s$/, ', Seasoned') + special;
   var html = '<label id="' + name + '-butt" name="' + radioName + '" class="btn btn-default btn-lg">';
   html += '<input type="radio" name="' + radioName + '" value="' + name + '" autocomplete="off">' + Name + '</label>';
   return html

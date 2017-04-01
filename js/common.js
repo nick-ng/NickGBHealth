@@ -80,7 +80,9 @@ common.getRosterName = function getRosterName(name) {
   if (playerObj.display) {
     displayName = playerObj.display;
   } else {
-    displayName = common.capFirst(name).replace( /-v$/, ', Veteran' );
+    displayName = common.capFirst(name)
+      .replace(/-v$/, ', Veteran')
+      .replace(/-s$/, ', Seasoned');
   }
   if (playerObj.detach) {
     displayName += ' &amp; ' + common.getRosterName(playerObj.detach);
