@@ -16,6 +16,7 @@ common.allGuilds[L].players = [
   {name:'mercury', hp:15, sponge:[8]},
   {name:'venin', hp:16, sponge:[10]},
   {name:'vitriol', hp:12, sponge:[6]},
+  {name:'crucible', hp:14, sponge:[7]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -95,6 +96,7 @@ common.allGuilds[L].players = [
   {name:'salvo', hp:14, sponge:[7]},
   {name:'velocity', hp:11, sponge:[6]},
   {name:'velocity-v', hp:14, sponge:[7]},
+  {name:'locus', hp:15, sponge:[8]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -210,6 +212,7 @@ common.allGuilds[L].players = [
   {name:'compound', hp:20, sponge:[10], role:'nonunion'},
   {name:'blackheart', hp:16, sponge:[8], role:'c'},
   {name:'rage-v', hp:17, sponge:[9], role:'c'},
+  {name:'brisket-s', hp:15, sponge:[8], role:'c'},
   {name:'coin', hp:8, sponge:[4], role:'m'},
   {name:'strongbox', hp:8, sponge:[4], role:'m'},
   {name:'avarisse', hp:20, sponge:[10], detach:'greede'},
