@@ -44,6 +44,7 @@ common.allGuilds[L].players = [
   {name:'spigot-v', hp:16, sponge:[8]},
   {name:'stave', hp:23, sponge:[12]},
   {name:'stoker', hp:16, sponge:[8]},
+  {name:'pintpot', hp:20, sponge:[10], display:'PintPot'},
 ];
 common.allGuilds[L].union = [
   'avarisse',
@@ -168,6 +169,7 @@ common.allGuilds[L].players = [
   {name:'harmony-v', hp:10, sponge:[5]},
   {name:'mallet', hp:16, sponge:[8]},
   {name:'tower', hp:18, sponge:[9]},
+  {name:'granite', hp:24, sponge:[12]},
 ];
 common.allGuilds[L].union = [
   'avarisse',
