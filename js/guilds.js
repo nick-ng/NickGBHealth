@@ -139,12 +139,16 @@ L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'hunters';
 common.allGuilds[L].players = [
   {name:'theron', hp:18, sponge:[9], role:'c'},
+  {name:'skatha', hp:14, sponge:[7], role:'c'},
   {name:'fahad', hp:6, sponge:[3], role:'m'},
+  {name:'snow', hp:8, sponge:[4], role:'m'},
   {name:'chaska', hp:16, sponge:[8]},
   {name:'egret', hp:12, sponge:[6]},
   {name:'hearne', hp:20, sponge:[10]},
+  {name:'hearne-v', hp:20, sponge:[10]},
   {name:'jaecar', hp:14, sponge:[7]},
   {name:'seenah', hp:21, sponge:[11]},
+  {name:'ulfr', hp:16, sponge:[8]},
   {name:'zarola', hp:12, sponge:[6]},
 ];
 common.allGuilds[L].union = [
