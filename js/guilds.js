@@ -108,6 +108,16 @@ common.allGuilds[L].union = [
   'rage',
 ];
 
+// Farmers
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'farmers';
+common.allGuilds[L].players = [
+  {name:'grange', hp:26, sponge:[13], role:'c'},
+  {name:'thresher', hp:20, sponge:[10], role:'c'},
+];
+common.allGuilds[L].union = [];
+
 // Fishermen
 common.allGuilds.push({});
 L = common.allGuilds.length - 1;
@@ -223,8 +233,10 @@ common.allGuilds[L].players = [
   {name:'strongbox', hp:8, sponge:[4], role:'m'},
   {name:'avarisse', hp:20, sponge:[10], detach:'greede'},
   {name:'greede', hp:7, sponge:[4], role:'benched'},
+  {name:'benediction', hp:19, sponge:[10]},
   {name:'decimate', hp:14, sponge:[7]},
   {name:'fangtooth', hp:29, sponge:[15]},
+  {name:'grace', hp:15, sponge:[8]},
   {name:'gutter', hp:14, sponge:[7]},
   {name:'harry', hp:19, sponge:[12], display:'Harry &lsquo;the Hat&rsquo;'},
   {name:'hemlocke', hp:10, sponge:[5]},
