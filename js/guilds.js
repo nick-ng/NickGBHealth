@@ -113,8 +113,16 @@ common.allGuilds.push({});
 L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'farmers';
 common.allGuilds[L].players = [
-  {name:'grange', hp:26, sponge:[13], role:'c'},
-  {name:'thresher', hp:20, sponge:[10], role:'c'},
+  { name:'grange', hp:26, sponge:[13], role:'c' },
+  { name:'thresher', hp:20, sponge:[10], role:'c' },
+  { name: 'peck', hp: 6, sponge: [3], role: 'm' },
+  { name: 'buckwheat', hp: 9, sponge: [5], role: 'm' },
+  { name: 'bushel', hp: 12, sponge: [6] },
+  { name: 'jackstraw', hp: 10, sponge: [5] },
+  { name: 'harrow', hp: 19, sponge: [10] },
+  { name: 'millstone', hp: 17, sponge: [9] },
+  { name: 'windle', hp: 28, sponge: [14] },
+  { name: 'tater', hp: 16, sponge: [8] },
 ];
 common.allGuilds[L].union = [];
 
