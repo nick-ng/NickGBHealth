@@ -28,6 +28,26 @@ common.allGuilds[L].union = [
   'snakeskin',
 ];
 
+// Blacksmiths
+common.allGuilds.push({});
+L = common.allGuilds.length - 1;
+common.allGuilds[L].name = 'blacksmiths';
+common.allGuilds[L].players = [
+  { name:'anvil', hp:19, sponge:[10] },
+  { name:'cinder', hp:13, sponge:[7] },
+  { name:'ferrite', hp: 17, sponge:[9] },
+  { name:'furnace', hp:20, sponge:[10] },
+  { name:'iron', hp: 14, sponge:[7] },
+  { name:'sledge', hp: 12, sponge:[6] },
+  { name:'1-anvil', hp:19, sponge:[10], display: 'Anvil', role: 'c' },
+  { name:'1-cinder', hp:13, sponge:[7], display: 'Cinder', role: 'm' },
+  { name:'1-ferrite', hp: 17, sponge:[9], display: 'Ferrite', role: 'c' },
+  { name:'1-furnace', hp:20, sponge:[10], display: 'Furnace', role: 'c' },
+  { name:'1-iron', hp: 14, sponge:[7], display: 'Iron', role: 'm' },
+  { name:'1-sledge', hp: 12, sponge:[6], display: 'Sledge', role: 'm' },
+];
+common.allGuilds[L].union = [];
+
 // Brewers
 common.allGuilds.push({});
 L = common.allGuilds.length - 1;
@@ -52,6 +72,7 @@ common.allGuilds[L].union = [
   'gutter',
   'harry',
   'hemlocke',
+  'lucky',
   'rage',
 ];
 
@@ -196,6 +217,7 @@ common.allGuilds[L].players = [
 common.allGuilds[L].union = [
   'avarisse',
   'decimate',
+  'lucky',
   'minx',
   'mist',
   'snakeskin',
@@ -234,6 +256,7 @@ L = common.allGuilds.length - 1;
 common.allGuilds[L].name = 'union';
 common.allGuilds[L].players = [
   {name:'compound', hp:20, sponge:[10], role:'nonunion'},
+  {name: 'lucky', hp:14, sponge: [7], role: 'nonunion'},
   {name:'blackheart', hp:16, sponge:[8], role:'c'},
   {name:'rage-v', hp:17, sponge:[9], role:'c'},
   {name:'brisket-s', hp:15, sponge:[8], role:'c'},
