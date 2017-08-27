@@ -118,3 +118,8 @@ section, .fullscreen-view {
   width: 100%;
 	background-color: #fff;
 }
+
+.player-card {
+  width: 440px;
+  height: 616px;
+}
