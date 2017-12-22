@@ -472,7 +472,7 @@ function displayCard(player) {
   if (player) {
     if ($( '#cardCol2' ).css( 'display' ) != 'none') {
       play.cardFront = true;
-      imageURL2 = '/cards/' + player.name + '_b' + common.IMG_EXT;
+      imageURL2 = '/cards/' + player.name.replace('1-', '') + '_b' + common.IMG_EXT;
       var imageTag = '<img src="' + imageURL2 + '" class="img-responsive center-block player-card" alt="' + player.Name + '">';
       $( '#playerCard2' ).html(imageTag);
       $( '#cardPanel2' ).removeClass( 'hidden' );
@@ -483,6 +483,7 @@ function displayCard(player) {
     } else {
       imageURL += 'b' + common.IMG_EXT;
     }
+    imageUrl = imageUrl.replace('1-', '');
     if ($( '#cardCol' ).css( 'display' ) != 'none') {
       var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block player-card" alt="' + player.Name + '">';
       $( '#playerCard' ).html(imageTag);
