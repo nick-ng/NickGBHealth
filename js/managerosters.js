@@ -191,7 +191,7 @@ function displayCard(playerName) {
   var imageURL2 = imageURL;
   if ($( '#cardCol2' ).css( 'display' ) != 'none') {
     roster.cardFront = true;
-    imageURL2 = '/cards/' + playerName + '_b' + common.IMG_EXT;
+    imageURL2 = '/cards/' + playerName.replace('1-', '') + '_b' + common.IMG_EXT;
     var imageTag = '<img src="' + imageURL2 + '" class="img-responsive center-block">';
     $( '#playerCard2' ).html(imageTag);
     $( '#cardPanel2' ).removeClass( 'hidden' );
@@ -202,6 +202,7 @@ function displayCard(playerName) {
   } else {
     imageURL += 'b' + common.IMG_EXT;
   }
+  imageURL = imageURL.replace('1-', '');
   if ($( '#cardCol' ).css( 'display' ) != 'none') {
     var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block" alt="' + playerName + '">';
     $( '#playerCard' ).html(imageTag);
