@@ -483,7 +483,7 @@ function displayCard(player) {
     } else {
       imageURL += 'b' + common.IMG_EXT;
     }
-    imageUrl = imageUrl.replace('1-', '');
+    imageURL = imageURL.replace('1-', '');
     if ($( '#cardCol' ).css( 'display' ) != 'none') {
       var imageTag = '<img src="' + imageURL + '" class="img-responsive center-block player-card" alt="' + player.Name + '">';
       $( '#playerCard' ).html(imageTag);
