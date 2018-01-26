@@ -155,6 +155,7 @@ common.allGuilds[L].players = [
   { name: 'bushel', hp: 12, sponge: [6] },
   { name: 'jackstraw', hp: 10, sponge: [5] },
   { name: 'harrow', hp: 19, sponge: [10] },
+  { name: 'fallow', hp: 19, sponge: [10] },
   { name: 'millstone', hp: 17, sponge: [9] },
   { name: 'windle', hp: 28, sponge: [14] },
   { name: 'tater', hp: 16, sponge: [8] },
