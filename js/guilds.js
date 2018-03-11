@@ -161,7 +161,10 @@ common.allGuilds[L].players = [
   { name: 'tater', hp: 16, sponge: [8] },
   { name: 'ploughman', hp: 22, sponge: [11] },
 ];
-common.allGuilds[L].union = [];
+common.allGuilds[L].union = [
+  'benediction',
+  'grace',
+];
 
 // Fishermen
 common.allGuilds.push({});
