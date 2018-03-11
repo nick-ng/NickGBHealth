@@ -159,6 +159,7 @@ common.allGuilds[L].players = [
   { name: 'millstone', hp: 17, sponge: [9] },
   { name: 'windle', hp: 28, sponge: [14] },
   { name: 'tater', hp: 16, sponge: [8] },
+  { name: 'ploughman', hp: 22, sponge: [11] },
 ];
 common.allGuilds[L].union = [];
 
