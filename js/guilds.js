@@ -260,13 +260,11 @@ common.allGuilds[L].players = [
   {name:'silence', hp:12, sponge: [6]},
   {name:'brainpan', hp:14, sponge: [7], detach:'memory'},
   {name:'memory', hp:3, sponge: [], role:'benched'},
+  { name: 'hemlocke-v', hp: 12, sponge: [6] },
+  { name: 'pelage', hp: 10, sponge: [5] },
+  { name: 'skulk', hp: 14, sponge: [7] },
 ];
 common.allGuilds[L].union = [
-  'avarisse',
-  'fangtooth',
-  'minx',
-  'mist',
-  'rage',
 ];
 
 // Union
