@@ -221,28 +221,32 @@ function lastMinuteStyles() {
 
 // Generated DOM events
 function hookPlayerButtons() {
-  $( 'button[role=player-buttons]' ).each(function () {
+  $( 'button[role=player-buttons]' ).each(function (index) {
     $(this).off();
     const ida = $(this).attr( 'id' );
     const playerName = ida.replace(/\d(M|O)_(1-)*/i, '');
     const host = location.host;
-    var elementF = document.createElement('embed');
-    const fUrl = `http://${host}/cards/${playerName}_f.pdf`;
-    elementF.setAttribute('src', `https://drive.google.com/viewerng/viewer?embedded=true&url=${fUrl}`);
-    elementF.setAttribute('width', 440);
-    elementF.setAttribute('height', 616);
-    elementF.setAttribute('id', `${ida}_f`);
-    elementF.classList.add('player-card2');
-    document.getElementById('cardPanel').appendChild(elementF);
+    setTimeout(() => {
+      var elementF = document.createElement('embed');
+      document.getElementById('cardPanel').appendChild(elementF);
+      const fUrl = `http://${host}/cards/${playerName}_f.pdf`;
+      elementF.setAttribute('src', `https://drive.google.com/viewerng/viewer?embedded=true&url=${fUrl}`);
+      elementF.setAttribute('width', 440);
+      elementF.setAttribute('height', 616);
+      elementF.setAttribute('id', `${ida}_f`);
+      elementF.classList.add('player-card2');
+    }, index * 5000)
 
-    var elementB = document.createElement('embed');
-    const bUrl = `http://${host}/cards/${playerName}_b.pdf`;
-    elementB.setAttribute('src', `https://drive.google.com/viewerng/viewer?embedded=true&url=${bUrl}`);
-    elementB.setAttribute('width', 440);
-    elementB.setAttribute('height', 616);
-    elementB.setAttribute('id', `${ida}_b`);
-    elementB.classList.add('player-card2');
-    document.getElementById('cardPanel').appendChild(elementB);
+    setTimeout(() => {
+      var elementB = document.createElement('embed');
+      document.getElementById('cardPanel').appendChild(elementB);
+      const bUrl = `http://${host}/cards/${playerName}_b.pdf`;
+      elementB.setAttribute('src', `https://drive.google.com/viewerng/viewer?embedded=true&url=${bUrl}`);
+      elementB.setAttribute('width', 440);
+      elementB.setAttribute('height', 616);
+      elementB.setAttribute('id', `${ida}_b`);
+      elementB.classList.add('player-card2');
+    }, (index * 5000) + 2500);
 
     $(this).click(function() {
       $(this).addClass( 'active' );
