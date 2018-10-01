@@ -252,18 +252,18 @@ function hookPlayerButtons() {
         $(this).css( 'background-color', '' );
         if ($(this).attr( 'id' ) != id) {
           $(this).removeClass( 'active' );
-          if ($(`${playerName}_f`)) {
-            $(`${playerName}_f`).removeClass('infront');
-            $(`${playerName}_b`).removeClass('infront');
+          if ($(`${id}_f`)) {
+            $(`${id}_f`).removeClass('infront');
+            $(`${id}_b`).removeClass('infront');
           }
         } else {
-          if ($(`${playerName}_f`)) {
-            if ($(`${playerName}_f`).hasClass('infront')) {
-              $(`${playerName}_f`).removeClass('infront');
-              $(`${playerName}_b`).addClass('infront');
+          if ($(`${id}_f`)) {
+            if ($(`${id}_f`).hasClass('infront')) {
+              $(`${id}_f`).removeClass('infront');
+              $(`${id}_b`).addClass('infront');
             } else {
-              $(`${playerName}_f`).addClass('infront');
-              $(`${playerName}_b`).removeClass('infront');
+              $(`${id}_f`).addClass('infront');
+              $(`${id}_b`).removeClass('infront');
             }
           }
         }
