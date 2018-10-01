@@ -123,3 +123,18 @@ section, .fullscreen-view {
   width: 440px;
   height: 616px;
 }
+
+.player-card2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+embed.infront {
+  z-index: 2;
+}
+
+.prelative {
+  position: relative;
+}
