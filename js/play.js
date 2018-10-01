@@ -251,19 +251,22 @@ function hookPlayerButtons() {
       $( 'button[role=player-buttons]' ).each(function() {
         $(this).css( 'background-color', '' );
         if ($(this).attr( 'id' ) != id) {
+          var idb = $(this).attr( 'id' );
           $(this).removeClass( 'active' );
-          if ($(`${id}_f`)) {
-            $(`${id}_f`).removeClass('infront');
-            $(`${id}_b`).removeClass('infront');
+          if ($(`#${idb}_f`)) {
+            $(`#${idb}_f`).removeClass('infront');
+            $(`#${idb}_b`).removeClass('infront');
           }
         } else {
-          if ($(`${id}_f`)) {
-            if ($(`${id}_f`).hasClass('infront')) {
-              $(`${id}_f`).removeClass('infront');
-              $(`${id}_b`).addClass('infront');
+          console.log('hi', `${id}_f`);
+          if ($(`#${id}_f`)) {
+            if ($(`#${id}_f`).hasClass('infront')) {
+              console.log('a');
+              $(`#${id}_f`).removeClass('infront');
+              $(`#${id}_b`).addClass('infront');
             } else {
-              $(`${id}_f`).addClass('infront');
-              $(`${id}_b`).removeClass('infront');
+              $(`#${id}_f`).addClass('infront');
+              $(`#${id}_b`).removeClass('infront');
             }
           }
         }
