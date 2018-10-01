@@ -83,15 +83,7 @@ common.allGuilds[L].players = [
   {name:'pintpot', hp:20, sponge: [10]},
   {name:'vdecimate', hp:14, sponge: [7], display: 'vDecimate'},
 ];
-common.allGuilds[L].union = [
-  'avarisse',
-  'fangtooth',
-  'gutter',
-  'harry',
-  'hemlocke',
-  'lucky',
-  'rage',
-];
+common.allGuilds[L].union = [];
 
 // Butchers
 common.allGuilds.push({});
