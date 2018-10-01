@@ -252,18 +252,18 @@ function hookPlayerButtons() {
         $(this).css( 'background-color', '' );
         if ($(this).attr( 'id' ) != id) {
           $(this).removeClass( 'active' );
-          if (document.getElementById(`${playerName}_f`)) {
-            document.getElementById(`${playerName}_f`).classList.remove('infront');
-            document.getElementById(`${playerName}_b`).classList.remove('infront');
+          if ($(`${playerName}_f`)) {
+            $(`${playerName}_f`).removeClass('infront');
+            $(`${playerName}_b`).removeClass('infront');
           }
         } else {
-          if (document.getElementById(`${playerName}_f`)) {
-            if (document.getElementById(`${playerName}_f`).classList.contains('infront')) {
-              document.getElementById(`${playerName}_f`).classList.remove('infront');
-              document.getElementById(`${playerName}_b`).classList.add('infront');
+          if ($(`${playerName}_f`)) {
+            if ($(`${playerName}_f`).hasClass('infront')) {
+              $(`${playerName}_f`).removeClass('infront');
+              $(`${playerName}_b`).addClass('infront');
             } else {
-              document.getElementById(`${playerName}_f`).classList.add('infront');
-              document.getElementById(`${playerName}_b`).classList.remove('infront');
+              $(`${playerName}_f`).addClass('infront');
+              $(`${playerName}_b`).removeClass('infront');
             }
           }
         }
