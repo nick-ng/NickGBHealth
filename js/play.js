@@ -252,15 +252,19 @@ function hookPlayerButtons() {
         $(this).css( 'background-color', '' );
         if ($(this).attr( 'id' ) != id) {
           $(this).removeClass( 'active' );
-          document.getElementById(`${playerName}_f`).classList.remove('infront');
-          document.getElementById(`${playerName}_b`).classList.remove('infront');
-        } else {
-          if (document.getElementById(`${playerName}_f`).classList.contains('infront')) {
+          if (document.getElementById(`${playerName}_f`)) {
             document.getElementById(`${playerName}_f`).classList.remove('infront');
-            document.getElementById(`${playerName}_b`).classList.add('infront');
-          } else {
-            document.getElementById(`${playerName}_f`).classList.add('infront');
             document.getElementById(`${playerName}_b`).classList.remove('infront');
+          }
+        } else {
+          if (document.getElementById(`${playerName}_f`)) {
+            if (document.getElementById(`${playerName}_f`).classList.contains('infront')) {
+              document.getElementById(`${playerName}_f`).classList.remove('infront');
+              document.getElementById(`${playerName}_b`).classList.add('infront');
+            } else {
+              document.getElementById(`${playerName}_f`).classList.add('infront');
+              document.getElementById(`${playerName}_b`).classList.remove('infront');
+            }
           }
         }
       });
