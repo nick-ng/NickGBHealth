@@ -224,7 +224,7 @@ function hookPlayerButtons() {
   $( 'button[role=player-buttons]' ).each(function () {
     $(this).off();
     const ida = $(this).attr( 'id' );
-    const playerName = ida.replace(/\d(M|O)_(1-)*/i);
+    const playerName = ida.replace(/\d(M|O)_(1-)*/i, '');
     const host = location.host;
     var elementF = document.createElement('embed');
     const fUrl = `http://${host}/cards/${playerName}_f.pdf`;
@@ -247,7 +247,7 @@ function hookPlayerButtons() {
     $(this).click(function() {
       $(this).addClass( 'active' );
       var id = $(this).attr( 'id' );
-      const playerName = id.replace(/\d(M|O)_(1-)*/i);
+      const playerName = id.replace(/\d(M|O)_(1-)*/i, '');
       $( 'button[role=player-buttons]' ).each(function() {
         $(this).css( 'background-color', '' );
         if ($(this).attr( 'id' ) != id) {
